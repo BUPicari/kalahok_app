@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 import 'choice_model.dart';
 import 'config_model.dart';
 import 'rate_model.dart';
+import 'label_model.dart';
 
 class Question {
   int id = 0;
@@ -10,15 +13,18 @@ class Question {
   String type = "";
   List<Choice> choices = [];
   List<Rate> rates = [];
+  List<Label> labels = [];
   Config config = Config(
     multipleAnswer: false,
     canAddOthers: false,
     useYesOrNo: false,
+    isRequired: true,
   );
   String addedAt = "";
   String updatedAt = "";
   Choice? selectedChoice;
   List<Choice>? selectedChoices;
+  // List<String>? selected;
   int? selectedRate;
   String? addedOthers;
   String? response;
@@ -28,12 +34,14 @@ class Question {
     required this.question,
     required this.type,
     required this.choices,
-    required this.config,
     required this.rates,
+    required this.labels,
+    required this.config,
     required this.addedAt,
     required this.updatedAt,
     this.selectedChoice,
     this.selectedChoices,
+    // this.selected,
     this.selectedRate,
     this.addedOthers,
     this.response,
@@ -45,6 +53,9 @@ class Question {
 
     var ratesJson = json['rates'] as List;
     List<Rate> rates = ratesJson.map((e) => Rate.fromJson(e)).toList();
+
+    var labelsJson = json['labels'] as List;
+    List<Label> labels = labelsJson.map((e) => Label.fromJson(e)).toList();
 
     var config = Config.fromJson(json['config']);
 
@@ -63,6 +74,7 @@ class Question {
       type: json['type'],
       choices: choices,
       rates: rates,
+      labels: labels,
       config: config,
       addedAt: json['added_at'],
       updatedAt: json['updated_at'],
@@ -76,6 +88,7 @@ class Question {
       'type': type,
       'choices': choices, // add toJson in Choice model
       'rates': rates, // add toJson in Rate model
+      'labels': labels, // add toJson in Label model
       'config': config, // add toJson in Config model
       'added_at': addedAt,
       'updated_at': updatedAt,
@@ -104,6 +117,88 @@ class Question {
       });
     }
 
-    return "'$response'";
+    return response.toString();
+  }
+
+  Widget getReviewResponse() {
+    var arrResponses = <String>[];
+    String answer = response.toString();
+
+    if (config.multipleAnswer ||
+        config.canAddOthers ||
+        type == 'openEnded' ||
+        type == 'dropdown') {
+      if (config.multipleAnswer) {
+        arrResponses = answer != 'null' ? answer.split(',') : arrResponses;
+      } else if (config.canAddOthers) {
+        var decoded = jsonDecode(answer);
+        decoded != null ? arrResponses.add(answer) : arrResponses;
+      } else {
+        var decoded = jsonDecode(answer);
+        arrResponses =
+            decoded != null ? List<String>.from(decoded as List) : arrResponses;
+      }
+
+      List<Widget> selected = arrResponses.map(
+        (res) {
+          String r = res.replaceAll('"', '');
+          String ans = 'Answer (${arrResponses.indexOf(res) + 1}):  $r';
+          if (arrResponses.length == 1) {
+            ans = 'Answer: $r';
+          }
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 5),
+                Text(
+                  ans,
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 16,
+                  ),
+                ),
+              ]);
+        },
+      ).toList();
+
+      Widget addOthersWidget = Column();
+      final addedOthers = this.addedOthers;
+      String othersOrSpecifyText =
+          type == 'trueOrFalse' ? 'Specify:' : 'Others:';
+
+      if (addedOthers != null) {
+        addOthersWidget = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 5),
+            Text(
+              '$othersOrSpecifyText ${addedOthers.replaceAll('"', '')}',
+              style: const TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        );
+      }
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: selected,
+          ),
+          addOthersWidget,
+        ],
+      );
+    }
+
+    return Text(
+      jsonDecode(answer) != null
+          ? 'Answer:  ${answer.replaceAll('"', '')}'
+          : '',
+      style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
+    );
   }
 }

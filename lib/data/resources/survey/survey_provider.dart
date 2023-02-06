@@ -5,12 +5,21 @@ import 'package:kalahok_app/data/models/survey_model.dart';
 import 'package:kalahok_app/data/models/survey_response_model.dart';
 
 class SurveyProvider {
-  Future<Survey> getSurveyList({required int categoryId}) async {
-    var path = '/surveys/current-active?category=$categoryId&format-date=true';
+  Future<Survey> getSurveyList({required int surveyId}) async {
+    var path = '/surveys/fetch/$surveyId';
     var url = Uri.parse(ApiConfig.baseUrl + path);
     http.Response response = await http.get(url);
 
-    return Survey.fromJson(jsonDecode(response.body));
+    var result = Survey.fromJson(jsonDecode(response.body));
+
+    for (var question in result.questionnaires) {
+      if (question.config.isRequired) {
+        var num = result.numOfRequired?.toInt() ?? 0;
+        result.numOfRequired = num + 1;
+      }
+    }
+
+    return result;
   }
 
   Future<void> postSubmitSurveyResponse({required Survey survey}) async {
@@ -21,14 +30,13 @@ class SurveyProvider {
     List<Questionnaires> questionnaires = survey.questionnaires
         .map((question) => Questionnaires(
               questionnaireId: question.id,
-              // answer: question.response.toString(),
               answer: question.getAnswer(),
             ))
         .toList();
 
     var surveyResponse = <Map<String, dynamic>>[
       SurveyResponse(
-        surveyId: 1,
+        surveyId: survey.id,
         questionnaires: questionnaires,
       ).toJson(),
     ];

@@ -17,6 +17,10 @@ class SurveyLoadedState extends SurveyState {
   const SurveyLoadedState(this.survey);
 }
 
+class SurveyForReviewState extends SurveyState {}
+
+class SurveyDoneState extends SurveyState {}
+
 class SurveyErrorState extends SurveyState {
   final String error;
   const SurveyErrorState(this.error);
