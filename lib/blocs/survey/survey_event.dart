@@ -9,9 +9,9 @@ abstract class SurveyEvent extends Equatable {
 }
 
 class GetSurveyListEvent extends SurveyEvent {
-  final int categoryId;
+  final int surveyId;
 
-  const GetSurveyListEvent({required this.categoryId});
+  const GetSurveyListEvent({required this.surveyId});
 }
 
 class SubmitSurveyResponseEvent extends SurveyEvent {

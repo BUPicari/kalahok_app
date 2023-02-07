@@ -1,25 +1,24 @@
-import 'question_model.dart';
-import 'survey_response_model.dart';
+import 'added_by_model.dart';
 
-class Survey {
-  int id = 0;
-  String title = "";
-  String description = "";
-  String completionEstimatedTime = "";
-  bool status = false;
-  bool multipleSubmission = false;
-  String startDate = "";
-  String endDate = "";
-  String addedAt = "";
-  String updatedAt = "";
-  List<Question> questionnaires = [];
-  List<SurveyResponse>? response = [];
-  int? numOfRequired = 0;
+class Surveys {
+  int id;
+  String title;
+  String description;
+  String waiver;
+  String completionEstimatedTime;
+  bool status;
+  bool multipleSubmission;
+  String startDate;
+  String endDate;
+  String addedAt;
+  String updatedAt;
+  AddedBy addedBy;
 
-  Survey({
+  Surveys({
     required this.id,
     required this.title,
     required this.description,
+    required this.waiver,
     required this.completionEstimatedTime,
     required this.status,
     required this.multipleSubmission,
@@ -27,20 +26,17 @@ class Survey {
     required this.endDate,
     required this.addedAt,
     required this.updatedAt,
-    required this.questionnaires,
-    this.response,
-    this.numOfRequired,
+    required this.addedBy,
   });
 
-  factory Survey.fromJson(Map<String, dynamic> json) {
-    var questionnairesJson = json['questionnaires'] as List;
-    List<Question> questions =
-        questionnairesJson.map((e) => Question.fromJson(e)).toList();
+  factory Surveys.fromJson(Map<String, dynamic> json) {
+    var addedBy = AddedBy.fromJson(json['addedBy']);
 
-    return Survey(
+    return Surveys(
       id: json['id'],
       title: json['title'],
       description: json['description'],
+      waiver: json['waiver'],
       completionEstimatedTime: json['completion_estimated_time'],
       status: json['status'],
       multipleSubmission: json['multipleSubmission'],
@@ -48,18 +44,16 @@ class Survey {
       endDate: json['end_date'],
       addedAt: json['added_at'],
       updatedAt: json['updated_at'],
-      questionnaires: questions,
+      addedBy: addedBy,
     );
   }
 
   Map<String, dynamic> toJson() {
-    List<Map<String, dynamic>> questions =
-        questionnaires.map((e) => e.toJson()).toList();
-
     return {
       'id': id,
       'title': title,
       'description': description,
+      'waiver': waiver,
       'completion_estimated_time': completionEstimatedTime,
       'status': status,
       'multiple_submission': multipleSubmission,
@@ -67,7 +61,7 @@ class Survey {
       'end_date': endDate,
       'added_at': addedAt,
       'updated_at': updatedAt,
-      'questionnaires': questions,
+      'added_by': addedBy,
     };
   }
 }

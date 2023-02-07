@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/choice_model.dart';
 import 'package:kalahok_app/data/models/question_model.dart';
 import 'package:kalahok_app/helpers/utils.dart';
+import 'package:kalahok_app/helpers/variables.dart';
 
 class ChoicesWidget extends StatelessWidget {
   final Question question;
@@ -32,7 +33,7 @@ class ChoicesWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: AppColor.subPrimary,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/question_model.dart';
 import 'package:kalahok_app/data/models/survey_model.dart';
-import 'package:kalahok_app/screens/survey_done_screen.dart';
+import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/screens/review_screen.dart';
 
-class SubmitButtonWidget extends StatelessWidget {
+class ReviewButtonWidget extends StatelessWidget {
   final Question question;
   final Survey survey;
 
-  const SubmitButtonWidget({
+  const ReviewButtonWidget({
     Key? key,
     required this.question,
     required this.survey,
@@ -28,7 +29,7 @@ class SubmitButtonWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SurveyDoneScreen(survey: survey),
+                      builder: (context) => ReviewScreen(survey: survey),
                     ),
                   );
                 },
@@ -37,18 +38,17 @@ class SubmitButtonWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(33),
                   ),
                 ),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'SUBMIT',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ]),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    'REVIEW ANSWERS',
+                    style: TextStyle(
+                      color: AppColor.subPrimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ]),
               ),
             ),
           ),

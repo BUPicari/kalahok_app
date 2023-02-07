@@ -9,3 +9,9 @@ abstract class CategoryEvent extends Equatable {
 }
 
 class GetCategoryListEvent extends CategoryEvent {}
+
+class GetCategorySurveyListEvent extends CategoryEvent {
+  final int categoryId;
+
+  const GetCategorySurveyListEvent({required this.categoryId});
+}

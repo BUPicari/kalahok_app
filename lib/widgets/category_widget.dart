@@ -2,7 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/configs/api_config.dart';
 import 'package:kalahok_app/data/models/category_model.dart';
-import 'package:kalahok_app/screens/waiver_screen.dart';
+import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/screens/category_survey_screen.dart';
 
 class CategoryWidget extends StatelessWidget {
   final Category category;
@@ -16,7 +17,7 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => WaiverScreen(category: category),
+        builder: (context) => CategorySurveyScreen(category: category),
       )),
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -34,10 +35,10 @@ class CategoryWidget extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               category.name,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColor.subPrimary,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 12,
               ),
               textAlign: TextAlign.center,
             ),

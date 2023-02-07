@@ -17,6 +17,15 @@ class CategoryLoadedState extends CategoryState {
   const CategoryLoadedState(this.categories);
 }
 
+class CategorySurveyInitialState extends CategoryState {}
+
+class CategorySurveyLoadingState extends CategoryState {}
+
+class CategorySurveyLoadedState extends CategoryState {
+  final CategorySurvey categorySurvey;
+  const CategorySurveyLoadedState(this.categorySurvey);
+}
+
 class CategoryErrorState extends CategoryState {
   final String error;
   const CategoryErrorState(this.error);

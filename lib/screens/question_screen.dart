@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kalahok_app/data/models/choice_model.dart';
 import 'package:kalahok_app/data/models/question_model.dart';
 import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/home_screen.dart';
 import 'package:kalahok_app/widgets/question_numbers_widget.dart';
 import 'package:kalahok_app/widgets/questions_widget.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class QuestionScreen extends StatefulWidget {
   final Survey survey;
@@ -19,7 +24,8 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  late PageController controller;
+  late PageController pageController;
+  // late TextEditingController textController;
   late Question question;
   late List<Choice> selected;
 
@@ -27,7 +33,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
   void initState() {
     super.initState();
 
-    controller = PageController();
+    pageController = PageController();
+    // textController = TextEditingController();
     question = widget.survey.questionnaires.first;
     selected = [];
   }
@@ -36,15 +43,19 @@ class _QuestionScreenState extends State<QuestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
+      resizeToAvoidBottomInset: false,
       body: QuestionsWidget(
         survey: widget.survey,
-        controller: controller,
+        pageController: pageController,
+        // textController: textController,
         onChangedPage: (index) => nextQuestion(index: index),
         onClickedChoice: selectChoice,
-        // onSelectChoices: selectMultipleChoices,
         onClickedRate: selectRate,
-        onChanged: setResponse,
+        onChanged: setTextFieldResponses,
         onAddOthers: setAddedOthers,
+        onDateSelected: setDateSelected,
+        onPressedPrev: setPrevQuestion,
+        onPressedNext: setNextQuestion,
       ),
     );
   }
@@ -53,18 +64,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
     return AppBar(
       title: Text(widget.survey.title),
       flexibleSpace: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blueGrey, Colors.indigo],
+            colors: AppColor.linearGradient,
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
           ),
         ),
       ),
       leading: GestureDetector(
-        child: const Icon(
+        child: Icon(
           Icons.arrow_back,
-          color: Colors.white,
+          color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const HomeScreen(),
@@ -96,15 +107,22 @@ class _QuestionScreenState extends State<QuestionScreen> {
           selected.add(choice);
         }
         question.selectedChoices = selected;
+        // question.selectedChoices
+        //     ?.map((choice) => question.selected?.add(choice.name));
 
         if (question.response == null) {
-          setResponse(choice.name);
+          setResponse(jsonEncode(choice.name));
         } else {
-          setResponse("${question.response},${choice.name}");
+          // String? res = question.selected?.join(', ');
+          // setResponse(res.toString());
+          List<String> arrRes = question.response.toString().split(',');
+          if (!arrRes.contains(jsonEncode(choice.name))) {
+            setResponse("${question.response},${jsonEncode(choice.name)}");
+          }
         }
       } else {
         question.selectedChoice = choice;
-        setResponse(choice.name);
+        setResponse(jsonEncode(choice.name));
       }
     });
   }
@@ -112,20 +130,63 @@ class _QuestionScreenState extends State<QuestionScreen> {
   void selectRate(int rate) {
     setState(() {
       question.selectedRate = rate.toInt();
-      setResponse((rate + 1).toString());
+      setResponse(jsonEncode((rate + 1).toString()));
     });
   }
 
   void setAddedOthers(String others) {
     setState(() {
-      question.addedOthers = others;
+      question.addedOthers = jsonEncode(others);
     });
+  }
+
+  void setTextFieldResponses(String response) {
+    List<dynamic> textFieldResponse = <String>[];
+    List<String> responses = response.toString().split(',');
+
+    if (question.response != null) {
+      textFieldResponse = jsonDecode(question.response.toString()) as List;
+    }
+
+    for (var i = 0; i <= int.parse(responses[0]); i++) {
+      if (int.parse(responses[0]) == i) {
+        if (textFieldResponse.asMap().containsKey(i)) {
+          textFieldResponse[i] = responses[1].trim();
+        } else {
+          textFieldResponse.insert(i, responses[1].trim());
+        }
+      } else {
+        if (!textFieldResponse.asMap().containsKey(i)) {
+          textFieldResponse.insert(i, "");
+        }
+      }
+    }
+
+    setResponse(jsonEncode(textFieldResponse));
+  }
+
+  void setDateSelected(DateRangePickerSelectionChangedArgs args) {
+    setResponse(jsonEncode(DateFormat('yyyy-MM-dd').format(args.value)));
   }
 
   void setResponse(String response) {
     setState(() {
       question.response = response;
     });
+  }
+
+  void setPrevQuestion(int index) {
+    nextQuestion(
+      index: index - 1,
+      jump: true,
+    );
+  }
+
+  void setNextQuestion(int index) {
+    nextQuestion(
+      index: index + 1,
+      jump: true,
+    );
   }
 
   void nextQuestion({
@@ -139,7 +200,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     });
 
     if (jump) {
-      controller.jumpToPage(indexPage);
+      pageController.jumpToPage(indexPage);
     }
   }
 }
