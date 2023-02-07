@@ -8,7 +8,7 @@ import 'package:kalahok_app/widgets/questions/open_ended_question_widget.dart';
 import 'package:kalahok_app/widgets/questions/rating_question_widget.dart';
 import 'package:kalahok_app/widgets/questions/unkown_question_widget.dart';
 import 'package:kalahok_app/widgets/questions/with_choices_question_widget.dart';
-// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class QuestionsWidget extends StatelessWidget {
   final Survey survey;
@@ -19,7 +19,7 @@ class QuestionsWidget extends StatelessWidget {
   final ValueChanged<int> onClickedRate;
   final ValueChanged<String> onChanged;
   final ValueChanged<String> onAddOthers;
-  // final ValueChanged<DateRangePickerSelectionChangedArgs> onDateSelected;
+  final ValueChanged<DateRangePickerSelectionChangedArgs> onDateSelected;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
@@ -33,7 +33,7 @@ class QuestionsWidget extends StatelessWidget {
     required this.onClickedRate,
     required this.onChanged,
     required this.onAddOthers,
-    // required this.onDateSelected,
+    required this.onDateSelected,
     required this.onPressedPrev,
     required this.onPressedNext,
   }) : super(key: key);
@@ -101,15 +101,15 @@ class QuestionsWidget extends StatelessWidget {
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
         );
-      // case "datepicker":
-      //   return DatePickerQuestionWidget(
-      //     index: index,
-      //     survey: survey,
-      //     question: question,
-      //     onDateSelected: onDateSelected,
-      //     onPressedPrev: onPressedPrev,
-      //     onPressedNext: onPressedNext,
-      //   );
+      case "datepicker":
+        return DatePickerQuestionWidget(
+          index: index,
+          survey: survey,
+          question: question,
+          onDateSelected: onDateSelected,
+          onPressedPrev: onPressedPrev,
+          onPressedNext: onPressedNext,
+        );
       case "dropdown":
         return DropdownQuestionWidget(
           index: index,

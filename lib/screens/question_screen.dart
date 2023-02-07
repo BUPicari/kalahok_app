@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import 'package:kalahok_app/data/models/choice_model.dart';
 import 'package:kalahok_app/data/models/question_model.dart';
 import 'package:kalahok_app/data/models/survey_model.dart';
@@ -9,7 +9,7 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/home_screen.dart';
 import 'package:kalahok_app/widgets/question_numbers_widget.dart';
 import 'package:kalahok_app/widgets/questions_widget.dart';
-// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class QuestionScreen extends StatefulWidget {
   final Survey survey;
@@ -53,7 +53,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         onClickedRate: selectRate,
         onChanged: setTextFieldResponses,
         onAddOthers: setAddedOthers,
-        // onDateSelected: setDateSelected,
+        onDateSelected: setDateSelected,
         onPressedPrev: setPrevQuestion,
         onPressedNext: setNextQuestion,
       ),
@@ -165,9 +165,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
     setResponse(jsonEncode(textFieldResponse));
   }
 
-  // void setDateSelected(DateRangePickerSelectionChangedArgs args) {
-  //   setResponse(jsonEncode(DateFormat('yyyy-MM-dd').format(args.value)));
-  // }
+  void setDateSelected(DateRangePickerSelectionChangedArgs args) {
+    setResponse(jsonEncode(DateFormat('yyyy-MM-dd').format(args.value)));
+  }
 
   void setResponse(String response) {
     setState(() {

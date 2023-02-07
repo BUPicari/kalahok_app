@@ -14,6 +14,7 @@ dependencies:
   equatable: ^2.0.5
   dropdown_search: ^5.0.5
   flutter_svg: ^1.1.6
+  syncfusion_flutter_datepicker: 20.3.59
 dev_dependencies:
   flutter_test:
     sdk: flutter
