@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/question_model.dart';
 import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
+import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
+// import 'package:kalahok_app/widgets/audio_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
+import 'package:kalahok_app/widgets/record_answer_widget.dart';
 import 'package:kalahok_app/widgets/review_button_widget.dart';
 
 class OpenEndedQuestionWidget extends StatelessWidget {
@@ -32,14 +36,16 @@ class OpenEndedQuestionWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           QuestionTextWidget(
             isRequired: question.config.isRequired,
             question: question.question,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 5),
+          const RecordAnswerWidget(),
+          const SizedBox(height: 12),
           Expanded(
-            child: Column(children: buildTextFieldForms()),
+            child: _buildTextFieldForms(),
           ),
           PreviousNextButtonWidget(
             index: index,
@@ -57,7 +63,17 @@ class OpenEndedQuestionWidget extends StatelessWidget {
     );
   }
 
-  List<Widget> buildTextFieldForms() {
+  Widget _buildTextFieldForms() {
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      children: Utils.heightBetween(
+        _buildTextField(),
+        height: 5,
+      ),
+    );
+  }
+
+  List<Widget> _buildTextField() {
     List<Widget> textFields = question.labels
         .map(
           (label) => Column(children: [
@@ -75,7 +91,7 @@ class OpenEndedQuestionWidget extends StatelessWidget {
                 // textController.text = value;
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
           ]),
         )
         .toList();

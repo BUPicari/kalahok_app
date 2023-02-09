@@ -19,39 +19,32 @@ class ReviewButtonWidget extends StatelessWidget {
     if (survey.questionnaires.last == question) {
       return Column(children: [
         const SizedBox(height: 17),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80),
-            child: SizedBox(
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReviewScreen(survey: survey),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(33),
-                  ),
-                ),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(
-                    'REVIEW ANSWERS',
-                    style: TextStyle(
-                      color: AppColor.subPrimary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ]),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReviewScreen(survey: survey),
               ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size.fromHeight(50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(33),
             ),
           ),
+          child:
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(
+              'REVIEW ANSWERS',
+              style: TextStyle(
+                color: AppColor.subPrimary,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ]),
         ),
       ]);
     }
