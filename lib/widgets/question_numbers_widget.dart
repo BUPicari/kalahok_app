@@ -28,14 +28,14 @@ class QuestionNumbersWidget extends StatelessWidget {
         itemCount: questions.length,
         itemBuilder: (context, index) {
           final isSelected = question == questions[index];
-          return buildNumber(index: index, isSelected: isSelected);
+          return _buildNumber(index: index, isSelected: isSelected);
         },
       ),
     );
   }
 
-  Widget buildNumber({required int index, required bool isSelected}) {
-    final color = generateColor(
+  Widget _buildNumber({required int index, required bool isSelected}) {
+    final color = _generateColor(
       question: questions[index],
       isSelected: isSelected,
     );
@@ -56,7 +56,7 @@ class QuestionNumbersWidget extends StatelessWidget {
     );
   }
 
-  Color generateColor({
+  Color _generateColor({
     required Question question,
     required bool isSelected,
   }) {

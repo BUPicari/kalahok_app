@@ -16,7 +16,7 @@ class RateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final stars =
         List<Widget>.generate(int.parse(question.rates[0].max), (index) {
-      final containerColor = getColorForRate(index, question);
+      final containerColor = _getColorForRate(index, question);
       return GestureDetector(
         onTap: () => onClickedRate(index),
         child: _buildRatingStar(containerColor),
@@ -55,7 +55,7 @@ class RateWidget extends StatelessWidget {
     );
   }
 
-  Color getColorForRate(int rate, Question question) {
+  Color _getColorForRate(int rate, Question question) {
     var selectedRate = question.selectedRate?.toInt() ?? -1;
     final isSelected = rate <= selectedRate;
 

@@ -56,7 +56,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
           ),
           const SizedBox(height: 32),
           Expanded(
-            child: buildDropdownForms(),
+            child: _buildDropdownForms(),
           ),
           PreviousNextButtonWidget(
             index: widget.index,
@@ -74,7 +74,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
     );
   }
 
-  Widget buildDropdownForms() {
+  Widget _buildDropdownForms() {
     return ListView(
       children: widget.question.labels
           .map(

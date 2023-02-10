@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/survey_screen.dart';
@@ -32,12 +33,24 @@ class WaiverScreen extends StatelessWidget {
                   child: Column(children: [
                     const SizedBox(height: 50),
                     SizedBox(
-                      child: Image.asset(
-                        'assets/images/survey-waiver.png',
+                      child: SvgPicture.asset(
+                        'assets/images/survey-waiver.svg',
+                        semanticsLabel: 'Survey Waiver',
                         height: 300,
                       ),
                     ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      child: Text(
+                        'WAIVER',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: AppColor.subPrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
                     SizedBox(
                       child: Text(
                         survey.waiver,
@@ -78,7 +91,7 @@ class WaiverScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'I AGREE',
+                            'PROCEED',
                             style: TextStyle(
                               color: AppColor.subSecondary,
                               fontSize: 16,

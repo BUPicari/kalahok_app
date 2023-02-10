@@ -29,7 +29,7 @@ class SurveyScreen extends StatelessWidget {
               );
             }
             if (state is SurveyLoadedState) {
-              return buildContent(context: context, survey: state.survey);
+              return _buildContent(context: context, survey: state.survey);
             }
             if (state is SurveyErrorState) {
               // fix this ui later
@@ -42,7 +42,7 @@ class SurveyScreen extends StatelessWidget {
     );
   }
 
-  Widget buildContent({context, required Survey survey}) {
+  Widget _buildContent({context, required Survey survey}) {
     return Container(
       padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(

@@ -17,7 +17,7 @@ class ReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: _buildAppBar(context),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -79,7 +79,7 @@ class ReviewScreen extends StatelessWidget {
     return survey.questionnaires.map(
       (question) {
         return Card(
-          color: getColorForBox(question),
+          color: _getColorForBox(question),
           child: ExpansionTile(
             title: Text(
               question.question,
@@ -103,9 +103,9 @@ class ReviewScreen extends StatelessWidget {
     ).toList();
   }
 
-  PreferredSizeWidget buildAppBar(context) {
+  PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
-      title: const Text('Review Survey'),
+      title: const Text('Recorded Response'),
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -127,7 +127,7 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  Color getColorForBox(Question question) {
+  Color _getColorForBox(Question question) {
     Color boxColor = AppColor.neutral;
 
     if (question.config.isRequired &&

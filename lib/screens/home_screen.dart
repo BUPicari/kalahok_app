@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.centerLeft,
-              child: buildWelcome(),
+              child: _buildWelcome(),
             ),
           ),
           flexibleSpace: Container(
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 children: [
                   const SizedBox(height: 8),
-                  buildCategories(categories: state.categories),
+                  _buildCategories(categories: state.categories),
                 ],
               );
             }
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildWelcome() {
+  Widget _buildWelcome() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCategories({required List<Category> categories}) {
+  Widget _buildCategories({required List<Category> categories}) {
     return SizedBox(
       height: 500,
       child: GridView(

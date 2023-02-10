@@ -27,16 +27,16 @@ class PreviousNextButtonWidget extends StatelessWidget {
         child: SizedBox(
           height: 50,
           child: Row(children: [
-            buildPrevBtn(),
+            _buildPrevBtn(),
             const Spacer(),
-            buildNextBtn(),
+            _buildNextBtn(),
           ]),
         ),
       ),
     ]);
   }
 
-  Widget buildPrevBtn() {
+  Widget _buildPrevBtn() {
     bool condition = question == survey.questionnaires.first;
     var color = condition ? AppColor.secondary : AppColor.primary;
 
@@ -61,7 +61,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
     );
   }
 
-  Widget buildNextBtn() {
+  Widget _buildNextBtn() {
     bool condition = question == survey.questionnaires.last;
     var color = condition ? AppColor.secondary : AppColor.primary;
 

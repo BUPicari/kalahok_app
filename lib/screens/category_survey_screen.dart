@@ -38,7 +38,7 @@ class CategorySurveyScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.centerLeft,
-              child: buildWelcome(),
+              child: _buildWelcome(),
             ),
           ),
           flexibleSpace: Container(
@@ -63,7 +63,7 @@ class CategorySurveyScreen extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(16),
                 children: [
-                  buildCategorySurveys(categorySurvey: state.categorySurvey),
+                  _buildCategorySurveys(categorySurvey: state.categorySurvey),
                 ],
               );
             }
@@ -78,7 +78,7 @@ class CategorySurveyScreen extends StatelessWidget {
     );
   }
 
-  Widget buildWelcome() {
+  Widget _buildWelcome() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -98,7 +98,7 @@ class CategorySurveyScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCategorySurveys({required CategorySurvey categorySurvey}) {
+  Widget _buildCategorySurveys({required CategorySurvey categorySurvey}) {
     return SizedBox(
       height: 530,
       child: GridView(

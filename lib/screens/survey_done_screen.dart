@@ -23,10 +23,10 @@ class SurveyDoneScreen extends StatelessWidget {
       child: BlocBuilder<SurveyBloc, SurveyState>(
         builder: (context, state) {
           if (state is SurveyForReviewState) {
-            return buildDone(context);
+            return _buildDone(context);
           }
           if (state is SurveyDoneState) {
-            return buildDone(context);
+            return _buildDone(context);
           }
           return Container();
         },
@@ -34,7 +34,7 @@ class SurveyDoneScreen extends StatelessWidget {
     );
   }
 
-  Widget buildForReview(BuildContext context) {
+  Widget _buildForReview(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -123,7 +123,7 @@ class SurveyDoneScreen extends StatelessWidget {
     );
   }
 
-  Widget buildDone(BuildContext context) {
+  Widget _buildDone(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -147,7 +147,7 @@ class SurveyDoneScreen extends StatelessWidget {
               const SizedBox(height: 45),
               SizedBox(
                 child: Text(
-                  "THANK YOU!",
+                  'THANK YOU!',
                   style: TextStyle(
                     fontSize: 30,
                     color: AppColor.subPrimary,
@@ -158,7 +158,7 @@ class SurveyDoneScreen extends StatelessWidget {
               const SizedBox(height: 15),
               SizedBox(
                 child: Text(
-                  "Thank you for your time and participation!",
+                  'Thank you for your time and participation!',
                   style: TextStyle(
                     fontSize: 15,
                     color: AppColor.subPrimary,

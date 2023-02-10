@@ -43,8 +43,8 @@ class ChoiceWidget extends StatelessWidget {
 
   Widget _buildChoiceContainer(Choice choice) {
     final containerColor = question.config.multipleAnswer
-        ? getColorForChoices(choice)
-        : getColorForChoice(choice);
+        ? _getColorForChoices(choice)
+        : _getColorForChoice(choice);
 
     return GestureDetector(
       onTap: () => onClickedChoice(choice),
@@ -99,7 +99,7 @@ class ChoiceWidget extends StatelessWidget {
     );
   }
 
-  Color getColorForChoice(Choice choice) {
+  Color _getColorForChoice(Choice choice) {
     final isSelected = choice == question.selectedChoice;
 
     if (!isSelected) {
@@ -109,7 +109,7 @@ class ChoiceWidget extends StatelessWidget {
     }
   }
 
-  Color getColorForChoices(Choice choice) {
+  Color _getColorForChoices(Choice choice) {
     final isSelected = question.selectedChoices?.contains(choice) ?? false;
 
     if (!isSelected) {

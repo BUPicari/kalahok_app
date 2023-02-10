@@ -47,12 +47,12 @@ class QuestionsWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         final question = survey.questionnaires[index];
 
-        return buildQuestion(index: index, question: question);
+        return _buildQuestion(index: index, question: question);
       },
     );
   }
 
-  Widget buildQuestion({
+  Widget _buildQuestion({
     required int index,
     required Question question,
   }) {

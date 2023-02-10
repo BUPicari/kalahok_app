@@ -20,16 +20,16 @@ class ReviewBtnWidget extends StatelessWidget {
         child: SizedBox(
           height: 50,
           child: Row(children: [
-            buildAnswerBtn(context),
+            _buildAnswerBtn(context),
             const Spacer(),
-            buildSubmitBtn(context),
+            _buildSubmitBtn(context),
           ]),
         ),
       ),
     ]);
   }
 
-  Widget buildAnswerBtn(context) {
+  Widget _buildAnswerBtn(context) {
     return Expanded(
       child: ElevatedButton(
         onPressed: () {
@@ -57,7 +57,7 @@ class ReviewBtnWidget extends StatelessWidget {
     );
   }
 
-  Widget buildSubmitBtn(context) {
+  Widget _buildSubmitBtn(context) {
     return Expanded(
       child: ElevatedButton(
         onPressed: () {
