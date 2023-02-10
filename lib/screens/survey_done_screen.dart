@@ -23,7 +23,7 @@ class SurveyDoneScreen extends StatelessWidget {
       child: BlocBuilder<SurveyBloc, SurveyState>(
         builder: (context, state) {
           if (state is SurveyForReviewState) {
-            return buildForReview(context);
+            return buildDone(context);
           }
           if (state is SurveyDoneState) {
             return buildDone(context);
@@ -147,21 +147,32 @@ class SurveyDoneScreen extends StatelessWidget {
               const SizedBox(height: 45),
               SizedBox(
                 child: Text(
-                  "You're all set!",
+                  "THANK YOU!",
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: 30,
                     color: AppColor.subPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const SizedBox(height: 140),
+              const SizedBox(height: 15),
+              SizedBox(
+                child: Text(
+                  "Thank you for your time and participation!",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: AppColor.subPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 110),
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: SizedBox(
                     height: 50,
-                    child: ElevatedButton(
+                    child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -171,23 +182,21 @@ class SurveyDoneScreen extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(180, 40),
                         backgroundColor: AppColor.subPrimary,
+                        foregroundColor: AppColor.subSecondary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(33),
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'BACK TO HOME',
-                            style: TextStyle(
-                              color: AppColor.subSecondary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      icon: const Icon(Icons.home),
+                      label: Text(
+                        'HOME',
+                        style: TextStyle(
+                          color: AppColor.subSecondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
