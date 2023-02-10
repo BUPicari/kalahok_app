@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:kalahok_app/configs/api_config.dart';
 import 'package:kalahok_app/data/models/category_model.dart';
 import 'package:kalahok_app/data/models/category_survey_model.dart';
+import 'package:kalahok_app/helpers/variables.dart';
 
 class CategoryProvider {
   Future<List<Category>> getCategoryList() async {

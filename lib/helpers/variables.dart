@@ -14,3 +14,13 @@ class AppColor {
   static MaterialColor neutral = Colors.grey;
   static List<MaterialColor> linearGradient = [Colors.blueGrey, Colors.indigo];
 }
+
+class ApiConfig {
+  // static String baseUrl = 'http://203.177.49.45:8001';
+  static String baseUrl = 'http://10.11.79.19:3001';
+}
+
+class AppConfig {
+  static String name = 'Kalahok';
+  static String logo = 'assets/images/kalahok-logo.png';
+}

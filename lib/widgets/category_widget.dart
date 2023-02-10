@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/configs/api_config.dart';
 import 'package:kalahok_app/data/models/category_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_survey_screen.dart';
