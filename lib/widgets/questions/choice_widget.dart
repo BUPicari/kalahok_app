@@ -53,6 +53,10 @@ class ChoiceWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: containerColor,
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+              color: AppColor.neutral,
+              width: 2.0
+          ),
         ),
         child: Column(
           children: [
@@ -92,6 +96,13 @@ class ChoiceWidget extends StatelessWidget {
     return TextField(
       onChanged: (value) => onAddOthers(value),
       decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(
+              color: AppColor.neutral,
+              width: 2.0
+          ),
+        ),
         border: const OutlineInputBorder(),
         hintText: subText,
       ),

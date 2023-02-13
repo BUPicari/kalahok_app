@@ -4,7 +4,6 @@ import 'package:kalahok_app/data/models/survey_model.dart';
 import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
-// import 'package:kalahok_app/widgets/audio_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/record_answer_widget.dart';
 import 'package:kalahok_app/widgets/review_button_widget.dart';
@@ -80,6 +79,13 @@ class OpenEndedQuestionWidget extends StatelessWidget {
             TextField(
               // controller: textController,
               decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                      color: AppColor.neutral,
+                      width: 2.0
+                  ),
+                ),
                 border: const OutlineInputBorder(),
                 hintText: label.name,
               ),
