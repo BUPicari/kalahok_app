@@ -23,7 +23,7 @@ class SurveyDoneScreen extends StatelessWidget {
       child: BlocBuilder<SurveyBloc, SurveyState>(
         builder: (context, state) {
           if (state is SurveyForReviewState) {
-            return _buildDone(context);
+            return _buildForReview(context);
           }
           if (state is SurveyDoneState) {
             return _buildDone(context);
@@ -139,10 +139,11 @@ class SurveyDoneScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 100),
               SizedBox(
-                child: Image.asset(
-                  'assets/images/survey-done.png',
-                  height: 280,
-                ),
+                child: SvgPicture.asset(
+                'assets/images/survey-done.svg',
+                semanticsLabel: 'Survey done',
+                height: 260,
+              ),
               ),
               const SizedBox(height: 45),
               SizedBox(
