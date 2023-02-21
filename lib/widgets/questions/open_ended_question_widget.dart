@@ -5,7 +5,7 @@ import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
-import 'package:kalahok_app/widgets/record_answer_widget.dart';
+// import 'package:kalahok_app/widgets/record_answer_widget.dart';
 import 'package:kalahok_app/widgets/review_button_widget.dart';
 
 class OpenEndedQuestionWidget extends StatelessWidget {
@@ -41,7 +41,7 @@ class OpenEndedQuestionWidget extends StatelessWidget {
             question: question.question,
           ),
           const SizedBox(height: 5),
-          const RecordAnswerWidget(),
+          // const RecordAnswerWidget(),
           const SizedBox(height: 12),
           Expanded(
             child: _buildTextFieldForms(),
