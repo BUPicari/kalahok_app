@@ -28,7 +28,7 @@ class ReviewScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Text(
-                  '* Red boxes is required and has no answers',
+                  '* Red boxes are required and has no answers',
                   style: TextStyle(
                     color: AppColor.darkError,
                     fontStyle: FontStyle.italic,
@@ -38,7 +38,7 @@ class ReviewScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  '* Gray boxes is not required and has no answers',
+                  '* Gray boxes are not required and has no answers',
                   style: TextStyle(
                     color: AppColor.secondary,
                     fontStyle: FontStyle.italic,
@@ -48,7 +48,7 @@ class ReviewScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  '* Green boxes has answers',
+                  '* Green boxes have answers',
                   style: TextStyle(
                     color: AppColor.darkSuccess,
                     fontStyle: FontStyle.italic,

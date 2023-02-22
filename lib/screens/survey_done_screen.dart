@@ -159,7 +159,7 @@ class SurveyDoneScreen extends StatelessWidget {
               const SizedBox(height: 15),
               SizedBox(
                 child: Text(
-                  'Thank you for your time and participation!',
+                  'For your time and participation!',
                   style: TextStyle(
                     fontSize: 15,
                     color: AppColor.subPrimary,
