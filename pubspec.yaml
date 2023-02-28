@@ -17,6 +17,8 @@ dependencies:
   flutter_sound_lite: ^8.5.0
   permission_handler: ^10.2.0
   searchable_paginated_dropdown: ^0.0.7
+  avatar_glow: ^2.0.2
+  path_provider: ^2.0.13
 dev_dependencies:
   flutter_test:
     sdk: flutter
