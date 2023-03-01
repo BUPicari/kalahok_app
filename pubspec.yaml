@@ -19,6 +19,8 @@ dependencies:
   searchable_paginated_dropdown: ^0.0.7
   avatar_glow: ^2.0.2
   path_provider: ^2.0.13
+  sqflite: ^2.2.5
+  path: ^1.8.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
