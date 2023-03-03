@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kalahok_app/blocs/survey/survey_bloc.dart';
 import 'package:kalahok_app/data/models/survey_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/home_screen.dart';
+import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/screens/review_screen.dart';
 
 class SurveyDoneScreen extends StatelessWidget {
@@ -178,7 +178,7 @@ class SurveyDoneScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) => const CategoryScreen(),
                           ),
                         );
                       },

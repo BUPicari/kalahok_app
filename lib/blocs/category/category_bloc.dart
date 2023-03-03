@@ -17,8 +17,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         emit(CategoryLoadingState());
         final categories = await _categoryRepository.getCategoryList();
         emit(CategoryLoadedState(categories));
-      } on NetworkError {
-        emit(const CategoryErrorState("Failed to fetch data"));
+      } catch (error) {
+        emit(CategoryErrorState(error.toString()));
       }
     });
 
@@ -28,8 +28,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         final categorySurvey = await _categoryRepository.getCategorySurvey(
             categoryId: event.categoryId);
         emit(CategorySurveyLoadedState(categorySurvey));
-      } on NetworkError {
-        emit(const CategoryErrorState("Failed to fetch data"));
+      } catch (error) {
+        emit(CategoryErrorState(error.toString()));
       }
     });
   }

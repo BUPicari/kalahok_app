@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kalahok_app/data/models/category_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_survey_screen.dart';
@@ -27,9 +28,26 @@ class CategoryWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(
-              ApiConfig.baseUrl + category.image,
-              width: 70,
+            FutureBuilder<bool>(
+              future: InternetConnectionChecker().hasConnection,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Column();
+                  } else {
+                    if (snapshot.data == true) {
+                      return Image.network(
+                        ApiConfig.baseUrl + category.image,
+                        width: 70,
+                      );
+                    } else {
+                      return Column();
+                    }
+                  }
+                } else {
+                  return Column();
+                }
+              },
             ),
             const SizedBox(height: 10),
             Text(

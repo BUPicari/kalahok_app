@@ -6,7 +6,7 @@ import 'package:kalahok_app/data/models/choice_model.dart';
 import 'package:kalahok_app/data/models/question_model.dart';
 import 'package:kalahok_app/data/models/survey_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/home_screen.dart';
+import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/widgets/question_numbers_widget.dart';
 import 'package:kalahok_app/widgets/questions_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -78,7 +78,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => const CategoryScreen(),
         )),
       ),
       bottom: PreferredSize(

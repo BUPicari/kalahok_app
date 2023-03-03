@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class Utils {
   static List<Widget> heightBetween(
@@ -17,5 +18,10 @@ class Utils {
     list.add(children.last);
 
     return list;
+  }
+
+  /// Checking internet connection availability
+  static Future<bool> get hasInternetConnection async {
+    return await InternetConnectionChecker().hasConnection;
   }
 }

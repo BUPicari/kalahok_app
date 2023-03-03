@@ -5,7 +5,7 @@ import 'package:kalahok_app/data/models/category_model.dart';
 import 'package:kalahok_app/data/models/category_survey_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
-import 'package:kalahok_app/screens/home_screen.dart';
+import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/widgets/category_survey_widget.dart';
 
 class CategorySurveyScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class CategorySurveyScreen extends StatelessWidget {
               color: AppColor.subPrimary,
             ),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const CategoryScreen(),
             )),
           ),
           title: Text(category.name),
