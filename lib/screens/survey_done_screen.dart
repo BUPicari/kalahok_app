@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kalahok_app/blocs/survey/survey_bloc.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/screens/review_screen.dart';
 
 class SurveyDoneScreen extends StatelessWidget {
-  final Survey survey;
+  final Surveys survey;
 
   const SurveyDoneScreen({
     Key? key,
@@ -17,21 +17,21 @@ class SurveyDoneScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          SurveyBloc()..add(SubmitSurveyResponseEvent(survey: survey)),
-      child: BlocBuilder<SurveyBloc, SurveyState>(
-        builder: (context, state) {
-          if (state is SurveyForReviewState) {
-            return _buildForReview(context);
-          }
-          if (state is SurveyDoneState) {
-            return _buildDone(context);
-          }
-          return Container();
-        },
-      ),
-    );
+    // return BlocProvider(
+    //   create: (context) => SurveyBloc()..add(SubmitSurveyResponseEvent(survey: survey)),
+    //   child: BlocBuilder<SurveyBloc, SurveyState>(
+    //     builder: (context, state) {
+    //       if (state is SurveyForReviewState) {
+    //         return _buildForReview(context);
+    //       }
+    //       if (state is SurveyDoneState) {
+    //         return _buildDone(context);
+    //       }
+    //       return Container();
+    //     },
+    //   ),
+    // );
+    return _buildForReview(context);
   }
 
   Widget _buildForReview(BuildContext context) {

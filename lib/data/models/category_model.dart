@@ -26,7 +26,7 @@ class Category {
       );
     }
 
-    return Category(
+    return Category( /// todo: make this reusable that can add a key/value pair
       id: json['id'],
       name: json['name'],
       image: json['image'],
@@ -45,7 +45,7 @@ class Category {
       };
     }
 
-    return {
+    return { /// todo: make this reusable that can add a key/value pair
       'id': id,
       'name': name,
       'image': image,

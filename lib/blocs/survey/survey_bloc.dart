@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/survey/survey_repo.dart';
 
 part 'survey_event.dart';
@@ -11,14 +12,15 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   final SurveyRepository _surveyRepository = SurveyRepository();
 
   SurveyBloc() : super(SurveyInitialState()) {
-    on<GetSurveyListEvent>((event, emit) async {
+    /// @usedFor: Getting a survey w/ questionnaires
+    on<GetSurveyWithQuestionnairesEvent>((event, emit) async {
       try {
         emit(SurveyLoadingState());
-        final survey =
-            await _surveyRepository.getSurveyList(surveyId: event.surveyId);
-        emit(SurveyLoadedState(survey));
-      } on NetworkError {
-        emit(const SurveyErrorState("Failed to fetch data"));
+        final surveyWithQuestionnaires = await _surveyRepository.getSurveyWithQuestionnaires(
+            surveyId: event.surveyId);
+        emit(SurveyLoadedState(surveyWithQuestionnaires));
+      } catch (error) {
+        emit(SurveyErrorState(error.toString()));
       }
     });
 
@@ -46,8 +48,8 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
             survey: event.survey,
           );
         }
-      } on NetworkError {
-        emit(const SurveyErrorState("Failed to fetch data"));
+      } catch (error) {
+        emit(SurveyErrorState(error.toString()));
       }
     });
   }

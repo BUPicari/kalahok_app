@@ -13,4 +13,11 @@ class Rate {
       max: json['max'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'min': min,
+      'max': max,
+    };
+  }
 }

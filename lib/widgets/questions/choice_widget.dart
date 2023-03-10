@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/choice_model.dart';
 import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
 class ChoiceWidget extends StatelessWidget {
-  final Question question;
-  final ValueChanged<Choice> onClickedChoice;
-  final ValueChanged<String> onAddOthers;
+  final Questions question;
+  // final ValueChanged<Choice> onClickedChoice;
+  // final ValueChanged<String> onAddOthers;
 
   const ChoiceWidget({
     Key? key,
     required this.question,
-    required this.onClickedChoice,
-    required this.onAddOthers,
+    // required this.onClickedChoice,
+    // required this.onAddOthers,
   }) : super(key: key);
 
   @override
@@ -47,7 +47,7 @@ class ChoiceWidget extends StatelessWidget {
         : _getColorForChoice(choice);
 
     return GestureDetector(
-      onTap: () => onClickedChoice(choice),
+      // onTap: () => onClickedChoice(choice),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
@@ -94,7 +94,7 @@ class ChoiceWidget extends StatelessWidget {
         : 'If others, please specify';
 
     return TextField(
-      onChanged: (value) => onAddOthers(value),
+      // onChanged: (value) => onAddOthers(value),
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -111,22 +111,26 @@ class ChoiceWidget extends StatelessWidget {
   }
 
   Color _getColorForChoice(Choice choice) {
-    final isSelected = choice == question.selectedChoice;
+    // final isSelected = choice == question.selectedChoice;
+    //
+    // if (!isSelected) {
+    //   return AppColor.subPrimary;
+    // } else {
+    //   return AppColor.warning;
+    // }
 
-    if (!isSelected) {
-      return AppColor.subPrimary;
-    } else {
-      return AppColor.warning;
-    }
+    return AppColor.subPrimary;
   }
 
   Color _getColorForChoices(Choice choice) {
-    final isSelected = question.selectedChoices?.contains(choice) ?? false;
+    // final isSelected = question.selectedChoices?.contains(choice) ?? false;
+    //
+    // if (!isSelected) {
+    //   return AppColor.subPrimary;
+    // } else {
+    //   return AppColor.warning;
+    // }
 
-    if (!isSelected) {
-      return AppColor.subPrimary;
-    } else {
-      return AppColor.warning;
-    }
+    return AppColor.subPrimary;
   }
 }

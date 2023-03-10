@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
 class PreviousNextButtonWidget extends StatelessWidget {
   final int index;
-  final Question question;
-  final Survey survey;
+  final Questions question;
+  final Surveys survey;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
@@ -37,7 +37,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
   }
 
   Widget _buildPrevBtn() {
-    bool condition = question == survey.questionnaires.first;
+    bool condition = question == survey.questionnaires?.first;
     var color = condition ? AppColor.secondary : AppColor.primary;
 
     return Expanded(
@@ -62,7 +62,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
   }
 
   Widget _buildNextBtn() {
-    bool condition = question == survey.questionnaires.last;
+    bool condition = question == survey.questionnaires?.last;
     var color = condition ? AppColor.secondary : AppColor.primary;
 
     return Expanded(

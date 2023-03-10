@@ -12,9 +12,10 @@ class SurveyInitialState extends SurveyState {}
 
 class SurveyLoadingState extends SurveyState {}
 
+/// @return: Survey w/ questionnaires
 class SurveyLoadedState extends SurveyState {
-  final Survey survey;
-  const SurveyLoadedState(this.survey);
+  final Surveys? surveyWithQuestionnaires;
+  const SurveyLoadedState(this.surveyWithQuestionnaires);
 }
 
 class SurveyForReviewState extends SurveyState {}

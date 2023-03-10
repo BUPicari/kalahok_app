@@ -1,16 +1,22 @@
 import 'package:kalahok_app/data/models/survey_model.dart';
-import 'package:kalahok_app/data/resources/survey/survey_provider.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
+import 'package:kalahok_app/data/resources/survey/survey_api_provider.dart';
+import 'package:kalahok_app/data/resources/survey/survey_db_provider.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 
 class SurveyRepository {
-  final _provider = SurveyProvider();
+  final _apiProvider = SurveyApiProvider();
+  final _dbProvider = SurveyDbProvider();
 
-  Future<Survey> getSurveyList({required int surveyId}) {
-    return _provider.getSurveyList(surveyId: surveyId);
+  /// @usedFor: Getting a survey w/ questionnaires
+  /// @return: If has internet connection get data using api else local db
+  Future<Surveys?> getSurveyWithQuestionnaires({required int surveyId}) async {
+    if (await Utils.hasInternetConnection) return _apiProvider.getSurveyWithQuestionnaires(surveyId: surveyId);
+    return _dbProvider.getSurveyWithQuestionnaires(surveyId: surveyId);
   }
 
-  Future<void> postSubmitSurveyResponse({required Survey survey}) {
-    return _provider.postSubmitSurveyResponse(survey: survey);
+  Future<void> postSubmitSurveyResponse({required Survey survey}) async {
+    // if (await Utils.hasInternetConnection) return _apiProvider.postSubmitSurveyResponse(survey: survey);
+    return _apiProvider.postSubmitSurveyResponse(survey: survey);
   }
 }
-
-class NetworkError extends Error {}

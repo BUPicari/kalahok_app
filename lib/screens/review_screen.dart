@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/question_screen.dart';
 import 'package:kalahok_app/widgets/review_btn_widget.dart';
 
 class ReviewScreen extends StatelessWidget {
-  final Survey survey;
+  final Surveys survey;
 
   const ReviewScreen({
     Key? key,
@@ -76,7 +76,7 @@ class ReviewScreen extends StatelessWidget {
   }
 
   List<Widget> _buildListViewChildren() {
-    return survey.questionnaires.map(
+    return survey.questionnaires!.map(
       (question) {
         return Card(
           color: _getColorForBox(question),
@@ -94,7 +94,7 @@ class ReviewScreen extends StatelessWidget {
                 color: AppColor.subTertiary,
                 padding: const EdgeInsets.all(20),
                 width: double.infinity,
-                child: question.getReviewResponse(),
+                // child: question.getReviewResponse(),
               ),
             ],
           ),
@@ -127,16 +127,16 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  Color _getColorForBox(Question question) {
+  Color _getColorForBox(Questions question) {
     Color boxColor = AppColor.neutral;
 
-    if (question.config.isRequired &&
-        question.response == null &&
-        question.addedOthers == null) {
-      boxColor = AppColor.error;
-    } else if (question.response != null || question.addedOthers != null) {
-      boxColor = AppColor.success;
-    }
+    // if (question.config.isRequired &&
+    //     question.response == null &&
+    //     question.addedOthers == null) {
+    //   boxColor = AppColor.error;
+    // } else if (question.response != null || question.addedOthers != null) {
+    //   boxColor = AppColor.success;
+    // }
 
     return boxColor;
   }

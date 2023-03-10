@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/dropdown_model.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/dropdown/dropdown_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
@@ -11,9 +11,9 @@ import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart
 
 class DropdownQuestionWidget extends StatefulWidget {
   final int index;
-  final Survey survey;
-  final Question question;
-  final ValueChanged<String> onChanged;
+  final Surveys survey;
+  final Questions question;
+  // final ValueChanged<String> onChanged;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
@@ -22,7 +22,7 @@ class DropdownQuestionWidget extends StatefulWidget {
     required this.index,
     required this.survey,
     required this.question,
-    required this.onChanged,
+    // required this.onChanged,
     required this.onPressedPrev,
     required this.onPressedNext,
   }) : super(key: key);
@@ -122,8 +122,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                       q: searchKey != null ? searchKey.toString() : '',
                     );
 
-                    // nag tutuloy ang data kahit na nasa
-                    // pinaka dulo na datat na siya
+                    /// todo: fix this, nag tutuloy and data kahit nasa pinaka dulo na data na siya
 
                     return paginatedList
                         .map((e) => SearchableDropdownMenuItem(
@@ -138,9 +137,9 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                     setState(() {
                       _tempId = (val?.value)?.toInt() ?? 0;
                     });
-                    widget.onChanged(
-                        '${widget.question.labels.indexOf(label)},${val?.label.toString()}'
-                    );
+                    // widget.onChanged(
+                    //     '${widget.question.labels.indexOf(label)},${val?.label.toString()}'
+                    // );
                   },
                 ),
                 const SizedBox(height: 10),

@@ -12,18 +12,18 @@ class CategoryInitialState extends CategoryState {}
 
 class CategoryLoadingState extends CategoryState {}
 
+/// @return: Categories/domains w/o surveys
 class CategoryLoadedState extends CategoryState {
   final List<Category> categories;
   const CategoryLoadedState(this.categories);
 }
 
-class CategorySurveyInitialState extends CategoryState {}
+class CategoryWithSurveyLoadingState extends CategoryState {}
 
-class CategorySurveyLoadingState extends CategoryState {}
-
-class CategorySurveyLoadedState extends CategoryState {
-  final CategorySurvey categorySurvey;
-  const CategorySurveyLoadedState(this.categorySurvey);
+/// @return: Category/domain w/ surveys
+class CategoryWithSurveyLoadedState extends CategoryState {
+  final Category? categoryWithSurvey;
+  const CategoryWithSurveyLoadedState(this.categoryWithSurvey);
 }
 
 class CategoryErrorState extends CategoryState {

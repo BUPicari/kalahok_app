@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
 class QuestionNumbersWidget extends StatelessWidget {
-  final List<Question> questions;
-  final Question question;
+  final List<Questions> questions;
+  final Questions question;
   final ValueChanged<int> onClickedNumber;
 
   const QuestionNumbersWidget({
@@ -57,14 +57,14 @@ class QuestionNumbersWidget extends StatelessWidget {
   }
 
   Color _generateColor({
-    required Question question,
+    required Questions question,
     required bool isSelected,
   }) {
     var color = AppColor.subPrimary;
 
-    if (question.response != null || question.addedOthers != null) {
-      color = AppColor.darkSuccess;
-    }
+    // if (question.response != null || question.addedOthers != null) {
+    //   color = AppColor.darkSuccess;
+    // }
 
     if (isSelected) {
       color = AppColor.warning;

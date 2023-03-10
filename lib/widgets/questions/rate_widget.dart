@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
 class RateWidget extends StatelessWidget {
-  final Question question;
-  final ValueChanged<int> onClickedRate;
+  final Questions question;
+  // final ValueChanged<int> onClickedRate;
 
   const RateWidget({
     Key? key,
     required this.question,
-    required this.onClickedRate,
+    // required this.onClickedRate,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class RateWidget extends StatelessWidget {
         List<Widget>.generate(int.parse(question.rates[0].max), (index) {
       final containerColor = _getColorForRate(index, question);
       return GestureDetector(
-        onTap: () => onClickedRate(index),
+        // onTap: () => onClickedRate(index),
         child: _buildRatingStar(containerColor),
       );
     });
@@ -55,14 +55,16 @@ class RateWidget extends StatelessWidget {
     );
   }
 
-  Color _getColorForRate(int rate, Question question) {
-    var selectedRate = question.selectedRate?.toInt() ?? -1;
-    final isSelected = rate <= selectedRate;
+  Color _getColorForRate(int rate, Questions question) {
+    // var selectedRate = question.selectedRate?.toInt() ?? -1;
+    // final isSelected = rate <= selectedRate;
+    //
+    // if (!isSelected) {
+    //   return AppColor.secondary;
+    // } else {
+    //   return AppColor.warning;
+    // }
 
-    if (!isSelected) {
-      return AppColor.secondary;
-    } else {
-      return AppColor.warning;
-    }
+    return AppColor.secondary;
   }
 }

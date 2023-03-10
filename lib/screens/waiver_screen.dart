@@ -2,25 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kalahok_app/blocs/survey/survey_bloc.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
 import 'package:kalahok_app/screens/question_screen.dart';
 
 class WaiverScreen extends StatelessWidget {
-  final Surveys surveys;
+  final Surveys survey;
 
   const WaiverScreen({
     Key? key,
-    required this.surveys,
+    required this.survey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      SurveyBloc()..add(GetSurveyListEvent(surveyId: surveys.id)),
+      create: (context) => SurveyBloc()..add(GetSurveyWithQuestionnairesEvent(surveyId: survey.id)),
       child: Scaffold(
         body: BlocBuilder<SurveyBloc, SurveyState>(
           builder: (context, state) {
@@ -30,7 +28,7 @@ class WaiverScreen extends StatelessWidget {
               );
             }
             if (state is SurveyLoadedState) {
-              return _buildContent(context: context, survey: state.survey);
+              return _buildContent(context: context, surveyWithQuestionnaires: state.surveyWithQuestionnaires);
             }
             if (state is SurveyErrorState) {
               // fix this ui later
@@ -43,7 +41,7 @@ class WaiverScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContent({context, required Survey survey}) {
+  Widget _buildContent({context, Surveys? surveyWithQuestionnaires}) {
     return Container(
       padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
@@ -82,7 +80,7 @@ class WaiverScreen extends StatelessWidget {
                   const SizedBox(height: 25),
                   SizedBox(
                     child: Text(
-                      surveys.waiver,
+                      survey.waiver,
                       style: TextStyle(
                         fontSize: 18,
                         color: AppColor.subPrimary,
@@ -106,7 +104,7 @@ class WaiverScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QuestionScreen(survey: survey),
+                          builder: (context) => QuestionScreen(survey: surveyWithQuestionnaires!),
                         ),
                       );
                     },
