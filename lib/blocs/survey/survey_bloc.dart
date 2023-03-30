@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/survey/survey_repo.dart';
 
@@ -24,15 +24,18 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
       }
     });
 
+    /// @usedFor: Submit a response from a survey
     on<SubmitSurveyResponseEvent>((event, emit) async {
       try {
         int numOfRequiredResponses = 0;
+        List<Questions> questionnaires = event.survey.questionnaires ?? [];
 
-        for (var question in event.survey.questionnaires) {
+        for (var question in questionnaires) {
           if (question.config.isRequired) {
-            if ((question.response != null && question.response != "") ||
-                (question.addedOthers != null && question.addedOthers != "")) {
-              numOfRequiredResponses = numOfRequiredResponses + 1;
+            var answer = question.answer;
+            if ((answer != null && answer.answers.isNotEmpty) ||
+                (answer != null && answer.otherAnswer.isNotEmpty)) {
+              numOfRequiredResponses += 1;
             }
           }
         }
@@ -40,14 +43,12 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
         print('numOfRequired: ${event.survey.numOfRequired}');
         print('numOfRequiredResponses: $numOfRequiredResponses');
 
-        if (event.survey.numOfRequired != numOfRequiredResponses) {
-          emit(SurveyForReviewState());
-        } else {
-          emit(SurveyDoneState());
-          await _surveyRepository.postSubmitSurveyResponse(
-            survey: event.survey,
-          );
-        }
+        // if (event.survey.numOfRequired != numOfRequiredResponses) {
+        //   emit(SurveyForReviewState());
+        // } else {
+        //   emit(SurveyDoneState());
+          await _surveyRepository.postSubmitSurveyResponse(survey: event.survey);
+        // }
       } catch (error) {
         emit(SurveyErrorState(error.toString()));
       }

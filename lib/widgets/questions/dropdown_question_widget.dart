@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
 import 'package:kalahok_app/data/models/dropdown_model.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/dropdown/dropdown_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
+import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/review_button_widget.dart';
 import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
@@ -13,7 +14,7 @@ class DropdownQuestionWidget extends StatefulWidget {
   final int index;
   final Surveys survey;
   final Questions question;
-  // final ValueChanged<String> onChanged;
+  final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
@@ -22,7 +23,7 @@ class DropdownQuestionWidget extends StatefulWidget {
     required this.index,
     required this.survey,
     required this.question,
-    // required this.onChanged,
+    required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
   }) : super(key: key);
@@ -34,6 +35,8 @@ class DropdownQuestionWidget extends StatefulWidget {
 class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
   late int _tempId;
   late DropdownRepository _dropdownRepository;
+  List<String> responses = [];
+  List<String> fieldTexts = [];
 
   Future<List<Result>> _getData({
     required path,
@@ -57,6 +60,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
 
     _tempId = 0;
     _dropdownRepository = DropdownRepository();
+    responses = widget.question.answer?.answers ?? [];
+    fieldTexts = widget.question.labels.map((label) => label.name).toList();
   }
 
   @override
@@ -136,6 +141,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                   onChanged: (Result? val) {
                     setState(() {
                       _tempId = (val?.value)?.toInt() ?? 0;
+
+                      /// todo: add the onSetResponse function here
                     });
                     // widget.onChanged(
                     //     '${widget.question.labels.indexOf(label)},${val?.label.toString()}'

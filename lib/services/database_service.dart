@@ -31,5 +31,7 @@ class DatabaseService {
     await database.execute(DB.surveyCategoryTable);
     await database.execute(DB.surveyTable);
     await database.execute(DB.surveyQuestionnairesTable);
+    await database.execute(DB.surveyResponseTable);
+    await database.execute(DB.surveyQuestionnairesResponsesTable);
   }
 }

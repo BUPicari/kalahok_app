@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/survey_response_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -19,40 +20,46 @@ class SurveyApiProvider {
     http.Response response = await http.get(url);
 
     Surveys result = Surveys.fromJson(jsonDecode(response.body));
+    List<Questions> questionnaires = result.questionnaires ?? [];
 
-    /// todo: put this back if questions w/ db is already ok
-    // for (var question in result.questionnaires) {
-    //   if (question.config.isRequired) {
-    //     var num = result.numOfRequired?.toInt() ?? 0;
-    //     result.numOfRequired = num + 1;
-    //   }
-    // }
+    for (var question in questionnaires) {
+      Utils.updateQuestionnaireRequiredNum(survey: result, question: question);
+    }
 
-    if (result.questionnaires != null) {
-      result.questionnaires?.forEach((element) async {
-        element.surveyId = surveyId;
-        await db.insert(
-          'survey_questionnaires',
-          element.toJson(),
-          conflictAlgorithm: ConflictAlgorithm.replace
-        );
-      });
+    for (var item in questionnaires) {
+      item.surveyId = surveyId;
+      /// From api insert to local db
+      await db.insert(
+        'survey_questionnaires',
+        item.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace
+      );
     }
 
     return result;
   }
 
-  Future<void> postSubmitSurveyResponse({required Survey survey}) async {
+  /// @usedFor: API - post request submit survey responses
+  Future<void> postSubmitSurveyResponse({
+    required Surveys survey,
+    List<ResponseQuestionnaires>? responses,
+  }) async {
     var path = '/survey/responses';
     var url = Uri.parse(ApiConfig.baseUrl + path);
     final headers = {"Content-type": "application/json"};
 
-    List<Questionnaires> questionnaires = survey.questionnaires
-        .map((question) => Questionnaires(
-              questionnaireId: question.id,
-              answer: question.getAnswer(),
-            ))
+    List<ResponseQuestionnaires> questionnaires = [];
+
+    if (responses != null) {
+      questionnaires = responses;
+    } else {
+      questionnaires = survey.questionnaires!.map((question) =>
+        ResponseQuestionnaires(
+          questionnaireId: question.id,
+          answer: Utils.getQuestionResponse(question: question),
+        ))
         .toList();
+    }
 
     var surveyResponse = <Map<String, dynamic>>[
       SurveyResponse(
@@ -61,7 +68,7 @@ class SurveyApiProvider {
       ).toJson(),
     ];
 
-    print(surveyResponse);
+    print(json.encode(surveyResponse));
 
     http.Response response = await http.post(
       url,

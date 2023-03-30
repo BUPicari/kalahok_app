@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'answer_model.dart';
 import 'choice_model.dart';
 import 'config_model.dart';
 import 'rate_model.dart';
@@ -16,6 +17,7 @@ class Questions { /// todo: Make this Question only
   Config config;
   String addedAt;
   String updatedAt;
+  Answer? answer;
 
   Questions({
     required this.id,
@@ -28,6 +30,7 @@ class Questions { /// todo: Make this Question only
     required this.config,
     required this.addedAt,
     required this.updatedAt,
+    this.answer,
   });
 
   factory Questions.fromJson(Map<String, dynamic> data) {

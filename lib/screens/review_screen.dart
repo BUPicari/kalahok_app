@@ -94,7 +94,7 @@ class ReviewScreen extends StatelessWidget {
                 color: AppColor.subTertiary,
                 padding: const EdgeInsets.all(20),
                 width: double.infinity,
-                // child: question.getReviewResponse(),
+                child: Utils.getReviewResponse(question: question),
               ),
             ],
           ),
@@ -130,13 +130,18 @@ class ReviewScreen extends StatelessWidget {
   Color _getColorForBox(Questions question) {
     Color boxColor = AppColor.neutral;
 
-    // if (question.config.isRequired &&
-    //     question.response == null &&
-    //     question.addedOthers == null) {
-    //   boxColor = AppColor.error;
-    // } else if (question.response != null || question.addedOthers != null) {
-    //   boxColor = AppColor.success;
-    // }
+    String otherAnswer = question.answer?.otherAnswer ?? '';
+    List<String> answer = question.answer?.answers ?? [];
+
+    if (question.config.isRequired && answer.isEmpty && otherAnswer.isEmpty) {
+      boxColor = AppColor.error;
+    } else if ((answer.isNotEmpty && Utils.doesNotOnlyContainsEmptyString(strArr: answer))
+        || otherAnswer.isNotEmpty) {
+      boxColor = AppColor.success;
+    } else if ((answer.isNotEmpty && !Utils.doesNotOnlyContainsEmptyString(strArr: answer))
+        || otherAnswer.isNotEmpty) {
+      boxColor = AppColor.error;
+    }
 
     return boxColor;
   }

@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:kalahok_app/data/models/choice_model.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/widgets/question_numbers_widget.dart';
 import 'package:kalahok_app/widgets/questions_widget.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class QuestionScreen extends StatefulWidget {
   final Surveys survey;
@@ -25,7 +21,6 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   late PageController pageController;
-  // late TextEditingController textController;
   late Questions question;
   // late List<Choice> selected;
 
@@ -34,7 +29,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
     super.initState();
 
     pageController = PageController();
-    // textController = TextEditingController();
     question = widget.survey.questionnaires!.first;
     // selected = [];
   }
@@ -42,25 +36,25 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: buildAppBar(context: context),
       resizeToAvoidBottomInset: false,
       body: QuestionsWidget(
         survey: widget.survey,
         pageController: pageController,
-        // textController: textController,
         onChangedPage: (index) => nextQuestion(index: index),
         // onClickedChoice: selectChoice,
         // onClickedRate: selectRate,
         // onChanged: setTextFieldResponses,
         // onAddOthers: setAddedOthers,
         // onDateSelected: setDateSelected,
-        onPressedPrev: setPrevQuestion,
-        onPressedNext: setNextQuestion,
+        onSetResponse: (response) => setResponse(response: response),
+        onPressedPrev: (index) => setPrevQuestion(index: index),
+        onPressedNext: (index) => setNextQuestion(index: index),
       ),
     );
   }
 
-  PreferredSizeWidget buildAppBar(context) {
+  PreferredSizeWidget buildAppBar({required context}) {
     return AppBar(
       title: Text(widget.survey.title),
       flexibleSpace: Container(
@@ -96,6 +90,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
         ),
       ),
     );
+  }
+
+  void setResponse({required Answer response}) {
+    setState(() {
+      question.answer = response;
+    });
+    widget.survey.questionnaires?.forEach((element) {
+      print('Question: ${element.question}');
+      print(element.answer?.toJson());
+      print('----------');
+    });
+    print('*********');
   }
 
   // void selectChoice(Choice choice) {
@@ -175,14 +181,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
   //   });
   // }
 
-  void setPrevQuestion(int index) {
+  void setPrevQuestion({required int index}) {
     nextQuestion(
       index: index - 1,
       jump: true,
     );
   }
 
-  void setNextQuestion(int index) {
+  void setNextQuestion({required int index}) {
     nextQuestion(
       index: index + 1,
       jump: true,

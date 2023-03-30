@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
 class QuestionNumbersWidget extends StatelessWidget {
@@ -62,9 +63,13 @@ class QuestionNumbersWidget extends StatelessWidget {
   }) {
     var color = AppColor.subPrimary;
 
-    // if (question.response != null || question.addedOthers != null) {
-    //   color = AppColor.darkSuccess;
-    // }
+    String otherAnswer = question.answer?.otherAnswer ?? '';
+    List<String> answer = question.answer?.answers ?? [];
+
+    if ((answer.isNotEmpty && Utils.doesNotOnlyContainsEmptyString(strArr: answer))
+        || otherAnswer.isNotEmpty) {
+      color = AppColor.darkSuccess;
+    }
 
     if (isSelected) {
       color = AppColor.warning;

@@ -1,4 +1,3 @@
-import 'package:kalahok_app/data/models/survey_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/survey/survey_api_provider.dart';
 import 'package:kalahok_app/data/resources/survey/survey_db_provider.dart';
@@ -15,8 +14,12 @@ class SurveyRepository {
     return _dbProvider.getSurveyWithQuestionnaires(surveyId: surveyId);
   }
 
-  Future<void> postSubmitSurveyResponse({required Survey survey}) async {
-    // if (await Utils.hasInternetConnection) return _apiProvider.postSubmitSurveyResponse(survey: survey);
-    return _apiProvider.postSubmitSurveyResponse(survey: survey);
+  /// @usedFor: Submit survey responses
+  Future<void> postSubmitSurveyResponse({required Surveys survey}) async {
+    if (await Utils.hasInternetConnection) {
+      _apiProvider.postSubmitSurveyResponse(survey: survey);
+    } else {
+      _dbProvider.postSubmitSurveyResponse(survey: survey);
+    }
   }
 }

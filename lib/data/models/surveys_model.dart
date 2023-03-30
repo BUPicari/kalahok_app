@@ -14,7 +14,7 @@ class Surveys { /// todo: Make this Survey only
   String addedAt;
   String updatedAt;
   List<Questions>? questionnaires;
-  // AddedBy addedBy;
+  int? numOfRequired;
 
   Surveys({
     required this.id,
@@ -30,11 +30,10 @@ class Surveys { /// todo: Make this Survey only
     required this.addedAt,
     required this.updatedAt,
     this.questionnaires,
-    // required this.addedBy,
+    this.numOfRequired,
   });
 
   factory Surveys.fromJson(Map<String, dynamic> json) {
-    // var addedBy = AddedBy.fromJson(json['addedBy']);
     if (json.containsKey('questionnaires')) {
       var questionnairesJson = json['questionnaires'] as List;
       List<Questions> questions = questionnairesJson.map((e) => Questions.fromJson(e)).toList();
@@ -53,7 +52,6 @@ class Surveys { /// todo: Make this Survey only
         addedAt: json['added_at'],
         updatedAt: json['updated_at'],
         questionnaires: questions,
-        // addedBy: addedBy,
       );
     }
 
@@ -70,7 +68,6 @@ class Surveys { /// todo: Make this Survey only
       endDate: json['end_date'],
       addedAt: json['added_at'],
       updatedAt: json['updated_at'],
-      // addedBy: addedBy,
     );
   }
 
@@ -92,7 +89,6 @@ class Surveys { /// todo: Make this Survey only
         'added_at': addedAt,
         'updated_at': updatedAt,
         'questionnaires': questions,
-        // 'added_by': addedBy,
       };
     }
 
@@ -109,7 +105,6 @@ class Surveys { /// todo: Make this Survey only
       'end_date': endDate,
       'added_at': addedAt,
       'updated_at': updatedAt,
-      // 'added_by': addedBy,
     };
   }
 }

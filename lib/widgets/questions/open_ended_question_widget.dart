@@ -1,32 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
+import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/record_answer_widget.dart';
 import 'package:kalahok_app/widgets/review_button_widget.dart';
 
-class OpenEndedQuestionWidget extends StatelessWidget {
+class OpenEndedQuestionWidget extends StatefulWidget {
   final int index;
-  // final TextEditingController textController;
   final Surveys survey;
   final Questions question;
-  // final ValueChanged<String> onChanged;
+  final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
   const OpenEndedQuestionWidget({
     Key? key,
     required this.index,
-    // required this.textController,
     required this.survey,
     required this.question,
-    // required this.onChanged,
+    required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
   }) : super(key: key);
+
+  @override
+  State<OpenEndedQuestionWidget> createState() => _OpenEndedQuestionWidgetState();
+}
+
+class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
+  List<TextEditingController> fieldControllers = [];
+  List<String> responses = [];
+  List<String> fieldTexts = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    fieldControllers = widget.question.answer?.answers.map((e)
+      => TextEditingController(text: e)).toList() ?? [];
+    responses = widget.question.answer?.answers ?? [];
+    fieldTexts = widget.question.labels.map((label) => label.name).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +55,8 @@ class OpenEndedQuestionWidget extends StatelessWidget {
         children: [
           const SizedBox(height: 5),
           QuestionTextWidget(
-            isRequired: question.config.isRequired,
-            question: question.question,
+            isRequired: widget.question.config.isRequired,
+            question: widget.question.question,
           ),
           const SizedBox(height: 5),
           const RecordAnswerWidget(),
@@ -47,15 +65,15 @@ class OpenEndedQuestionWidget extends StatelessWidget {
             child: _buildTextFieldForms(),
           ),
           PreviousNextButtonWidget(
-            index: index,
-            question: question,
-            survey: survey,
-            onPressedPrev: onPressedPrev,
-            onPressedNext: onPressedNext,
+            index: widget.index,
+            question: widget.question,
+            survey: widget.survey,
+            onPressedPrev: widget.onPressedPrev,
+            onPressedNext: widget.onPressedNext,
           ),
           ReviewButtonWidget(
-            question: question,
-            survey: survey,
+            question: widget.question,
+            survey: widget.survey,
           ),
         ],
       ),
@@ -73,11 +91,13 @@ class OpenEndedQuestionWidget extends StatelessWidget {
   }
 
   List<Widget> _buildTextField() {
-    List<Widget> textFields = question.labels
+    List<Widget> textFields = widget.question.labels
         .map(
           (label) => Column(children: [
             TextField(
-              // controller: textController,
+              controller: fieldControllers.isNotEmpty
+                  ? fieldControllers[widget.question.labels.indexOf(label)]
+                  : null,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -92,10 +112,27 @@ class OpenEndedQuestionWidget extends StatelessWidget {
               maxLines: null,
               keyboardType: TextInputType.multiline,
               style: const TextStyle(height: 2.0),
-              // onChanged: (value) {
-              //   onChanged('${question.labels.indexOf(label)}, $value');
-              //   // textController.text = value;
-              // },
+              onChanged: (value) {
+                setState(() {
+                  int index = widget.question.labels.indexOf(label);
+
+                  responses.isNotEmpty
+                      ? responses[index] = value
+                      : responses = List.generate(widget.question.labels.length, (i) =>
+                          i == index ? value : '');
+
+                  if (fieldControllers.isNotEmpty) {
+                    fieldControllers[index].text = value;
+                    fieldControllers[index].selection =
+                        TextSelection.fromPosition(TextPosition(offset: fieldControllers[index].text.length));
+                  } else {
+                    fieldControllers = List.generate(widget.question.labels.length, (j) => j == index
+                        ? TextEditingController(text: value)
+                        : TextEditingController(text: ''));
+                  }
+                });
+                _setResponse();
+              },
             ),
             const SizedBox(height: 5),
           ]),
@@ -103,5 +140,14 @@ class OpenEndedQuestionWidget extends StatelessWidget {
         .toList();
 
     return textFields;
+  }
+
+  void _setResponse() {
+    widget.onSetResponse(Answer(
+      surveyQuestion: widget.question.question,
+      questionFieldTexts: fieldTexts,
+      answers: responses,
+      otherAnswer: '',
+    ));
   }
 }

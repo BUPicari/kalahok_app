@@ -15,8 +15,9 @@ class GetSurveyWithQuestionnairesEvent extends SurveyEvent {
   const GetSurveyWithQuestionnairesEvent({required this.surveyId});
 }
 
+/// @usedFor: Submit the survey responses
 class SubmitSurveyResponseEvent extends SurveyEvent {
-  final Survey survey;
+  final Surveys survey;
 
   const SubmitSurveyResponseEvent({required this.survey});
 }

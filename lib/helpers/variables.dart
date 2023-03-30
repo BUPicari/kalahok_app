@@ -16,7 +16,8 @@ class AppColor {
 }
 
 class ApiConfig {
-  static String baseUrl = 'https://pcari.mab.com.ph:8001';
+  // static String baseUrl = 'https://pcari.mab.com.ph:8001';
+  static String baseUrl = 'http://10.11.79.224:3001';
 }
 
 class AppConfig {

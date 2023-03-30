@@ -17,21 +17,20 @@ class SurveyDoneScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return BlocProvider(
-    //   create: (context) => SurveyBloc()..add(SubmitSurveyResponseEvent(survey: survey)),
-    //   child: BlocBuilder<SurveyBloc, SurveyState>(
-    //     builder: (context, state) {
-    //       if (state is SurveyForReviewState) {
-    //         return _buildForReview(context);
-    //       }
-    //       if (state is SurveyDoneState) {
-    //         return _buildDone(context);
-    //       }
-    //       return Container();
-    //     },
-    //   ),
-    // );
-    return _buildForReview(context);
+    return BlocProvider(
+      create: (context) => SurveyBloc()..add(SubmitSurveyResponseEvent(survey: survey)),
+      child: BlocBuilder<SurveyBloc, SurveyState>(
+        builder: (context, state) {
+          if (state is SurveyForReviewState) {
+            return _buildForReview(context);
+          }
+          if (state is SurveyDoneState) {
+            return _buildDone(context);
+          }
+          return Container();
+        },
+      ),
+    );
   }
 
   Widget _buildForReview(BuildContext context) {
