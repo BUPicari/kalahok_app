@@ -59,8 +59,6 @@ class SurveyDbProvider {
         => Utils.updateQuestionnaireRequiredNum(survey: result, question: question)
       );
 
-      /// todo: add here updateQuestionnaireRequiredNum
-
       return result;
     }
 
@@ -70,14 +68,6 @@ class SurveyDbProvider {
   /// @usedFor: DB - insert to local db the survey responses
   Future<void> postSubmitSurveyResponse({required Surveys survey}) async {
     final db = await _dbService.database;
-
-    /// todo: insert here the responses to the local db (ok)
-    /// todo: create from somewhere a function that will get all the (ok)
-    ///   "is_sent = false" "survey_response" and then do a post api request,
-    ///    maybe refactor the "@survey_api_provider postSubmitSurveyResponse"
-    ///    that both "@survey_api_provider and @survey_db_provider" can reuse,
-    ///    and also remove all the responses in the local db that is "is_sent"
-    /// todo: find, where to use the function everytime there is an internet connection and has !is_sent
 
     var surveyResponse = {
       'added_at': DateTime.now().toString(),
@@ -107,10 +97,13 @@ class SurveyDbProvider {
         surveyQuestionnairesResponses,
         conflictAlgorithm: ConflictAlgorithm.replace
       );
+
+      Utils.audioRename(from: 'PENDING', to: 'SUBMITTED');
     }
 
     if (await Utils.hasInternetConnection) {
       DB.submitLocalResponsesToApi();
+      DB.isSentSurveyFromFalseToTrue();
     }
   }
 }

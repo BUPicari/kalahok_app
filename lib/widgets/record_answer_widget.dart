@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/record_screen.dart';
-// import 'package:kalahok_app/widgets/audio_widget.dart';
+import 'package:kalahok_app/widgets/audio_widget.dart';
 
 class RecordAnswerWidget extends StatelessWidget {
-  const RecordAnswerWidget({Key? key}) : super(key: key);
+  final Questions question;
+
+  const RecordAnswerWidget({
+    Key? key,
+    required this.question,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class RecordAnswerWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const RecordScreen(),
+            builder: (context) => RecordScreen(question: question),
             // builder: (context) => const AudioWidget(),
           ),
         );

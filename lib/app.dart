@@ -2,10 +2,16 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/helpers/variables.dart';
+import 'package:workmanager/workmanager.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,6 +29,17 @@ class MyApp extends StatelessWidget {
         splashTransition: SplashTransition.fadeTransition,
         nextScreen: const CategoryScreen(),
       ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Workmanager().registerPeriodicTask(
+      "taskOne",
+      "sqlToApi",
+      frequency: const Duration(hours: 1),
+      constraints: Constraints(networkType: NetworkType.connected),
     );
   }
 }

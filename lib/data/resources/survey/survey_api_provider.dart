@@ -36,6 +36,8 @@ class SurveyApiProvider {
       );
     }
 
+    /// todo: get question type dropdown and api get request all the data and save to sqlite(as json para dynamic???)
+
     return result;
   }
 

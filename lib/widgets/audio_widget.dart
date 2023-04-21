@@ -46,7 +46,7 @@ class _AudioWidgetState extends State<AudioWidget> {
   void initState() {
     super.initState();
 
-    recorder.init();
+    // recorder.init();
   }
 
   @override

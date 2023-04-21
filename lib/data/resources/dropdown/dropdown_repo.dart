@@ -18,5 +18,3 @@ class DropdownRepository {
     );
   }
 }
-
-class NetworkError extends Error {}

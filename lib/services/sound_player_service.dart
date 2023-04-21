@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
-
-const pathToReadAudio = 'audio_example.aac';
+import 'package:intl/intl.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
+import 'package:path/path.dart';
 
 class SoundPlayerService {
   FlutterSoundPlayer? _audioPlayer;
+  late Questions _question;
 
   bool get isPlaying => _audioPlayer!.isPlaying;
 
-  Future init() async {
+  Future init({required Questions question}) async {
     _audioPlayer = FlutterSoundPlayer();
+    _question = question;
 
     await _audioPlayer!.openAudioSession();
   }
@@ -21,9 +25,15 @@ class SoundPlayerService {
   }
 
   Future _play(VoidCallback whenFinished) async {
+    String timestamp = DateFormat.yMd().format(DateTime.now()).toString().replaceAll('/', '_');
+    String appDirFolderPath = await Utils.getRecordingPath();
+    String path = join(
+      appDirFolderPath,
+      'recording-$timestamp-question#${_question.id}-survey#${_question.surveyId}@PENDING.aac'
+    );
+
     await _audioPlayer!.startPlayer(
-      fromURI: pathToReadAudio,
-      // fromURI: 'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3',
+      fromURI: path,
       // codec: Codec.mp3,
       whenFinished: whenFinished,
     );

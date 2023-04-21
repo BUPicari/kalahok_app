@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/survey/survey_repo.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 
 part 'survey_event.dart';
 part 'survey_state.dart';
@@ -19,6 +20,7 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
         final surveyWithQuestionnaires = await _surveyRepository.getSurveyWithQuestionnaires(
             surveyId: event.surveyId);
         emit(SurveyLoadedState(surveyWithQuestionnaires));
+        Utils.audioRename(from: 'PENDING', to: 'DENY');
       } catch (error) {
         emit(SurveyErrorState(error.toString()));
       }
@@ -43,12 +45,12 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
         print('numOfRequired: ${event.survey.numOfRequired}');
         print('numOfRequiredResponses: $numOfRequiredResponses');
 
-        // if (event.survey.numOfRequired != numOfRequiredResponses) {
-        //   emit(SurveyForReviewState());
-        // } else {
-        //   emit(SurveyDoneState());
+        if (event.survey.numOfRequired != numOfRequiredResponses) {
+          emit(SurveyForReviewState());
+        } else {
+          emit(SurveyDoneState());
           await _surveyRepository.postSubmitSurveyResponse(survey: event.survey);
-        // }
+        }
       } catch (error) {
         emit(SurveyErrorState(error.toString()));
       }

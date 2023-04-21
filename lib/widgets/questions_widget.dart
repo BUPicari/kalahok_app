@@ -93,15 +93,15 @@ class QuestionsWidget extends StatelessWidget {
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
         );
-      // case "dropdown":
-      //   return DropdownQuestionWidget(
-      //     index: index,
-      //     survey: survey,
-      //     question: question,
-      //     onSetResponse: onSetResponse,
-      //     onPressedPrev: onPressedPrev,
-      //     onPressedNext: onPressedNext,
-      //   );
+      case "dropdown":
+        return DropdownQuestionWidget(
+          index: index,
+          survey: survey,
+          question: question,
+          onSetResponse: onSetResponse,
+          onPressedPrev: onPressedPrev,
+          onPressedNext: onPressedNext,
+        );
       default:
         return const UnknownQuestionWidget();
     }

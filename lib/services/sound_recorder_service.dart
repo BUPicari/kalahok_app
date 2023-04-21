@@ -1,21 +1,24 @@
-// import 'dart:io';
+import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
-// import 'package:path_provider/path_provider.dart';
+import 'package:intl/intl.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
+import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-const pathToSaveAudio = 'audio_example.aac';
 
 class SoundRecorderService {
   FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialised = false;
   bool _isPlaybackReady = false;
-  // String _path = '';
+  late Questions _question;
 
   bool get isRecordingAvailable => _isPlaybackReady && !isRecording;
   bool get isRecording => _audioRecorder!.isRecording;
 
-  Future init() async {
+  Future init({required Questions question}) async {
     _audioRecorder = FlutterSoundRecorder();
+    _question = question;
 
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
@@ -32,22 +35,29 @@ class SoundRecorderService {
     _audioRecorder!.closeAudioSession();
     _audioRecorder = null;
     _isRecorderInitialised = false;
-
-    // File recording = File('$_path/recording.mp3');
-    // if (await recording.exists()) {
-    //   String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-    //   await recording.rename('$_path/recording_$timestamp.mp3');
-    // }
   }
 
   Future _record() async {
     if (!_isRecorderInitialised) return;
 
-    // Directory appDirectory = await getApplicationDocumentsDirectory();
-    // _path = '${appDirectory.path}/recordings';
-    // await Directory(_path).create(recursive: true);
+    String timestamp = DateFormat.yMd().format(DateTime.now()).toString().replaceAll('/', '_');
+    String appDirFolderPath = await Utils.getRecordingPath();
+    String path = join(
+      appDirFolderPath,
+      'recording-$timestamp-question#${_question.id}-survey#${_question.surveyId}@PENDING.aac'
+    );
 
-    await _audioRecorder!.startRecorder(toFile: pathToSaveAudio);
+    /// set Question response answer
+    _question.answer = Answer(
+      surveyQuestion: _question.question,
+      questionFieldTexts: List.generate(1, (i) => _question.question),
+      answers: List.generate(1, (i) => path),
+      otherAnswer: ''
+    );
+
+    /// todo: get the audio using the path when sending to api
+
+    await _audioRecorder!.startRecorder(toFile: path);
   }
 
   Future _stop() async {

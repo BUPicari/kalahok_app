@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Utils {
   /// Height between every widget
@@ -137,5 +139,49 @@ class Utils {
     }
 
     return json.encode(answer);
+  }
+
+  static Future<String> getRecordingPath() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final Directory appDirFolder = Directory('${documentsDirectory.path}/records');
+    if (await appDirFolder.exists() == false) {
+      await appDirFolder.create(recursive: true);
+    }
+
+    return appDirFolder.path;
+  }
+
+  static String getFilename({required String path}) {
+    List splitPath = path.split('/');
+    return splitPath.last;
+  }
+
+  static void renameFile({required File file, required String newFileName}) {
+    var path = file.path;
+    var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
+    var newPath = path.substring(0, lastSeparator + 1) + newFileName;
+    file.rename(newPath);
+  }
+
+  /// PENDING - kakarecord plng and di pa na balik sa waiver
+  /// DENY - lahat ng record na PENDING before tas di na submit
+  /// SUBMITTED - lahat ng record na PENDING before ang na save sa sqlite or na submit
+  /// DONE - lahat ng record na from SUBMITTED to post requested to api
+  static void audioRename({required String from, required String to}) async {
+    String appDirFolderPath = await getRecordingPath();
+    final recordDir = Directory(appDirFolderPath);
+    List recordFileLists = recordDir.listSync(recursive: true, followLinks: false);
+
+    for (var dirFile in recordFileLists) {
+      String filename = getFilename(path: dirFile.path);
+      List temp = filename.split('@');
+      List temp2 = temp.last.split('.');
+      String status = temp2.first;
+      String codec = temp2.last;
+      if (status == from) {
+        status = to;
+        renameFile(file: dirFile, newFileName: '${temp.first}@$status.$codec');
+      }
+    }
   }
 }

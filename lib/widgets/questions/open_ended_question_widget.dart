@@ -58,8 +58,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             isRequired: widget.question.config.isRequired,
             question: widget.question.question,
           ),
-          const SizedBox(height: 5),
-          const RecordAnswerWidget(),
+          _recordingButton(),
           const SizedBox(height: 12),
           Expanded(
             child: _buildTextFieldForms(),
@@ -78,6 +77,23 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
         ],
       ),
     );
+  }
+
+  Widget _recordingButton() {
+    Widget recording = Column(
+      children: [
+        const SizedBox(height: 5),
+        RecordAnswerWidget(question: widget.question),
+      ]);
+
+    if (responses.isEmpty) {
+      return recording;
+    }
+    int hasLegitResponse = 0;
+    for (var res in responses) {
+      res != '' ? hasLegitResponse += 1 : '';
+    }
+    return hasLegitResponse == 0 ? recording : Column();
   }
 
   Widget _buildTextFieldForms() {
@@ -131,7 +147,10 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
                         : TextEditingController(text: ''));
                   }
                 });
-                _setResponse();
+
+                if (widget.question.answer == null) {
+                  _setResponse();
+                }
               },
             ),
             const SizedBox(height: 5),

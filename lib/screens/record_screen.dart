@@ -1,5 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/sound_player_service.dart';
 import 'package:kalahok_app/services/sound_recorder_service.dart';
@@ -7,7 +8,12 @@ import 'package:kalahok_app/widgets/audio_button_widget.dart';
 import 'package:kalahok_app/widgets/timer_widget.dart';
 
 class RecordScreen extends StatefulWidget {
-  const RecordScreen({Key? key}) : super(key: key);
+  final Questions question;
+
+  const RecordScreen({
+    Key? key,
+    required this.question,
+  }) : super(key: key);
 
   @override
   State<RecordScreen> createState() => _RecordScreenState();
@@ -17,13 +23,15 @@ class _RecordScreenState extends State<RecordScreen> {
   final timerController = TimerController();
   final recorder = SoundRecorderService();
   final player = SoundPlayerService();
+  late List<String> responses;
 
   @override
   void initState() {
     super.initState();
 
-    recorder.init();
-    player.init();
+    recorder.init(question: widget.question);
+    player.init(question: widget.question);
+    responses = [];
   }
 
   @override

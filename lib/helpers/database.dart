@@ -1,6 +1,7 @@
 import 'package:kalahok_app/data/models/survey_response_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/survey/survey_api_provider.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/services/database_service.dart';
 
 class DB {
@@ -126,8 +127,21 @@ class DB {
             survey: survey,
             responses: responses
           );
+
+          Utils.audioRename(from: 'SUBMITTED', to: 'DONE');
         }
       }
     }
+  }
+
+  /// Get all the !is_sent from "survey_response" and then make it is_sent
+  static void isSentSurveyFromFalseToTrue() async {
+    final db = await _dbService.database;
+
+    await db.update('survey_response',
+      {'is_sent': 1},
+      where: 'is_sent = ?',
+      whereArgs: [false],
+    );
   }
 }

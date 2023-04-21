@@ -19,9 +19,9 @@ class DatabaseService {
 
     String path = join(documentsDirectory.path, DB.dbName);
     var database = await openDatabase(
-        path,
-        version: 1,
-        onCreate: _initDB,
+      path,
+      version: 1,
+      onCreate: _initDB,
     );
 
     return database;

@@ -142,6 +142,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                     setState(() {
                       _tempId = (val?.value)?.toInt() ?? 0;
 
+                      /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
+                      /// if getting from local db ~ try getting from json data
                       /// todo: add the onSetResponse function here
                     });
                     // widget.onChanged(

@@ -23,6 +23,7 @@ dependencies:
   path: ^1.8.2
   internet_connection_checker: ^1.0.0+1
   intl: ^0.18.0
+  workmanager: ^0.5.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
