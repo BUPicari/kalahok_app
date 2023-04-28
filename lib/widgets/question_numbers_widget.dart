@@ -65,9 +65,14 @@ class QuestionNumbersWidget extends StatelessWidget {
 
     String otherAnswer = question.answer?.otherAnswer ?? '';
     List<String> answer = question.answer?.answers ?? [];
+    String file = question.answer?.file ?? '';
 
     if ((answer.isNotEmpty && Utils.doesNotOnlyContainsEmptyString(strArr: answer))
         || otherAnswer.isNotEmpty) {
+      color = AppColor.darkSuccess;
+    }
+
+    if (file.isNotEmpty) {
       color = AppColor.darkSuccess;
     }
 

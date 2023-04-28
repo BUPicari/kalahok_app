@@ -47,15 +47,13 @@ class SoundRecorderService {
       'recording-$timestamp-question#${_question.id}-survey#${_question.surveyId}@PENDING.aac'
     );
 
-    /// set Question response answer
     _question.answer = Answer(
       surveyQuestion: _question.question,
       questionFieldTexts: List.generate(1, (i) => _question.question),
-      answers: List.generate(1, (i) => path),
-      otherAnswer: ''
+      answers: [],
+      otherAnswer: '',
+      file: path,
     );
-
-    /// todo: get the audio using the path when sending to api
 
     await _audioRecorder!.startRecorder(toFile: path);
   }

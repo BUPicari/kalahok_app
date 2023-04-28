@@ -55,9 +55,9 @@ class SurveyDbProvider {
       surveyQuestionnaires = questionnaires.map((e) => Questions.fromJson(e)).toList();
       result.questionnaires = surveyQuestionnaires;
 
-      surveyQuestionnaires.map((question)
-        => Utils.updateQuestionnaireRequiredNum(survey: result, question: question)
-      );
+      for (var question in surveyQuestionnaires) {
+        Utils.updateQuestionnaireRequiredNum(survey: result, question: question);
+      }
 
       return result;
     }
@@ -84,9 +84,17 @@ class SurveyDbProvider {
     List<Questions> questionnaires = survey.questionnaires ?? [];
 
     for (var question in questionnaires) {
+      String file = question.answer?.file ?? '';
+      if (file.isNotEmpty) {
+        file = Utils.getNewPath(
+          oldPath: file,
+          from: 'PENDING',
+          to: 'SUBMITTED',
+        );
+      }
       var surveyQuestionnairesResponses = {
         'answer': Utils.getQuestionResponse(question: question),
-        'file': null,
+        'file': file,
         'survey_response_id': newSurveyResponseId,
         'question_id': question.id,
         'added_at': DateTime.now().toString(),

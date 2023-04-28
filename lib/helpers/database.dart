@@ -120,8 +120,9 @@ class DB {
           responses = surveyQuestionnairesResponses.map((e) =>
             ResponseQuestionnaires(
               questionnaireId: e['question_id'],
-              answer: e['answer'])
-          ).toList();
+              answer: e['answer'],
+              file: e['file'],
+          )).toList();
 
           _apiProvider.postSubmitSurveyResponse(
             survey: survey,

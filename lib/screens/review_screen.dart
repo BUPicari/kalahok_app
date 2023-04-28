@@ -63,7 +63,7 @@ class ReviewScreen extends StatelessWidget {
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 children: Utils.heightBetween(
-                  _buildListViewChildren(),
+                  _buildListViewChildren(context),
                   height: 8,
                 ),
               ),
@@ -75,7 +75,7 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildListViewChildren() {
+  List<Widget> _buildListViewChildren(context) {
     return survey.questionnaires!.map(
       (question) {
         return Card(
@@ -94,7 +94,7 @@ class ReviewScreen extends StatelessWidget {
                 color: AppColor.subTertiary,
                 padding: const EdgeInsets.all(20),
                 width: double.infinity,
-                child: Utils.getReviewResponse(question: question),
+                child: Utils.getReviewResponse(context: context, question: question),
               ),
             ],
           ),
@@ -132,6 +132,7 @@ class ReviewScreen extends StatelessWidget {
 
     String otherAnswer = question.answer?.otherAnswer ?? '';
     List<String> answer = question.answer?.answers ?? [];
+    String file = question.answer?.file ?? '';
 
     if (question.config.isRequired && answer.isEmpty && otherAnswer.isEmpty) {
       boxColor = AppColor.error;
@@ -141,6 +142,10 @@ class ReviewScreen extends StatelessWidget {
     } else if ((answer.isNotEmpty && !Utils.doesNotOnlyContainsEmptyString(strArr: answer))
         || otherAnswer.isNotEmpty) {
       boxColor = AppColor.error;
+    }
+
+    if (file.isNotEmpty) {
+      boxColor = AppColor.success;
     }
 
     return boxColor;

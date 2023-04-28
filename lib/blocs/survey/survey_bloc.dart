@@ -36,7 +36,8 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
           if (question.config.isRequired) {
             var answer = question.answer;
             if ((answer != null && answer.answers.isNotEmpty) ||
-                (answer != null && answer.otherAnswer.isNotEmpty)) {
+                (answer != null && answer.otherAnswer.isNotEmpty) ||
+                (answer != null && answer.file != null)) {
               numOfRequiredResponses += 1;
             }
           }

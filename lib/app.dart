@@ -35,10 +35,12 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    print('App initState');
     Workmanager().registerPeriodicTask(
       "taskOne",
       "sqlToApi",
       frequency: const Duration(hours: 1),
+      // frequency: const Duration(seconds: 9000),
       constraints: Constraints(networkType: NetworkType.connected),
     );
   }

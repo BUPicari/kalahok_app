@@ -3,8 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:intl/intl.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
+import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/screens/record_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Utils {
@@ -33,9 +36,13 @@ class Utils {
   }
 
   /// Get review responses/answers
-  static Widget getReviewResponse({required Questions question}) {
+  static Widget getReviewResponse({
+    required context,
+    required Questions question
+  }) {
     List<String> answer = question.answer?.answers ?? [];
     String otherAnswer = question.answer?.otherAnswer ?? '';
+    String file = question.answer?.file ?? '';
     if (question.config.multipleAnswer ||
         question.config.canAddOthers ||
         question.type == 'openEnded' ||
@@ -78,6 +85,48 @@ class Utils {
             ),
           ],
         );
+      }
+
+      if (question.type == 'openEnded' && answer.isEmpty && file.isNotEmpty) {
+        responsesWidget = [
+          // Text(
+          //   'Record: ${getFilename(path: file)}',
+          //   style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
+          // )
+          Center(
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(250, 50),
+                backgroundColor: AppColor.primary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(33),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 16,
+                ),
+              ),
+              icon: const Icon(Icons.play_arrow),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RecordScreen(question: question),
+                  ),
+                );
+              },
+              label: Text(
+                // getFilename(path: file),
+                'Play Recorded File',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: AppColor.subPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          )
+        ];
       }
 
       return Column(
@@ -161,6 +210,46 @@ class Utils {
     var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
     var newPath = path.substring(0, lastSeparator + 1) + newFileName;
     file.rename(newPath);
+  }
+
+  static String getNewPath({
+    required String oldPath,
+    required String from,
+    required String to
+  }) {
+    List splitPath = oldPath.split('recording');
+    List temp = splitPath.last.split('@');
+    List temp2 = temp.last.split('.');
+    String status = temp2.first;
+    String codec = temp2.last;
+    if (status == from) {
+      status = to;
+      return '${splitPath.first}recording${temp.first}@$status.$codec';
+    }
+
+    return oldPath;
+  }
+
+  static Future<String> getAudioRecordedFile() async {
+    String timestamp = DateFormat.yMd().format(DateTime.now()).toString().replaceAll('/', '_');
+    String appDirFolderPath = await getRecordingPath();
+    final recordDir = Directory(appDirFolderPath);
+    List recordFileLists = recordDir.listSync(recursive: true, followLinks: false);
+
+    for (var dirFile in recordFileLists) {
+      String filename = getFilename(path: dirFile.path);
+      List split1 = filename.split('-');
+      if (split1[1] == timestamp) {
+        List split2 = filename.split('@');
+        List temp = split2.last.split('.');
+        String status = temp.first;
+        if (status == 'PENDING') {
+          return filename;
+        }
+      }
+    }
+
+    return '';
   }
 
   /// PENDING - kakarecord plng and di pa na balik sa waiver

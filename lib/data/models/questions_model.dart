@@ -67,7 +67,7 @@ class Questions { /// todo: Make this Question only
 
     return Questions(
       id: data['id'],
-      surveyId: data['surveyId'],
+      surveyId: data['survey_id'],
       question: data['question'],
       type: data['type'],
       choices: choices,

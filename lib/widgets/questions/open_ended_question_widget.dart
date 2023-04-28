@@ -133,18 +133,18 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
                   int index = widget.question.labels.indexOf(label);
 
                   responses.isNotEmpty
-                      ? responses[index] = value
-                      : responses = List.generate(widget.question.labels.length, (i) =>
-                          i == index ? value : '');
+                    ? responses[index] = value
+                    : responses = List.generate(widget.question.labels.length, (i) =>
+                      i == index ? value : '');
 
                   if (fieldControllers.isNotEmpty) {
                     fieldControllers[index].text = value;
                     fieldControllers[index].selection =
-                        TextSelection.fromPosition(TextPosition(offset: fieldControllers[index].text.length));
+                      TextSelection.fromPosition(TextPosition(offset: fieldControllers[index].text.length));
                   } else {
                     fieldControllers = List.generate(widget.question.labels.length, (j) => j == index
-                        ? TextEditingController(text: value)
-                        : TextEditingController(text: ''));
+                      ? TextEditingController(text: value)
+                      : TextEditingController(text: ''));
                   }
                 });
 

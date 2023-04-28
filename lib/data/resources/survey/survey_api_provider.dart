@@ -48,37 +48,81 @@ class SurveyApiProvider {
   }) async {
     var path = '/survey/responses';
     var url = Uri.parse(ApiConfig.baseUrl + path);
-    final headers = {"Content-type": "application/json"};
 
-    List<ResponseQuestionnaires> questionnaires = [];
+    try {
+      var request = http.MultipartRequest('POST', url);
+      request.headers['X-Requested-With'] = "XMLHttpRequest";
 
-    if (responses != null) {
-      questionnaires = responses;
-    } else {
-      questionnaires = survey.questionnaires!.map((question) =>
-        ResponseQuestionnaires(
-          questionnaireId: question.id,
-          answer: Utils.getQuestionResponse(question: question),
-        ))
-        .toList();
-    }
+      List<ResponseQuestionnaires> questionnaires = [];
 
-    var surveyResponse = <Map<String, dynamic>>[
-      SurveyResponse(
+      if (responses != null) {
+        questionnaires = responses;
+      } else {
+        questionnaires = survey.questionnaires!.map((question) =>
+          ResponseQuestionnaires(
+            questionnaireId: question.id,
+            answer: Utils.getQuestionResponse(question: question),
+            file: question.answer?.file ?? '',
+          ))
+          .toList();
+      }
+
+      SurveyResponse surveyResponse = SurveyResponse(
         surveyId: survey.id,
         questionnaires: questionnaires,
-      ).toJson(),
-    ];
+      );
 
-    print(json.encode(surveyResponse));
+      request.fields['survey_id'] = surveyResponse.surveyId.toString();
+      surveyResponse.questionnaires.asMap().forEach((index, value) async {
+        request.fields['questionnaires[$index][questionnaire_id]'] =
+            value.questionnaireId.toString();
+        request.fields['questionnaires[$index][answer]'] = value.answer;
+        if (value.file != '') {
+          request.files.add(await http.MultipartFile.fromPath(
+            'questionnaires[$index][files]-${value.questionnaireId}',
+            value.file.toString()
+          ));
+        }
+      });
 
-    http.Response response = await http.post(
-      url,
-      headers: headers,
-      body: json.encode(surveyResponse),
-    );
+      var result = await request.send();
+      Utils.audioRename(from: 'PENDING', to: 'DONE');
+    } catch (error) {
+      print(error);
+    }
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    /// Former way of sending to api
+    // final headers = {"Content-type": "application/json"};
+    //
+    // List<ResponseQuestionnaires> questionnaires = [];
+    //
+    // if (responses != null) {
+    //   questionnaires = responses;
+    // } else {
+    //   questionnaires = survey.questionnaires!.map((question) =>
+    //     ResponseQuestionnaires(
+    //       questionnaireId: question.id,
+    //       answer: Utils.getQuestionResponse(question: question),
+    //     ))
+    //     .toList();
+    // }
+    //
+    // var surveyResponse = <Map<String, dynamic>>[
+    //   SurveyResponse(
+    //     surveyId: survey.id,
+    //     questionnaires: questionnaires,
+    //   ).toJson(),
+    // ];
+    //
+    // print(json.encode(surveyResponse));
+    //
+    // http.Response response = await http.post(
+    //   url,
+    //   headers: headers,
+    //   body: json.encode(surveyResponse),
+    // );
+    //
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
   }
 }

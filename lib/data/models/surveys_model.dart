@@ -40,7 +40,7 @@ class Surveys { /// todo: Make this Survey only
 
       return Surveys(
         id: json['id'],
-        categoryId: json['categoryId'],
+        categoryId: json['category_id'],
         title: json['title'],
         description: json['description'],
         waiver: json['waiver'],
@@ -57,7 +57,7 @@ class Surveys { /// todo: Make this Survey only
 
     return Surveys( /// todo: make this reusable that can add a key/value pair
       id: json['id'],
-      categoryId: json['categoryId'],
+      categoryId: json['category_id'],
       title: json['title'],
       description: json['description'],
       waiver: json['waiver'],

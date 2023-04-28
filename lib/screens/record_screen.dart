@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/sound_player_service.dart';
 import 'package:kalahok_app/services/sound_recorder_service.dart';
@@ -23,7 +24,6 @@ class _RecordScreenState extends State<RecordScreen> {
   final timerController = TimerController();
   final recorder = SoundRecorderService();
   final player = SoundPlayerService();
-  late List<String> responses;
 
   @override
   void initState() {
@@ -31,7 +31,6 @@ class _RecordScreenState extends State<RecordScreen> {
 
     recorder.init(question: widget.question);
     player.init(question: widget.question);
-    responses = [];
   }
 
   @override
@@ -44,19 +43,42 @@ class _RecordScreenState extends State<RecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(context),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildPlayer(),
-            const SizedBox(height: 16),
-            _buildStart(),
-            const SizedBox(height: 20),
-            _buildPlay(),
-          ],
-        ),
+    return FutureBuilder(
+      future: _buildAudioFile(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return Scaffold(
+            appBar: _buildAppBar(context),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildPlayer(),
+                  const SizedBox(height: 16),
+                  _buildStart(),
+                  const SizedBox(height: 20),
+                  _buildPlay(),
+                  const SizedBox(height: 20),
+                  snapshot.data
+                ],
+              ),
+            ),
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      }
+    );
+  }
+
+  Future<Widget> _buildAudioFile() async {
+    return Text(
+      await Utils.getAudioRecordedFile(),
+      style: const TextStyle(
+        // backgroundColor: Colors.red,
+        fontStyle: FontStyle.italic,
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -73,7 +95,7 @@ class _RecordScreenState extends State<RecordScreen> {
       backgroundColor: backgroundC,
       icon: icon,
       onClicked: () async {
-        if (!recorder.isRecordingAvailable) return;
+        // if (!recorder.isRecordingAvailable) return;
 
         await player.togglePlaying(whenFinished: () => setState(() {}));
         setState(() {});
@@ -84,7 +106,7 @@ class _RecordScreenState extends State<RecordScreen> {
   Widget _buildStart() {
     bool isRecording = recorder.isRecording;
     IconData icon = isRecording ? Icons.stop : Icons.mic;
-    String text = isRecording ? 'Stop' : 'Record';
+    String text = isRecording ? 'Stop Recording' : 'Record';
     Color backgroundC = isRecording ? AppColor.darkError : AppColor.primary;
 
     return AudioButtonWidget(
