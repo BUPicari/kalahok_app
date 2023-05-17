@@ -80,20 +80,11 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
   }
 
   Widget _recordingButton() {
-    Widget recording = Column(
+    return Column(
       children: [
         const SizedBox(height: 5),
         RecordAnswerWidget(question: widget.question),
       ]);
-
-    if (responses.isEmpty) {
-      return recording;
-    }
-    int hasLegitResponse = 0;
-    for (var res in responses) {
-      res != '' ? hasLegitResponse += 1 : '';
-    }
-    return hasLegitResponse == 0 ? recording : Column();
   }
 
   Widget _buildTextFieldForms() {
@@ -150,6 +141,8 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
 
                 if (widget.question.answer == null) {
                   _setResponse();
+                } else {
+                  widget.question.answer?.answers = responses;
                 }
               },
             ),

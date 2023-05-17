@@ -73,9 +73,11 @@ class _RecordScreenState extends State<RecordScreen> {
 
   Future<Widget> _buildAudioFile() async {
     return Text(
-      await Utils.getAudioRecordedFile(),
+      await Utils.getAudioRecordedFile(
+        questionId: widget.question.id,
+        surveyId: widget.question.surveyId ?? 0
+      ),
       style: const TextStyle(
-        // backgroundColor: Colors.red,
         fontStyle: FontStyle.italic,
         fontSize: 12,
         fontWeight: FontWeight.bold,

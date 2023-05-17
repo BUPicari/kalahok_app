@@ -47,13 +47,17 @@ class SoundRecorderService {
       'recording-$timestamp-question#${_question.id}-survey#${_question.surveyId}@PENDING.aac'
     );
 
-    _question.answer = Answer(
-      surveyQuestion: _question.question,
-      questionFieldTexts: List.generate(1, (i) => _question.question),
-      answers: [],
-      otherAnswer: '',
-      file: path,
-    );
+    if (_question.answer == null) {
+      _question.answer = Answer(
+        surveyQuestion: _question.question,
+        questionFieldTexts: List.generate(1, (i) => _question.question),
+        answers: [],
+        otherAnswer: '',
+        file: path,
+      );
+    } else {
+      _question.answer?.file = path;
+    }
 
     await _audioRecorder!.startRecorder(toFile: path);
   }

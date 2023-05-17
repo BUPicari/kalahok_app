@@ -87,12 +87,19 @@ class Utils {
         );
       }
 
-      if (question.type == 'openEnded' && answer.isEmpty && file.isNotEmpty) {
+      if (question.type == 'openEnded' && file.isNotEmpty) {
+        List<Widget> tempResponsesWidget = responsesWidget;
         responsesWidget = [
-          // Text(
-          //   'Record: ${getFilename(path: file)}',
-          //   style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
-          // )
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: tempResponsesWidget,
+          ),
+          const SizedBox(height: 5),
+          const Text(
+            'Recorded File:',
+            style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
+          ),
+          const SizedBox(height: 10),
           Center(
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
@@ -230,7 +237,10 @@ class Utils {
     return oldPath;
   }
 
-  static Future<String> getAudioRecordedFile() async {
+  static Future<String> getAudioRecordedFile({
+    required int questionId,
+    required int surveyId
+  }) async {
     String timestamp = DateFormat.yMd().format(DateTime.now()).toString().replaceAll('/', '_');
     String appDirFolderPath = await getRecordingPath();
     final recordDir = Directory(appDirFolderPath);
@@ -238,12 +248,16 @@ class Utils {
 
     for (var dirFile in recordFileLists) {
       String filename = getFilename(path: dirFile.path);
-      List split1 = filename.split('-');
-      if (split1[1] == timestamp) {
-        List split2 = filename.split('@');
-        List temp = split2.last.split('.');
-        String status = temp.first;
-        if (status == 'PENDING') {
+      List splitted = filename.split('-');
+      if (splitted[1] == timestamp) {
+        List questionSplit = splitted[2].split('#');
+        List surveySplit = splitted[3].split('#');
+        List statusSplit = filename.split('@');
+        if (
+          statusSplit.last.split('.').first == 'PENDING' &&
+          questionSplit.last == questionId.toString() &&
+          surveySplit.last.split('@').first == surveyId.toString()
+        ) {
           return filename;
         }
       }

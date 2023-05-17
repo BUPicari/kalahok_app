@@ -16,6 +16,7 @@ class CategoryApiProvider {
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(url);
+    /// todo: add headers [x-api-key], value will be in variables
     var categoriesJson = jsonDecode(response.body) as List;
     List<Category> result = categoriesJson.map((e) =>
         Category.fromJson(e)).toList();
@@ -39,6 +40,7 @@ class CategoryApiProvider {
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(url);
+    /// todo: add headers [x-api-key], value will be in variables
     Category result = Category.fromJson(jsonDecode(response.body));
 
     if (result.surveys != null) {
