@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:kalahok_app/data/models/category_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
@@ -15,8 +16,10 @@ class CategoryApiProvider {
     var path = '/survey/categories/all';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
-    http.Response response = await http.get(url);
-    /// todo: add headers [x-api-key], value will be in variables
+    http.Response response = await http.get(
+      url,
+      headers: {'x-api-key': ApiConfig.apiKey},
+    );
     var categoriesJson = jsonDecode(response.body) as List;
     List<Category> result = categoriesJson.map((e) =>
         Category.fromJson(e)).toList();
@@ -39,8 +42,10 @@ class CategoryApiProvider {
     var path = '/survey/categories/$categoryId/surveys';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
-    http.Response response = await http.get(url);
-    /// todo: add headers [x-api-key], value will be in variables
+    http.Response response = await http.get(
+      url,
+      headers: {'x-api-key': ApiConfig.apiKey},
+    );
     Category result = Category.fromJson(jsonDecode(response.body));
 
     if (result.surveys != null) {
