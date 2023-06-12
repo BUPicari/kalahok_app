@@ -143,12 +143,20 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                       _tempId = (val?.value)?.toInt() ?? 0;
 
                       /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
-                      /// if getting from local db ~ try getting from json data
-                      /// todo: add the onSetResponse function here
+                      /// todo: if getting from local db ~ try getting from json data\
+                      int index = widget.question.labels.indexOf(label);
+
+                      responses.isNotEmpty
+                        ? responses[index] = (val?.label).toString()
+                        : responses = List.generate(widget.question.labels.length, (i) =>
+                          i == index ? (val?.label).toString() : '');
                     });
-                    // widget.onChanged(
-                    //     '${widget.question.labels.indexOf(label)},${val?.label.toString()}'
-                    // );
+
+                    if (widget.question.answer == null) {
+                      _setResponse();
+                    } else {
+                      widget.question.answer?.answers = responses;
+                    }
                   },
                 ),
                 const SizedBox(height: 10),
@@ -157,5 +165,14 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
           )
           .toList(),
     );
+  }
+
+  void _setResponse() {
+    widget.onSetResponse(Answer(
+      surveyQuestion: widget.question.question,
+      questionFieldTexts: fieldTexts,
+      answers: responses,
+      otherAnswer: '',
+    ));
   }
 }
