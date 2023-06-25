@@ -19,4 +19,13 @@ class Config {
       isRequired: json['isRequired'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'multipleAnswer': multipleAnswer,
+      'canAddOthers': canAddOthers,
+      'useYesOrNo': useYesOrNo,
+      'isRequired': isRequired,
+    };
+  }
 }

@@ -1,6 +1,6 @@
 class SurveyResponse {
-  int surveyId = 0;
-  List<Questionnaires> questionnaires = [];
+  int surveyId;
+  List<ResponseQuestionnaires> questionnaires;
 
   SurveyResponse({
     required this.surveyId,
@@ -9,7 +9,7 @@ class SurveyResponse {
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> questions =
-        questionnaires.map((e) => e.toJson()).toList();
+      questionnaires.map((e) => e.toJson()).toList();
 
     return {
       'survey_id': surveyId,
@@ -18,36 +18,22 @@ class SurveyResponse {
   }
 }
 
-class Questionnaires {
-  int questionnaireId = 0;
-  String answer = "";
+class ResponseQuestionnaires {
+  int questionnaireId;
+  String answer;
+  String? file;
 
-  Questionnaires({
+  ResponseQuestionnaires({
     required this.questionnaireId,
     required this.answer,
+    this.file,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'questionnaire_id': questionnaireId,
       'answer': answer,
-    };
-  }
-}
-
-class Answer {
-  List<String> selected = [];
-  String others = "";
-
-  Answer({
-    required this.selected,
-    required this.others,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'selected': selected,
-      'others': others,
+      'file': file,
     };
   }
 }

@@ -19,13 +19,13 @@ class ChoicesWidget extends StatelessWidget {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: Utils.heightBetween(
-        question.choices.map((choice) => buildChoice(context, choice)).toList(),
+        question.choices.map((choice) => _buildChoice(context, choice)).toList(),
         height: 8,
       ),
     );
   }
 
-  Widget buildChoice(BuildContext context, Choice choice) {
+  Widget _buildChoice(BuildContext context, Choice choice) {
     // final color = getColorForChoice(choice, question);
 
     return GestureDetector(
@@ -38,7 +38,7 @@ class ChoicesWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            buildAnswer(choice),
+            _buildAnswer(choice),
             // buildSolution(question.selectedOption, choice),
           ],
         ),
@@ -46,7 +46,7 @@ class ChoicesWidget extends StatelessWidget {
     );
   }
 
-  Widget buildAnswer(Choice choice) {
+  Widget _buildAnswer(Choice choice) {
     return SizedBox(
       height: 50,
       child: Row(children: [

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
 class QuestionNumbersWidget extends StatelessWidget {
-  final List<Question> questions;
-  final Question question;
+  final List<Questions> questions;
+  final Questions question;
   final ValueChanged<int> onClickedNumber;
 
   const QuestionNumbersWidget({
@@ -28,14 +29,14 @@ class QuestionNumbersWidget extends StatelessWidget {
         itemCount: questions.length,
         itemBuilder: (context, index) {
           final isSelected = question == questions[index];
-          return buildNumber(index: index, isSelected: isSelected);
+          return _buildNumber(index: index, isSelected: isSelected);
         },
       ),
     );
   }
 
-  Widget buildNumber({required int index, required bool isSelected}) {
-    final color = generateColor(
+  Widget _buildNumber({required int index, required bool isSelected}) {
+    final color = _generateColor(
       question: questions[index],
       isSelected: isSelected,
     );
@@ -56,13 +57,22 @@ class QuestionNumbersWidget extends StatelessWidget {
     );
   }
 
-  Color generateColor({
-    required Question question,
+  Color _generateColor({
+    required Questions question,
     required bool isSelected,
   }) {
     var color = AppColor.subPrimary;
 
-    if (question.response != null || question.addedOthers != null) {
+    String otherAnswer = question.answer?.otherAnswer ?? '';
+    List<String> answer = question.answer?.answers ?? [];
+    String file = question.answer?.file ?? '';
+
+    if ((answer.isNotEmpty && Utils.doesNotOnlyContainsEmptyString(strArr: answer))
+        || otherAnswer.isNotEmpty) {
+      color = AppColor.darkSuccess;
+    }
+
+    if (file.isNotEmpty) {
       color = AppColor.darkSuccess;
     }
 

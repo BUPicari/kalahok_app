@@ -1,18 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:kalahok_app/data/models/choice_model.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/home_screen.dart';
+import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/widgets/question_numbers_widget.dart';
 import 'package:kalahok_app/widgets/questions_widget.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class QuestionScreen extends StatefulWidget {
-  final Survey survey;
+  final Surveys survey;
 
   const QuestionScreen({
     Key? key,
@@ -25,42 +21,40 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   late PageController pageController;
-  // late TextEditingController textController;
-  late Question question;
-  late List<Choice> selected;
+  late Questions question;
+  // late List<Choice> selected;
 
   @override
   void initState() {
     super.initState();
 
     pageController = PageController();
-    // textController = TextEditingController();
-    question = widget.survey.questionnaires.first;
-    selected = [];
+    question = widget.survey.questionnaires!.first;
+    // selected = [];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: buildAppBar(context: context),
       resizeToAvoidBottomInset: false,
       body: QuestionsWidget(
         survey: widget.survey,
         pageController: pageController,
-        // textController: textController,
         onChangedPage: (index) => nextQuestion(index: index),
-        onClickedChoice: selectChoice,
-        onClickedRate: selectRate,
-        onChanged: setTextFieldResponses,
-        onAddOthers: setAddedOthers,
-        onDateSelected: setDateSelected,
-        onPressedPrev: setPrevQuestion,
-        onPressedNext: setNextQuestion,
+        // onClickedChoice: selectChoice,
+        // onClickedRate: selectRate,
+        // onChanged: setTextFieldResponses,
+        // onAddOthers: setAddedOthers,
+        // onDateSelected: setDateSelected,
+        onSetResponse: (response) => setResponse(response: response),
+        onPressedPrev: (index) => setPrevQuestion(index: index),
+        onPressedNext: (index) => setNextQuestion(index: index),
       ),
     );
   }
 
-  PreferredSizeWidget buildAppBar(context) {
+  PreferredSizeWidget buildAppBar({required context}) {
     return AppBar(
       title: Text(widget.survey.title),
       flexibleSpace: Container(
@@ -78,7 +72,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => const CategoryScreen(),
         )),
       ),
       bottom: PreferredSize(
@@ -86,7 +80,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: QuestionNumbersWidget(
-            questions: widget.survey.questionnaires,
+            questions: widget.survey.questionnaires!,
             question: question,
             onClickedNumber: (index) => nextQuestion(
               index: index,
@@ -98,105 +92,114 @@ class _QuestionScreenState extends State<QuestionScreen> {
     );
   }
 
-  void selectChoice(Choice choice) {
+  void setResponse({required Answer response}) {
     setState(() {
-      if (question.config.multipleAnswer) {
-        if (selected.contains(choice)) {
-          selected.remove(choice);
-        } else {
-          selected.add(choice);
-        }
-        question.selectedChoices = selected;
-        // question.selectedChoices
-        //     ?.map((choice) => question.selected?.add(choice.name));
-
-        if (question.response == null) {
-          setResponse(jsonEncode(choice.name));
-        } else {
-          // String? res = question.selected?.join(', ');
-          // setResponse(res.toString());
-          List<String> arrRes = question.response.toString().split(',');
-          if (!arrRes.contains(jsonEncode(choice.name))) {
-            setResponse("${question.response},${jsonEncode(choice.name)}");
-          }
-        }
-      } else {
-        question.selectedChoice = choice;
-        setResponse(jsonEncode(choice.name));
-      }
+      question.answer = response;
     });
-  }
-
-  void selectRate(int rate) {
-    setState(() {
-      question.selectedRate = rate.toInt();
-      setResponse(jsonEncode((rate + 1).toString()));
+    widget.survey.questionnaires?.forEach((element) {
+      print('Question: ${element.question}');
+      print(element.answer?.toJson());
+      print('----------');
     });
+    print('*********');
   }
 
-  void setAddedOthers(String others) {
-    setState(() {
-      question.addedOthers = jsonEncode(others);
-    });
-  }
+  // void selectChoice(Choice choice) {
+  //   setState(() {
+  //     if (question.config.multipleAnswer) {
+  //       if (selected.contains(choice)) {
+  //         selected.remove(choice);
+  //       } else {
+  //         selected.add(choice);
+  //       }
+  //       question.selectedChoices = selected;
+  //       // question.selectedChoices
+  //       //     ?.map((choice) => question.selected?.add(choice.name));
+  //
+  //       if (question.response == null) {
+  //         setResponse(jsonEncode(choice.name));
+  //       } else {
+  //         // String? res = question.selected?.join(', ');
+  //         // setResponse(res.toString());
+  //         List<String> arrRes = question.response.toString().split(',');
+  //         if (!arrRes.contains(jsonEncode(choice.name))) {
+  //           setResponse("${question.response},${jsonEncode(choice.name)}");
+  //         }
+  //       }
+  //     } else {
+  //       question.selectedChoice = choice;
+  //       setResponse(jsonEncode(choice.name));
+  //     }
+  //   });
+  // }
 
-  void setTextFieldResponses(String response) {
-    List<dynamic> textFieldResponse = <String>[];
-    List<String> responses = response.toString().split(',');
+  // void selectRate(int rate) {
+  //   setState(() {
+  //     question.selectedRate = rate.toInt();
+  //     setResponse(jsonEncode((rate + 1).toString()));
+  //   });
+  // }
 
-    if (question.response != null) {
-      textFieldResponse = jsonDecode(question.response.toString()) as List;
-    }
+  // void setAddedOthers(String others) {
+  //   setState(() {
+  //     question.addedOthers = jsonEncode(others);
+  //   });
+  // }
 
-    for (var i = 0; i <= int.parse(responses[0]); i++) {
-      if (int.parse(responses[0]) == i) {
-        if (textFieldResponse.asMap().containsKey(i)) {
-          textFieldResponse[i] = responses[1].trim();
-        } else {
-          textFieldResponse.insert(i, responses[1].trim());
-        }
-      } else {
-        if (!textFieldResponse.asMap().containsKey(i)) {
-          textFieldResponse.insert(i, "");
-        }
-      }
-    }
+  // void setTextFieldResponses(String response) {
+  //   List<dynamic> textFieldResponse = <String>[];
+  //   List<String> responses = response.toString().split(',');
+  //
+  //   if (question.response != null) {
+  //     textFieldResponse = jsonDecode(question.response.toString()) as List;
+  //   }
+  //
+  //   for (var i = 0; i <= int.parse(responses[0]); i++) {
+  //     if (int.parse(responses[0]) == i) {
+  //       if (textFieldResponse.asMap().containsKey(i)) {
+  //         textFieldResponse[i] = responses[1].trim();
+  //       } else {
+  //         textFieldResponse.insert(i, responses[1].trim());
+  //       }
+  //     } else {
+  //       if (!textFieldResponse.asMap().containsKey(i)) {
+  //         textFieldResponse.insert(i, "");
+  //       }
+  //     }
+  //   }
+  //
+  //   setResponse(jsonEncode(textFieldResponse));
+  // }
 
-    setResponse(jsonEncode(textFieldResponse));
-  }
+  // void setDateSelected(DateRangePickerSelectionChangedArgs args) {
+  //   setResponse(jsonEncode(DateFormat('yyyy-MM-dd').format(args.value)));
+  // }
 
-  void setDateSelected(DateRangePickerSelectionChangedArgs args) {
-    setResponse(jsonEncode(DateFormat('yyyy-MM-dd').format(args.value)));
-  }
+  // void setResponse(String response) {
+  //   setState(() {
+  //     question.response = response;
+  //   });
+  // }
 
-  void setResponse(String response) {
-    setState(() {
-      question.response = response;
-    });
-  }
-
-  void setPrevQuestion(int index) {
+  void setPrevQuestion({required int index}) {
     nextQuestion(
       index: index - 1,
       jump: true,
     );
   }
 
-  void setNextQuestion(int index) {
+  void setNextQuestion({required int index}) {
     nextQuestion(
       index: index + 1,
       jump: true,
     );
   }
 
-  void nextQuestion({
-    required int index,
-    bool jump = false,
-  }) {
+  void nextQuestion({required int index, bool jump = false}) {
     final indexPage = index;
 
     setState(() {
-      question = widget.survey.questionnaires[indexPage];
+      question = widget.survey.questionnaires![indexPage];
     });
 
     if (jump) {

@@ -8,14 +8,16 @@ abstract class SurveyEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetSurveyListEvent extends SurveyEvent {
+/// @usedFor: Get the survey w/ questionnaires
+class GetSurveyWithQuestionnairesEvent extends SurveyEvent {
   final int surveyId;
 
-  const GetSurveyListEvent({required this.surveyId});
+  const GetSurveyWithQuestionnairesEvent({required this.surveyId});
 }
 
+/// @usedFor: Submit the survey responses
 class SubmitSurveyResponseEvent extends SurveyEvent {
-  final Survey survey;
+  final Surveys survey;
 
   const SubmitSurveyResponseEvent({required this.survey});
 }

@@ -1,21 +1,24 @@
-import 'added_by_model.dart';
+import 'questions_model.dart';
 
-class Surveys {
+class Surveys { /// todo: Make this Survey only
   int id;
+  int? categoryId;
   String title;
   String description;
   String waiver;
   String completionEstimatedTime;
-  bool status;
-  bool multipleSubmission;
+  int status;
+  int multipleSubmission;
   String startDate;
   String endDate;
   String addedAt;
   String updatedAt;
-  AddedBy addedBy;
+  List<Questions>? questionnaires;
+  int? numOfRequired;
 
   Surveys({
     required this.id,
+    this.categoryId,
     required this.title,
     required this.description,
     required this.waiver,
@@ -26,31 +29,72 @@ class Surveys {
     required this.endDate,
     required this.addedAt,
     required this.updatedAt,
-    required this.addedBy,
+    this.questionnaires,
+    this.numOfRequired,
   });
 
   factory Surveys.fromJson(Map<String, dynamic> json) {
-    var addedBy = AddedBy.fromJson(json['addedBy']);
+    if (json.containsKey('questionnaires')) {
+      var questionnairesJson = json['questionnaires'] as List;
+      List<Questions> questions = questionnairesJson.map((e) => Questions.fromJson(e)).toList();
 
-    return Surveys(
+      return Surveys(
+        id: json['id'],
+        categoryId: json['category_id'],
+        title: json['title'],
+        description: json['description'],
+        waiver: json['waiver'],
+        completionEstimatedTime: json['completion_estimated_time'],
+        status: json['status'] == true ? 1 : 0,
+        multipleSubmission: json['multipleSubmission'] == true ? 1 : 0,
+        startDate: json['start_date'],
+        endDate: json['end_date'],
+        addedAt: json['added_at'],
+        updatedAt: json['updated_at'],
+        questionnaires: questions,
+      );
+    }
+
+    return Surveys( /// todo: make this reusable that can add a key/value pair
       id: json['id'],
+      categoryId: json['category_id'],
       title: json['title'],
       description: json['description'],
       waiver: json['waiver'],
       completionEstimatedTime: json['completion_estimated_time'],
-      status: json['status'],
-      multipleSubmission: json['multipleSubmission'],
+      status: json['status'] == true ? 1 : 0,
+      multipleSubmission: json['multipleSubmission'] == true ? 1 : 0,
       startDate: json['start_date'],
       endDate: json['end_date'],
       addedAt: json['added_at'],
       updatedAt: json['updated_at'],
-      addedBy: addedBy,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    if (questionnaires != null) {
+      List<Map<String, dynamic>>? questions = questionnaires?.map((e) => e.toJson()).toList();
+
+      return {
+        'id': id,
+        'category_id': categoryId,
+        'title': title,
+        'description': description,
+        'waiver': waiver,
+        'completion_estimated_time': completionEstimatedTime,
+        'status': status,
+        'multiple_submission': multipleSubmission,
+        'start_date': startDate,
+        'end_date': endDate,
+        'added_at': addedAt,
+        'updated_at': updatedAt,
+        'questionnaires': questions,
+      };
+    }
+
+    return { /// todo: make this reusable that can add a key/value pair
       'id': id,
+      'category_id': categoryId,
       'title': title,
       'description': description,
       'waiver': waiver,
@@ -61,7 +105,6 @@ class Surveys {
       'end_date': endDate,
       'added_at': addedAt,
       'updated_at': updatedAt,
-      'added_by': addedBy,
     };
   }
 }

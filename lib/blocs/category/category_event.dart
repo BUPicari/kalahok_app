@@ -8,10 +8,12 @@ abstract class CategoryEvent extends Equatable {
   List<Object> get props => [];
 }
 
+/// @usedFor: Get all the categories/domain w/o surveys
 class GetCategoryListEvent extends CategoryEvent {}
 
-class GetCategorySurveyListEvent extends CategoryEvent {
+/// @usedFor: Get a category/domain w/ surveys
+class GetCategoryWithSurveyListEvent extends CategoryEvent {
   final int categoryId;
 
-  const GetCategorySurveyListEvent({required this.categoryId});
+  const GetCategoryWithSurveyListEvent({required this.categoryId});
 }

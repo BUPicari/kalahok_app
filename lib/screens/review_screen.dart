@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/question_screen.dart';
 import 'package:kalahok_app/widgets/review_btn_widget.dart';
 
 class ReviewScreen extends StatelessWidget {
-  final Survey survey;
+  final Surveys survey;
 
   const ReviewScreen({
     Key? key,
@@ -17,7 +17,7 @@ class ReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: _buildAppBar(context),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -28,7 +28,7 @@ class ReviewScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Text(
-                  '* Red boxes is required and has no answers',
+                  '* Red boxes are required and has no answers',
                   style: TextStyle(
                     color: AppColor.darkError,
                     fontStyle: FontStyle.italic,
@@ -38,7 +38,7 @@ class ReviewScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  '* Gray boxes is not required and has no answers',
+                  '* Gray boxes are not required and has no answers',
                   style: TextStyle(
                     color: AppColor.secondary,
                     fontStyle: FontStyle.italic,
@@ -48,7 +48,7 @@ class ReviewScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  '* Green boxes has answers',
+                  '* Green boxes have answers',
                   style: TextStyle(
                     color: AppColor.darkSuccess,
                     fontStyle: FontStyle.italic,
@@ -63,7 +63,7 @@ class ReviewScreen extends StatelessWidget {
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 children: Utils.heightBetween(
-                  _buildListViewChildren(),
+                  _buildListViewChildren(context),
                   height: 8,
                 ),
               ),
@@ -75,11 +75,11 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildListViewChildren() {
-    return survey.questionnaires.map(
+  List<Widget> _buildListViewChildren(context) {
+    return survey.questionnaires!.map(
       (question) {
         return Card(
-          color: getColorForBox(question),
+          color: _getColorForBox(question),
           child: ExpansionTile(
             title: Text(
               question.question,
@@ -94,7 +94,7 @@ class ReviewScreen extends StatelessWidget {
                 color: AppColor.subTertiary,
                 padding: const EdgeInsets.all(20),
                 width: double.infinity,
-                child: question.getReviewResponse(),
+                child: Utils.getReviewResponse(context: context, question: question),
               ),
             ],
           ),
@@ -103,9 +103,9 @@ class ReviewScreen extends StatelessWidget {
     ).toList();
   }
 
-  PreferredSizeWidget buildAppBar(context) {
+  PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
-      title: const Text('Review Survey'),
+      title: const Text('Recorded Response'),
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -127,14 +127,24 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  Color getColorForBox(Question question) {
+  Color _getColorForBox(Questions question) {
     Color boxColor = AppColor.neutral;
 
-    if (question.config.isRequired &&
-        question.response == null &&
-        question.addedOthers == null) {
+    String otherAnswer = question.answer?.otherAnswer ?? '';
+    List<String> answer = question.answer?.answers ?? [];
+    String file = question.answer?.file ?? '';
+
+    if (question.config.isRequired && answer.isEmpty && otherAnswer.isEmpty) {
       boxColor = AppColor.error;
-    } else if (question.response != null || question.addedOthers != null) {
+    } else if ((answer.isNotEmpty && Utils.doesNotOnlyContainsEmptyString(strArr: answer))
+        || otherAnswer.isNotEmpty) {
+      boxColor = AppColor.success;
+    } else if ((answer.isNotEmpty && !Utils.doesNotOnlyContainsEmptyString(strArr: answer))
+        || otherAnswer.isNotEmpty) {
+      boxColor = AppColor.error;
+    }
+
+    if (file.isNotEmpty) {
       boxColor = AppColor.success;
     }
 
