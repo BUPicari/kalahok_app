@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
       ),
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
-        splash: Image.asset(AppConfig.logo),
+        splash: Image.asset(AppConfig.logo, width: 300.0),
         splashIconSize: double.infinity,
         backgroundColor: AppColor.primary,
         duration: 3000,

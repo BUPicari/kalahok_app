@@ -22,6 +22,6 @@ class ApiConfig {
 }
 
 class AppConfig {
-  static String name = "Kalahok";
-  static String logo = "assets/images/kalahok-logo.png";
+  static String name = "Boses Ko";
+  static String logo = "assets/images/bosesko-logo.png";
 }
