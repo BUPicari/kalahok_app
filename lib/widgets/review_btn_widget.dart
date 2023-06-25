@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/question_screen.dart';
 import 'package:kalahok_app/screens/survey_done_screen.dart';
 
 class ReviewBtnWidget extends StatelessWidget {
-  final Survey survey;
+  final Surveys survey;
 
   const ReviewBtnWidget({
     Key? key,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/choice_model.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
-import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
+import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/questions/choice_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/question_subtext_widget.dart';
@@ -10,11 +10,10 @@ import 'package:kalahok_app/widgets/review_button_widget.dart';
 
 class WithChoicesQuestionWidget extends StatelessWidget {
   final int index;
-  final Survey survey;
-  final Question question;
+  final Surveys survey;
+  final Questions question;
   final String subText;
-  final ValueChanged<Choice> onClickedChoice;
-  final ValueChanged<String> onAddOthers;
+  final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
@@ -24,8 +23,7 @@ class WithChoicesQuestionWidget extends StatelessWidget {
     required this.survey,
     required this.question,
     required this.subText,
-    required this.onClickedChoice,
-    required this.onAddOthers,
+    required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
   }) : super(key: key);
@@ -47,8 +45,7 @@ class WithChoicesQuestionWidget extends StatelessWidget {
           Expanded(
             child: ChoiceWidget(
               question: question,
-              onClickedChoice: onClickedChoice,
-              onAddOthers: onAddOthers,
+              onSetResponse: onSetResponse,
             ),
           ),
           PreviousNextButtonWidget(

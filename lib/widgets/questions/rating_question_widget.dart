@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
-import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
+import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/questions/rate_widget.dart';
 import 'package:kalahok_app/widgets/review_button_widget.dart';
 
 class RatingQuestionWidget extends StatelessWidget {
   final int index;
-  final Survey survey;
-  final Question question;
-  final ValueChanged<int> onClickedRate;
+  final Surveys survey;
+  final Questions question;
+  final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
@@ -19,7 +20,7 @@ class RatingQuestionWidget extends StatelessWidget {
     required this.index,
     required this.survey,
     required this.question,
-    required this.onClickedRate,
+    required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
   }) : super(key: key);
@@ -40,7 +41,7 @@ class RatingQuestionWidget extends StatelessWidget {
           Expanded(
             child: RateWidget(
               question: question,
-              onClickedRate: onClickedRate,
+              onSetResponse: onSetResponse,
             ),
           ),
           PreviousNextButtonWidget(

@@ -17,7 +17,10 @@ class DropdownProvider {
     if (q != '') finalPath = '$finalPath&q=$q';
 
     var url = Uri.parse(ApiConfig.baseUrl + finalPath);
-    http.Response response = await http.get(url);
+    http.Response response = await http.get(
+      url,
+      headers: {'x-api-key': ApiConfig.apiKey},
+    );
 
     return Dropdown.fromJson(jsonDecode(response.body));
   }

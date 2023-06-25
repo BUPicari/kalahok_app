@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/review_screen.dart';
 
 class ReviewButtonWidget extends StatelessWidget {
-  final Question question;
-  final Survey survey;
+  final Questions question;
+  final Surveys survey;
 
   const ReviewButtonWidget({
     Key? key,
@@ -16,7 +16,7 @@ class ReviewButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (survey.questionnaires.last == question) {
+    if (survey.questionnaires?.last == question) {
       return Column(children: [
         const SizedBox(height: 17),
         ElevatedButton(

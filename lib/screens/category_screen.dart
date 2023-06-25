@@ -6,8 +6,8 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
 import 'package:kalahok_app/widgets/category_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class CategoryScreen extends StatelessWidget {
+  const CategoryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

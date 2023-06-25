@@ -15,7 +15,7 @@ class CategorySurveyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => WaiverScreen(surveys: survey),
+        builder: (context) => WaiverScreen(survey: survey),
       )),
       child: Container(
         padding: const EdgeInsets.all(30),
@@ -80,7 +80,7 @@ class CategorySurveyWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WaiverScreen(surveys: survey),
+                      builder: (context) => WaiverScreen(survey: survey),
                     ),
                   );
                 },

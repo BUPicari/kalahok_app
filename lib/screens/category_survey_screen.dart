@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalahok_app/blocs/category/category_bloc.dart';
 import 'package:kalahok_app/data/models/category_model.dart';
-import 'package:kalahok_app/data/models/category_survey_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
-import 'package:kalahok_app/screens/home_screen.dart';
+import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/widgets/category_survey_widget.dart';
 
 class CategorySurveyScreen extends StatelessWidget {
@@ -20,7 +19,7 @@ class CategorySurveyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CategoryBloc()
-        ..add(GetCategorySurveyListEvent(categoryId: category.id)),
+        ..add(GetCategoryWithSurveyListEvent(categoryId: category.id)),
       child: Scaffold(
         appBar: AppBar(
           leading: GestureDetector(
@@ -29,7 +28,7 @@ class CategorySurveyScreen extends StatelessWidget {
               color: AppColor.subPrimary,
             ),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const CategoryScreen(),
             )),
           ),
           title: Text(category.name),
@@ -53,17 +52,17 @@ class CategorySurveyScreen extends StatelessWidget {
         ),
         body: BlocBuilder<CategoryBloc, CategoryState>(
           builder: (context, state) {
-            if (state is CategorySurveyLoadingState) {
+            if (state is CategoryWithSurveyLoadingState) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            if (state is CategorySurveyLoadedState) {
+            if (state is CategoryWithSurveyLoadedState) {
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(16),
                 children: [
-                  _buildCategorySurveys(categorySurvey: state.categorySurvey),
+                  _buildCategorySurveys(categoryWithSurvey: state.categoryWithSurvey),
                 ],
               );
             }
@@ -98,7 +97,7 @@ class CategorySurveyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategorySurveys({required CategorySurvey categorySurvey}) {
+  Widget _buildCategorySurveys({Category? categoryWithSurvey}) {
     return SizedBox(
       height: 530,
       child: GridView(
@@ -109,8 +108,8 @@ class CategorySurveyScreen extends StatelessWidget {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
-        children: categorySurvey.survey
-            .map((survey) => CategorySurveyWidget(survey: survey))
+        children: categoryWithSurvey!.surveys
+            !.map((survey) => CategorySurveyWidget(survey: survey))
             .toList(),
       ),
     );

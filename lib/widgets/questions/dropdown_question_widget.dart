@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:kalahok_app/data/models/answer_model.dart';
 import 'package:kalahok_app/data/models/dropdown_model.dart';
-import 'package:kalahok_app/data/models/question_model.dart';
-import 'package:kalahok_app/data/models/survey_model.dart';
+import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/dropdown/dropdown_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/widgets/PreviousNextButtonWidget.dart';
+import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/review_button_widget.dart';
 import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
 
 class DropdownQuestionWidget extends StatefulWidget {
   final int index;
-  final Survey survey;
-  final Question question;
-  final ValueChanged<String> onChanged;
+  final Surveys survey;
+  final Questions question;
+  final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
 
@@ -22,7 +23,7 @@ class DropdownQuestionWidget extends StatefulWidget {
     required this.index,
     required this.survey,
     required this.question,
-    required this.onChanged,
+    required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
   }) : super(key: key);
@@ -34,6 +35,8 @@ class DropdownQuestionWidget extends StatefulWidget {
 class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
   late int _tempId;
   late DropdownRepository _dropdownRepository;
+  List<String> responses = [];
+  List<String> fieldTexts = [];
 
   Future<List<Result>> _getData({
     required path,
@@ -57,6 +60,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
 
     _tempId = 0;
     _dropdownRepository = DropdownRepository();
+    responses = widget.question.answer?.answers ?? [];
+    fieldTexts = widget.question.labels.map((label) => label.name).toList();
   }
 
   @override
@@ -122,8 +127,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                       q: searchKey != null ? searchKey.toString() : '',
                     );
 
-                    // nag tutuloy ang data kahit na nasa
-                    // pinaka dulo na datat na siya
+                    /// todo: fix this, nag tutuloy and data kahit nasa pinaka dulo na data na siya
 
                     return paginatedList
                         .map((e) => SearchableDropdownMenuItem(
@@ -137,10 +141,22 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                   onChanged: (Result? val) {
                     setState(() {
                       _tempId = (val?.value)?.toInt() ?? 0;
+
+                      /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
+                      /// todo: if getting from local db ~ try getting from json data\
+                      int index = widget.question.labels.indexOf(label);
+
+                      responses.isNotEmpty
+                        ? responses[index] = (val?.label).toString()
+                        : responses = List.generate(widget.question.labels.length, (i) =>
+                          i == index ? (val?.label).toString() : '');
                     });
-                    widget.onChanged(
-                        '${widget.question.labels.indexOf(label)},${val?.label.toString()}'
-                    );
+
+                    if (widget.question.answer == null) {
+                      _setResponse();
+                    } else {
+                      widget.question.answer?.answers = responses;
+                    }
                   },
                 ),
                 const SizedBox(height: 10),
@@ -149,5 +165,14 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
           )
           .toList(),
     );
+  }
+
+  void _setResponse() {
+    widget.onSetResponse(Answer(
+      surveyQuestion: widget.question.question,
+      questionFieldTexts: fieldTexts,
+      answers: responses,
+      otherAnswer: '',
+    ));
   }
 }
