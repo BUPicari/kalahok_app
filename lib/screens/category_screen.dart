@@ -15,7 +15,7 @@ class CategoryScreen extends StatelessWidget {
       create: (context) => CategoryBloc()..add(GetCategoryListEvent()),
       child: Scaffold(
         appBar: AppBar(
-          leading: Image.asset(AppConfig.logo),
+          leading: Image.asset(AppConfig.logoPreview),
           title: Text(AppConfig.name),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(80),
