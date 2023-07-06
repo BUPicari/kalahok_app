@@ -19,6 +19,7 @@ class Question {
     canAddOthers: false,
     useYesOrNo: false,
     isRequired: true,
+    enableAudioRecording: true,
   );
   String addedAt = "";
   String updatedAt = "";

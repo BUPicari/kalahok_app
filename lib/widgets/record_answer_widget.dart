@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/record_screen.dart';
-import 'package:kalahok_app/widgets/audio_widget.dart';
+// import 'package:kalahok_app/widgets/audio_widget.dart';
 
 class RecordAnswerWidget extends StatelessWidget {
   final Questions question;
