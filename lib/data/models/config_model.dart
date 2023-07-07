@@ -3,14 +3,14 @@ class Config {
   bool canAddOthers = false;
   bool useYesOrNo = false;
   bool isRequired = false;
-  bool enableAudioRecording = false;
+  bool? enableAudioRecording = false;
 
   Config({
     required this.multipleAnswer,
     required this.canAddOthers,
     required this.useYesOrNo,
     required this.isRequired,
-    required this.enableAudioRecording,
+    this.enableAudioRecording,
   });
 
   factory Config.fromJson(Map<String, dynamic> json) {

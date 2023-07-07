@@ -80,7 +80,10 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
   }
 
   Widget _recordingButton() {
-    if (widget.question.config.enableAudioRecording) {
+    bool enableAudioRecording = widget.question.config.enableAudioRecording ??
+      false;
+
+    if (enableAudioRecording) {
       return Column(
         children: [
           const SizedBox(height: 5),
