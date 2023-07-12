@@ -97,72 +97,144 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
   }
 
   Widget _buildDropdownForms() {
+    bool useStaticDropdown = widget.question.config.useStaticDropdown ?? false;
+    /// todo: refactor this code, masyado ulit ulit and make sure na ok offline
+
+    if (useStaticDropdown) {
+      return _buildStaticForm();
+    }
+
+    return _buildNonStaticForm();
+  }
+
+  Widget _buildStaticForm() {
     return ListView(
       children: widget.question.labels
           .map(
             (label) => Column(
-              children: [
-                SearchableDropdown<Result>.paginated(
-                  backgroundDecoration: (child) => Card(
-                    margin: EdgeInsets.zero,
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide(
-                          color: AppColor.neutral,
-                          width: 2.0
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: child,
-                    ),
+          children: [
+            SearchableDropdown<Result>.paginated(
+              backgroundDecoration: (child) => Card(
+                margin: EdgeInsets.zero,
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                      color: AppColor.neutral,
+                      width: 2.0
                   ),
-                  hintText: Text('Select a ${label.name}'),
-                  margin: const EdgeInsets.all(15),
-                  paginatedRequest: (int page, String? searchKey) async {
-                    final paginatedList = await _getData(
-                      path: '/${label.endpoint}',
-                      page: page,
-                      filter: _tempId != 0 ? _tempId.toString() : '',
-                      q: searchKey != null ? searchKey.toString() : '',
-                    );
-
-                    /// todo: fix this, nag tutuloy and data kahit nasa pinaka dulo na data na siya
-
-                    return paginatedList
-                        .map((e) => SearchableDropdownMenuItem(
-                          value: Result(value: e.value, label: e.label),
-                          label: e.label ?? '',
-                          child: Text(e.label ?? ''),
-                        ))
-                        .toList();
-                  },
-                  requestItemCount: 10,
-                  onChanged: (Result? val) {
-                    setState(() {
-                      _tempId = (val?.value)?.toInt() ?? 0;
-
-                      /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
-                      /// todo: if getting from local db ~ try getting from json data\
-                      int index = widget.question.labels.indexOf(label);
-
-                      responses.isNotEmpty
-                        ? responses[index] = (val?.label).toString()
-                        : responses = List.generate(widget.question.labels.length, (i) =>
-                          i == index ? (val?.label).toString() : '');
-                    });
-
-                    if (widget.question.answer == null) {
-                      _setResponse();
-                    } else {
-                      widget.question.answer?.answers = responses;
-                    }
-                  },
                 ),
-                const SizedBox(height: 10),
-              ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: child,
+                ),
+              ),
+              hintText: Text('Select a ${label.name}'),
+              margin: const EdgeInsets.all(15),
+              paginatedRequest: (int page, String? searchKey) async {
+                final options = label.endpoint.split(',');
+
+                return options.asMap().entries.map((e) => SearchableDropdownMenuItem(
+                  value: Result(value: e.key, label: e.value.trim()),
+                  label: e.value.trim() ?? '',
+                  child: Text(e.value.trim() ?? ''),
+                ))
+                    .toList();
+              },
+              requestItemCount: 10,
+              onChanged: (Result? val) {
+                setState(() {
+                  /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
+                  /// todo: if getting from local db ~ try getting from json data\
+                  int index = widget.question.labels.indexOf(label);
+
+                  responses.isNotEmpty
+                      ? responses[index] = (val?.label).toString()
+                      : responses = List.generate(widget.question.labels.length, (i) =>
+                  i == index ? (val?.label).toString() : '');
+                });
+
+                if (widget.question.answer == null) {
+                  _setResponse();
+                } else {
+                  widget.question.answer?.answers = responses;
+                }
+              },
             ),
-          )
+            const SizedBox(height: 10),
+          ],
+        ),
+      )
+          .toList(),
+    );
+  }
+
+  Widget _buildNonStaticForm() {
+    return ListView(
+      children: widget.question.labels
+          .map(
+            (label) => Column(
+          children: [
+            SearchableDropdown<Result>.paginated(
+              backgroundDecoration: (child) => Card(
+                margin: EdgeInsets.zero,
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                      color: AppColor.neutral,
+                      width: 2.0
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: child,
+                ),
+              ),
+              hintText: Text('Select a ${label.name}'),
+              margin: const EdgeInsets.all(15),
+              paginatedRequest: (int page, String? searchKey) async {
+                final paginatedList = await _getData(
+                  path: '/${label.endpoint}',
+                  page: page,
+                  filter: _tempId != 0 ? _tempId.toString() : '',
+                  q: searchKey != null ? searchKey.toString() : '',
+                );
+
+                /// todo: fix this, nag tutuloy and data kahit nasa pinaka dulo na data na siya
+
+                return paginatedList
+                    .map((e) => SearchableDropdownMenuItem(
+                  value: Result(value: e.value, label: e.label),
+                  label: e.label ?? '',
+                  child: Text(e.label ?? ''),
+                ))
+                    .toList();
+              },
+              requestItemCount: 10,
+              onChanged: (Result? val) {
+                setState(() {
+                  _tempId = (val?.value)?.toInt() ?? 0;
+
+                  /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
+                  /// todo: if getting from local db ~ try getting from json data\
+                  int index = widget.question.labels.indexOf(label);
+
+                  responses.isNotEmpty
+                      ? responses[index] = (val?.label).toString()
+                      : responses = List.generate(widget.question.labels.length, (i) =>
+                  i == index ? (val?.label).toString() : '');
+                });
+
+                if (widget.question.answer == null) {
+                  _setResponse();
+                } else {
+                  widget.question.answer?.answers = responses;
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      )
           .toList(),
     );
   }
