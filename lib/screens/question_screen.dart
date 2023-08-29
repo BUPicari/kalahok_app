@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/answer_model.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
+// import 'package:kalahok_app/events/listeners.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/widgets/question_numbers_widget.dart';
@@ -102,6 +103,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
       print('----------');
     });
     print('*********');
+    // Listeners.loggerEventListener('Question: ${question.question}');
+    // Listeners.loggerEventListener('Answer: ${question.answer?.toJson()}');
   }
 
   // void selectChoice(Choice choice) {

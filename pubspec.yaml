@@ -24,6 +24,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   intl: ^0.18.0
   workmanager: ^0.5.1
+  event_bus: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

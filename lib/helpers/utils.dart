@@ -187,7 +187,31 @@ class Utils {
     String otherAnswer = question.answer?.otherAnswer ?? '';
     List<String> answer = question.answer?.answers ?? [];
 
+    if ((!question.config.multipleAnswer && !question.config.canAddOthers &&
+        question.type != "openEnded" && question.type != "dropdown") ||
+      (question.type == "openEnded" && answer.length == 1) ||
+      (question.type == "dropdown" && answer.length == 1) ||
+      (question.config.multipleAnswer && !question.config.canAddOthers &&
+        answer.length == 1)) {
+      return answer[0];
+    }
+
     if (question.config.canAddOthers) {
+      if (otherAnswer == '' && answer.length == 1) {
+        return answer[0];
+      }
+
+      if (otherAnswer != '' && answer.length == 1) {
+        return jsonEncode({
+          'selected': answer[0],
+          'others': otherAnswer,
+        });
+      }
+
+      if (otherAnswer == '' && answer.length > 1) {
+        return json.encode(answer);
+      }
+
       return jsonEncode({
         'selected': answer,
         'others': otherAnswer,

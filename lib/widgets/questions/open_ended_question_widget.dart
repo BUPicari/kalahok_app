@@ -80,11 +80,18 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
   }
 
   Widget _recordingButton() {
-    return Column(
-      children: [
-        const SizedBox(height: 5),
-        RecordAnswerWidget(question: widget.question),
-      ]);
+    bool enableAudioRecording = widget.question.config.enableAudioRecording ??
+      false;
+
+    if (enableAudioRecording) {
+      return Column(
+        children: [
+          const SizedBox(height: 5),
+          RecordAnswerWidget(question: widget.question),
+        ]);
+    }
+
+    return Column();
   }
 
   Widget _buildTextFieldForms() {
