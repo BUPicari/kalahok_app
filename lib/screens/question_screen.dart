@@ -42,7 +42,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       body: QuestionsWidget(
         survey: widget.survey,
         pageController: pageController,
-        onChangedPage: (index) => nextQuestion(index: index),
+        onChangedPage: (index) => goTo(index: index),
         // onClickedChoice: selectChoice,
         // onClickedRate: selectRate,
         // onChanged: setTextFieldResponses,
@@ -83,7 +83,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           child: QuestionNumbersWidget(
             questions: widget.survey.questionnaires!,
             question: question,
-            onClickedNumber: (index) => nextQuestion(
+            onClickedNumber: (index) => goTo(
               index: index,
               jump: true,
             ),
@@ -185,20 +185,20 @@ class _QuestionScreenState extends State<QuestionScreen> {
   // }
 
   void setPrevQuestion({required int index}) {
-    nextQuestion(
+    goTo(
       index: index - 1,
       jump: true,
     );
   }
 
   void setNextQuestion({required int index}) {
-    nextQuestion(
+    goTo(
       index: index + 1,
       jump: true,
     );
   }
 
-  void nextQuestion({required int index, bool jump = false}) {
+  void goTo({required int index, bool jump = false}) {
     final indexPage = index;
 
     setState(() {

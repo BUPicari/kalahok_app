@@ -7,7 +7,7 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/record_answer_widget.dart';
-import 'package:kalahok_app/widgets/review_button_widget.dart';
+// import 'package:kalahok_app/widgets/review_button_widget.dart';
 
 class OpenEndedQuestionWidget extends StatefulWidget {
   final int index;
@@ -70,10 +70,10 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
           ),
-          ReviewButtonWidget(
-            question: widget.question,
-            survey: widget.survey,
-          ),
+          // ReviewButtonWidget(
+          //   question: widget.question,
+          //   survey: widget.survey,
+          // ),
         ],
       ),
     );

@@ -58,6 +58,12 @@ class CategorySurveyScreen extends StatelessWidget {
               );
             }
             if (state is CategoryWithSurveyLoadedState) {
+              if (state.categoryWithSurvey?.name == "none") {
+                return const ErrorScreen(
+                  error: "No Active Survey as of the moment!",
+                );
+              }
+
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(16),

@@ -17,7 +17,8 @@ class AppColor {
 
 class ApiConfig {
   static String baseUrl = "https://chedlakas.mab.com.ph:8001"; /// server
-  // static String baseUrl = "http://192.168.1.19:3001"; /// local
+  static String visualizationUrl = "https://chedlakas.mab.com.ph:8004/admin"; /// visualization/frequency
+  // static String baseUrl = "http://192.168.1.115:3001"; /// local
   static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
 }
 
@@ -25,4 +26,5 @@ class AppConfig {
   static String name = "BosesKo";
   static String logo = "assets/images/bosesko-logo.png";
   static String logoPreview = "assets/images/bosesko-removebg-preview.png";
+  static String demoVideo = "assets/videos/demo.mp4";
 }

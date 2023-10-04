@@ -25,6 +25,10 @@ dependencies:
   intl: ^0.18.0
   workmanager: ^0.5.1
   event_bus: ^2.0.0
+  video_player: ^2.7.2
+  chewie: ^1.7.1
+  awesome_notifications: ^0.7.6
+  flutter_inappwebview: ^5.7.2+3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -33,3 +37,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/videos/

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalahok_app/blocs/category/category_bloc.dart';
 import 'package:kalahok_app/data/models/category_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/screens/demo_screen.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
 import 'package:kalahok_app/widgets/category_widget.dart';
 
@@ -34,6 +35,23 @@ class CategoryScreen extends StatelessWidget {
               ),
             ),
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.info_outline,
+                color: Colors.white,
+              ),
+              tooltip: "Toolkit Demo",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DemoScreen(),
+                  ),
+                );
+              },
+            )
+          ],
         ),
         body: BlocBuilder<CategoryBloc, CategoryState>(
           builder: (context, state) {

@@ -13,31 +13,45 @@ class SurveyApiProvider {
 
   /// @usedFor: API - get survey with questionnaires
   /// @return: Survey w/ questionnaires
-  Future<Surveys> getSurveyWithQuestionnaires({required int surveyId}) async {
+  Future<Surveys> getSurveyWithQuestionnaires({
+    required int surveyId,
+    // required int landId,
+  }) async {
     final db = await _dbService.database;
-    var path = '/surveys/fetch/$surveyId';
+    var path = '/surveys/fetch/$surveyId?langId=1';
     var url = Uri.parse(ApiConfig.baseUrl + path);
     http.Response response = await http.get(
       url,
       headers: {'x-api-key': ApiConfig.apiKey},
     );
+    var responseBody = response.body;
 
-    Surveys result = Surveys.fromJson(jsonDecode(response.body));
-    List<Questions> questionnaires = result.questionnaires ?? [];
-
-    for (var question in questionnaires) {
-      Utils.updateQuestionnaireRequiredNum(survey: result, question: question);
-    }
-
-    for (var item in questionnaires) {
-      item.surveyId = surveyId;
-      /// From api insert to local db
-      await db.insert(
-        'survey_questionnaires',
-        item.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace
+    if (responseBody.contains("message")) {
+      return Surveys(
+        id: 0,
+        title: "none",
+        description: "none",
+        startDate: "none",
+        endDate: "none",
       );
     }
+
+    Surveys result = Surveys.fromJson(jsonDecode(responseBody));
+    // List<Questions> questionnaires = result.questionnaires ?? [];
+    //
+    // for (var question in questionnaires) {
+    //   Utils.updateQuestionnaireRequiredNum(survey: result, question: question);
+    // }
+
+    // for (var item in questionnaires) {
+    //   item.surveyId = surveyId;
+    //   /// From api insert to local db
+    //   await db.insert(
+    //     'survey_questionnaires',
+    //     item.toJson(),
+    //     conflictAlgorithm: ConflictAlgorithm.replace
+    //   );
+    // }
 
     /// todo: get question type dropdown and api get request all the data and save to sqlite(as json para dynamic???)
 

@@ -3,33 +3,35 @@ import 'questions_model.dart';
 class Surveys { /// todo: Make this Survey only
   int id;
   int? categoryId;
+  int? detailsId;
+  String? passcode;
   String title;
   String description;
-  String waiver;
-  String completionEstimatedTime;
-  int status;
-  int multipleSubmission;
+  String? waiver;
+  int? status;
   String startDate;
   String endDate;
-  String addedAt;
-  String updatedAt;
+  String? addedAt;
+  String? updatedAt;
   List<Questions>? questionnaires;
+  List<SurveyDetails>? details;
   int? numOfRequired;
 
   Surveys({
     required this.id,
     this.categoryId,
+    this.detailsId,
+    this.passcode,
     required this.title,
     required this.description,
-    required this.waiver,
-    required this.completionEstimatedTime,
-    required this.status,
-    required this.multipleSubmission,
+    this.waiver,
+    this.status,
     required this.startDate,
     required this.endDate,
-    required this.addedAt,
-    required this.updatedAt,
+    this.addedAt,
+    this.updatedAt,
     this.questionnaires,
+    this.details,
     this.numOfRequired,
   });
 
@@ -41,12 +43,11 @@ class Surveys { /// todo: Make this Survey only
       return Surveys(
         id: json['id'],
         categoryId: json['category_id'],
+        detailsId: json['detailsId'],
         title: json['title'],
         description: json['description'],
         waiver: json['waiver'],
-        completionEstimatedTime: json['completion_estimated_time'],
         status: json['status'] == true ? 1 : 0,
-        multipleSubmission: json['multipleSubmission'] == true ? 1 : 0,
         startDate: json['start_date'],
         endDate: json['end_date'],
         addedAt: json['added_at'],
@@ -55,15 +56,31 @@ class Surveys { /// todo: Make this Survey only
       );
     }
 
+    if (json.containsKey('details')) {
+      var detailsJson = json['details'] as List;
+      List<SurveyDetails> details = detailsJson.map((e) => SurveyDetails.fromJson(e)).toList();
+
+      return Surveys(
+        id: json['id'],
+        categoryId: json['category_id'],
+        passcode: json['passcode'],
+        title: json['title'],
+        description: json['description'],
+        startDate: json['start_date'],
+        endDate: json['end_date'],
+        details: details,
+      );
+    }
+
     return Surveys( /// todo: make this reusable that can add a key/value pair
       id: json['id'],
       categoryId: json['category_id'],
+      detailsId: json['detailsId'],
+      passcode: json['passcode'],
       title: json['title'],
       description: json['description'],
       waiver: json['waiver'],
-      completionEstimatedTime: json['completion_estimated_time'],
       status: json['status'] == true ? 1 : 0,
-      multipleSubmission: json['multipleSubmission'] == true ? 1 : 0,
       startDate: json['start_date'],
       endDate: json['end_date'],
       addedAt: json['added_at'],
@@ -78,12 +95,11 @@ class Surveys { /// todo: Make this Survey only
       return {
         'id': id,
         'category_id': categoryId,
+        'details_id': detailsId,
         'title': title,
         'description': description,
         'waiver': waiver,
-        'completion_estimated_time': completionEstimatedTime,
         'status': status,
-        'multiple_submission': multipleSubmission,
         'start_date': startDate,
         'end_date': endDate,
         'added_at': addedAt,
@@ -92,19 +108,84 @@ class Surveys { /// todo: Make this Survey only
       };
     }
 
+    if (details != null) {
+      List<Map<String, dynamic>>? theDetails = details?.map((e) => e.toJson()).toList();
+
+      return {
+        'id': id,
+        'category_id': categoryId,
+        'passcode': passcode,
+        'title': title,
+        'description': description,
+        'start_date': startDate,
+        'end_date': endDate,
+        'details': theDetails,
+      };
+    }
+
     return { /// todo: make this reusable that can add a key/value pair
       'id': id,
       'category_id': categoryId,
+      'details_id': detailsId,
+      'passcode': passcode,
       'title': title,
       'description': description,
       'waiver': waiver,
-      'completion_estimated_time': completionEstimatedTime,
       'status': status,
-      'multiple_submission': multipleSubmission,
       'start_date': startDate,
       'end_date': endDate,
       'added_at': addedAt,
       'updated_at': updatedAt,
+    };
+  }
+}
+
+class SurveyDetails {
+  int id;
+  SurveyLanguage language;
+
+  SurveyDetails({
+    required this.id,
+    required this.language,
+  });
+
+  factory SurveyDetails.fromJson(Map<String, dynamic> json) {
+    SurveyLanguage language = SurveyLanguage.fromJson(json['language']);
+
+    return SurveyDetails(
+      id: json['id'],
+      language: language,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'language': language.toJson(),
+    };
+  }
+}
+
+class SurveyLanguage {
+  int id;
+  String name;
+
+  SurveyLanguage({
+    required this.id,
+    required this.name,
+  });
+
+  factory SurveyLanguage.fromJson(Map<String, dynamic> json) {
+    return SurveyLanguage(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
     };
   }
 }

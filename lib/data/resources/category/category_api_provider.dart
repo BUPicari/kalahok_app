@@ -46,19 +46,25 @@ class CategoryApiProvider {
       url,
       headers: {'x-api-key': ApiConfig.apiKey},
     );
-    Category result = Category.fromJson(jsonDecode(response.body));
+    var responseBody = response.body;
 
-    if (result.surveys != null) {
-      result.surveys?.forEach((element) async {
-        element.categoryId = categoryId;
-        /// From api insert to local db
-        await db.insert(
-          'survey',
-          element.toJson(), /// w/ surveys
-          conflictAlgorithm: ConflictAlgorithm.replace
-        );
-      });
+    if (responseBody.contains("message")) {
+      return Category(id: 0, name: "none", image: "none");
     }
+
+    Category result = Category.fromJson(jsonDecode(responseBody));
+
+    // if (result.surveys != null) {
+    //   result.surveys?.forEach((element) async {
+    //     element.categoryId = categoryId;
+    //     /// From api insert to local db
+    //     await db.insert(
+    //       'survey',
+    //       element.toJson(), /// w/ surveys
+    //       conflictAlgorithm: ConflictAlgorithm.replace
+    //     );
+    //   });
+    // }
 
     return result;
   }

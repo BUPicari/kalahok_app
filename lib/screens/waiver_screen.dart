@@ -28,6 +28,12 @@ class WaiverScreen extends StatelessWidget {
               );
             }
             if (state is SurveyLoadedState) {
+              if (state.surveyWithQuestionnaires?.title == "none") {
+                return const ErrorScreen(
+                  error: "Unable to Take the Survey!",
+                );
+              }
+
               return _buildContent(context: context, surveyWithQuestionnaires: state.surveyWithQuestionnaires);
             }
             if (state is SurveyErrorState) {
@@ -80,7 +86,7 @@ class WaiverScreen extends StatelessWidget {
                   const SizedBox(height: 25),
                   SizedBox(
                     child: Text(
-                      survey.waiver,
+                      surveyWithQuestionnaires?.waiver ?? "",
                       style: TextStyle(
                         fontSize: 18,
                         color: AppColor.subPrimary,

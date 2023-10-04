@@ -6,7 +6,7 @@ import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/questions/choice_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/question_subtext_widget.dart';
-import 'package:kalahok_app/widgets/review_button_widget.dart';
+// import 'package:kalahok_app/widgets/review_button_widget.dart';
 
 class WithChoicesQuestionWidget extends StatelessWidget {
   final int index;
@@ -55,10 +55,10 @@ class WithChoicesQuestionWidget extends StatelessWidget {
             onPressedPrev: onPressedPrev,
             onPressedNext: onPressedNext,
           ),
-          ReviewButtonWidget(
-            question: question,
-            survey: survey,
-          ),
+          // ReviewButtonWidget(
+          //   question: question,
+          //   survey: survey,
+          // ),
         ],
       ),
     );

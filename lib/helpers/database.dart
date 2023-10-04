@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:kalahok_app/data/models/survey_response_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/data/resources/survey/survey_api_provider.dart';
@@ -67,6 +68,7 @@ class DB {
 
   /// Get all the !is_sent from "survey_response" and then do a post api request
   static void submitLocalResponsesToApi() async {
+    print("*** submitLocalResponsesToApi ***");
     final db = await _dbService.database;
 
     List<Map<String, dynamic>> surveysResponses = await db.query('survey_response',
@@ -129,6 +131,15 @@ class DB {
             responses: responses
           );
 
+          AwesomeNotifications().createNotification(
+            content: NotificationContent(
+              id: 1,
+              channelKey: 'bosesko_channel',
+              title: 'BosesKo Notification',
+              body: 'Done Syncing Local Responses to Server',
+            ),
+          );
+
           Utils.audioRename(from: 'SUBMITTED', to: 'DONE');
         }
       }
@@ -137,6 +148,7 @@ class DB {
 
   /// Get all the !is_sent from "survey_response" and then make it is_sent
   static void isSentSurveyFromFalseToTrue() async {
+    print("*** isSentSurveyFromFalseToTrue ***");
     final db = await _dbService.database;
 
     await db.update('survey_response',

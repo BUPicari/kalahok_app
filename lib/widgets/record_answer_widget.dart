@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/questions_model.dart';
+import 'package:kalahok_app/helpers/utils.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/record_screen.dart';
-// import 'package:kalahok_app/widgets/audio_widget.dart';
 
-class RecordAnswerWidget extends StatelessWidget {
+class RecordAnswerWidget extends StatefulWidget {
   final Questions question;
 
   const RecordAnswerWidget({
@@ -13,7 +13,39 @@ class RecordAnswerWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<RecordAnswerWidget> createState() => _RecordAnswerWidgetState();
+}
+
+class _RecordAnswerWidgetState extends State<RecordAnswerWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Utils.buildAudioFile(
+        questionId: widget.question.id,
+        surveyId: widget.question.surveyId ?? 0
+      ),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return Row(
+            children: [
+              _recordBtn(context),
+              const SizedBox(width: 10),
+              snapshot.data
+            ],
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      }
+    );
+  }
+
+  Widget _recordBtn(context) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(160, 40),
@@ -32,8 +64,7 @@ class RecordAnswerWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => RecordScreen(question: question),
-            // builder: (context) => const AudioWidget(),
+            builder: (context) => RecordScreen(question: widget.question),
           ),
         );
       },

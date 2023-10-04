@@ -311,4 +311,32 @@ class Utils {
       }
     }
   }
+
+  static Future<Widget> buildAudioFile({
+    required int questionId,
+    required int surveyId
+  }) async {
+    String temp = await Utils.getAudioRecordedFile(
+      questionId: questionId,
+      surveyId: surveyId
+    );
+
+    String filename = temp != '' ? "recorded.aac" : '';
+
+    if (filename != '') {
+      return ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(100, 40),
+        ),
+        icon: const Icon(Icons.music_note_rounded),
+        label: Text(
+          filename,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        onPressed: null,
+      );
+    }
+
+    return Column();
+  }
 }

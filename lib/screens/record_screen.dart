@@ -44,7 +44,10 @@ class _RecordScreenState extends State<RecordScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _buildAudioFile(),
+      future: Utils.buildAudioFile(
+        questionId: widget.question.id,
+        surveyId: widget.question.surveyId ?? 0
+      ),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
@@ -68,20 +71,6 @@ class _RecordScreenState extends State<RecordScreen> {
           return const CircularProgressIndicator();
         }
       }
-    );
-  }
-
-  Future<Widget> _buildAudioFile() async {
-    return Text(
-      await Utils.getAudioRecordedFile(
-        questionId: widget.question.id,
-        surveyId: widget.question.surveyId ?? 0
-      ),
-      style: const TextStyle(
-        fontStyle: FontStyle.italic,
-        fontSize: 12,
-        fontWeight: FontWeight.bold,
-      ),
     );
   }
 
@@ -175,7 +164,18 @@ class _RecordScreenState extends State<RecordScreen> {
           ),
         ),
       ),
-      leading: const BackButton(),
+      // leading: GestureDetector(
+      //   child: Icon(
+      //     Icons.arrow_back,
+      //     color: AppColor.subPrimary,
+      //   ),
+      //   onTap: () {
+      //     Navigator.pop(context);
+      //   },
+      // ),
+      leading: BackButton(
+        onPressed: () => Navigator.pop(context)
+      ),
     );
   }
 }

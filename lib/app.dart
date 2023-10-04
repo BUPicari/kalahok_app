@@ -1,8 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:workmanager/workmanager.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -12,6 +12,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    print('App initState');
+
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,19 +42,6 @@ class _MyAppState extends State<MyApp> {
         splashTransition: SplashTransition.fadeTransition,
         nextScreen: const CategoryScreen(),
       ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    print('App initState');
-    Workmanager().registerPeriodicTask(
-      "taskOne",
-      "sqlToApi",
-      frequency: const Duration(hours: 1),
-      // frequency: const Duration(seconds: 9000),
-      constraints: Constraints(networkType: NetworkType.connected),
     );
   }
 }

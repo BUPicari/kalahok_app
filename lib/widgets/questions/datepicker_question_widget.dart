@@ -5,7 +5,7 @@ import 'package:kalahok_app/data/models/questions_model.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
-import 'package:kalahok_app/widgets/review_button_widget.dart';
+// import 'package:kalahok_app/widgets/review_button_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DatePickerQuestionWidget extends StatefulWidget {
@@ -72,10 +72,10 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
           ),
-          ReviewButtonWidget(
-            question: widget.question,
-            survey: widget.survey,
-          ),
+          // ReviewButtonWidget(
+          //   question: widget.question,
+          //   survey: widget.survey,
+          // ),
         ],
       ),
     );

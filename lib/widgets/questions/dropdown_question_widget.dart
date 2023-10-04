@@ -7,7 +7,7 @@ import 'package:kalahok_app/data/resources/dropdown/dropdown_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
-import 'package:kalahok_app/widgets/review_button_widget.dart';
+// import 'package:kalahok_app/widgets/review_button_widget.dart';
 import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
 
 class DropdownQuestionWidget extends StatefulWidget {
@@ -87,10 +87,10 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
           ),
-          ReviewButtonWidget(
-            question: widget.question,
-            survey: widget.survey,
-          ),
+          // ReviewButtonWidget(
+          //   question: widget.question,
+          //   survey: widget.survey,
+          // ),
         ],
       ),
     );

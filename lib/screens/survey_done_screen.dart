@@ -6,6 +6,7 @@ import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/screens/review_screen.dart';
+import 'package:kalahok_app/screens/visualization_webview_screen.dart';
 
 class SurveyDoneScreen extends StatelessWidget {
   final Surveys survey;
@@ -138,14 +139,6 @@ class SurveyDoneScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 100),
               SizedBox(
-                child: SvgPicture.asset(
-                'assets/images/survey-done.svg',
-                semanticsLabel: 'Survey done',
-                height: 260,
-              ),
-              ),
-              const SizedBox(height: 45),
-              SizedBox(
                 child: Text(
                   'THANK YOU!',
                   style: TextStyle(
@@ -158,15 +151,81 @@ class SurveyDoneScreen extends StatelessWidget {
               const SizedBox(height: 15),
               SizedBox(
                 child: Text(
-                  'For your time and participation!',
+                  "You're part of the solution!",
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 20,
                     color: AppColor.subPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const SizedBox(height: 110),
+              const SizedBox(height: 50),
+              SizedBox(
+                child: SvgPicture.asset(
+                  'assets/images/survey-participants.svg',
+                  semanticsLabel: 'Survey done',
+                  height: 260,
+                ),
+              ),
+              const SizedBox(height: 45),
+              SizedBox(
+                child: Text(
+                  "You're 1 out of all the users who",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: AppColor.subPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              SizedBox(
+                child: Text(
+                  "participated in this initiative",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: AppColor.subPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 50),
+              SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
+                  child: SizedBox(
+                    height: 50,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const VisualizationWebViewScreen(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(180, 40),
+                        backgroundColor: AppColor.subPrimary,
+                        foregroundColor: AppColor.subSecondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(33),
+                        ),
+                      ),
+                      icon: const Icon(Icons.report),
+                      label: Text(
+                        'REPORTS',
+                        style: TextStyle(
+                          color: AppColor.subSecondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100),
