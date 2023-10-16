@@ -13,6 +13,14 @@ void callbackDispatcher() {
         print("*** Workmanager: syncResponses ***");
         DB.submitLocalResponsesToApi();
         DB.isSentSurveyFromFalseToTrue();
+        // AwesomeNotifications().createNotification(
+        //   content: NotificationContent(
+        //     id: 1,
+        //     channelKey: 'bosesko_channel',
+        //     title: 'BosesKo Notification',
+        //     body: 'Done Syncing Local Responses to Server',
+        //   ),
+        // );
         break;
     }
     return Future.value(true);

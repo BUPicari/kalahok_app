@@ -18,7 +18,9 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
       try {
         emit(SurveyLoadingState());
         final surveyWithQuestionnaires = await _surveyRepository.getSurveyWithQuestionnaires(
-            surveyId: event.surveyId);
+          surveyId: event.surveyId,
+          languageId: event.languageId,
+        );
         emit(SurveyLoadedState(surveyWithQuestionnaires));
         Utils.audioRename(from: 'PENDING', to: 'DENY');
       } catch (error) {

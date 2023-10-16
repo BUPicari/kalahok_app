@@ -29,6 +29,7 @@ dependencies:
   chewie: ^1.7.1
   awesome_notifications: ^0.7.6
   flutter_inappwebview: ^5.7.2+3
+  flutter_map_location_marker: ^6.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

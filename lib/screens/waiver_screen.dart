@@ -18,7 +18,10 @@ class WaiverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SurveyBloc()..add(GetSurveyWithQuestionnairesEvent(surveyId: survey.id)),
+      create: (context) => SurveyBloc()..add(GetSurveyWithQuestionnairesEvent(
+        surveyId: survey.id,
+        languageId: survey.languageId ?? 1,
+      )),
       child: Scaffold(
         body: BlocBuilder<SurveyBloc, SurveyState>(
           builder: (context, state) {

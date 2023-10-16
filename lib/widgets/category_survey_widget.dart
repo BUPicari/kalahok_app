@@ -32,7 +32,7 @@ class CategorySurveyWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              survey.title,
+              "${survey.title} - ${survey.languageName}",
               style: TextStyle(
                 color: AppColor.warning,
                 fontWeight: FontWeight.bold,

@@ -5,8 +5,8 @@ import 'package:kalahok_app/blocs/survey/survey_bloc.dart';
 import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
+import 'package:kalahok_app/screens/current_location_map_screen.dart';
 import 'package:kalahok_app/screens/review_screen.dart';
-import 'package:kalahok_app/screens/visualization_webview_screen.dart';
 
 class SurveyDoneScreen extends StatelessWidget {
   final Surveys survey;
@@ -200,7 +200,7 @@ class SurveyDoneScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const VisualizationWebViewScreen(),
+                            builder: (context) => const CurrentLocationMapScreen(),
                           ),
                         );
                       },
@@ -212,9 +212,9 @@ class SurveyDoneScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(33),
                         ),
                       ),
-                      icon: const Icon(Icons.report),
+                      icon: const Icon(Icons.pin_drop),
                       label: Text(
-                        'REPORTS',
+                        "LOCATION",
                         style: TextStyle(
                           color: AppColor.subSecondary,
                           fontSize: 16,

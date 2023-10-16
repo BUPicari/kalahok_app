@@ -103,7 +103,7 @@ class CategoryScreen extends StatelessWidget {
 
   Widget _buildCategories({required List<Category> categories}) {
     return SizedBox(
-      height: 500,
+      height: 600,
       child: GridView(
         primary: false,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

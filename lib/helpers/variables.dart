@@ -18,7 +18,7 @@ class AppColor {
 class ApiConfig {
   static String baseUrl = "https://chedlakas.mab.com.ph:8001"; /// server
   static String visualizationUrl = "https://chedlakas.mab.com.ph:8004/admin"; /// visualization/frequency
-  // static String baseUrl = "http://192.168.1.115:3001"; /// local
+  // static String baseUrl = "http://10.10.14.80:3001"; /// local
   static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
 }
 

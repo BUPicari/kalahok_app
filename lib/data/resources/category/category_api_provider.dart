@@ -13,7 +13,7 @@ class CategoryApiProvider {
   /// @return: List of categories w/o surveys
   Future<List<Category>> getCategoryList() async {
     final db = await _dbService.database;
-    var path = '/survey/categories/all';
+    var path = '/survey/categories/all/with-active-survey-only';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(
@@ -23,14 +23,14 @@ class CategoryApiProvider {
     var categoriesJson = jsonDecode(response.body) as List;
     List<Category> result = categoriesJson.map((e) =>
         Category.fromJson(e)).toList();
-    for (var element in result) {
-      /// From api insert to local db
-      await db.insert(
-        'survey_category',
-        element.toJson(), /// w/o surveys
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
+    // for (var element in result) {
+    //   /// From api insert to local db
+    //   await db.insert(
+    //     'survey_category',
+    //     element.toJson(), /// w/o surveys
+    //     conflictAlgorithm: ConflictAlgorithm.replace,
+    //   );
+    // }
 
     return result;
   }

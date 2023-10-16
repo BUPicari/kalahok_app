@@ -15,7 +15,9 @@ class Surveys { /// todo: Make this Survey only
   String? updatedAt;
   List<Questions>? questionnaires;
   List<SurveyDetails>? details;
-  int? numOfRequired;
+  int? numOfRequired; /// only for getting the num if required questions in a survey
+  int? languageId; /// for getting the detail id of a language json
+  String? languageName; /// for getting the string value of the language name
 
   Surveys({
     required this.id,
@@ -33,6 +35,8 @@ class Surveys { /// todo: Make this Survey only
     this.questionnaires,
     this.details,
     this.numOfRequired,
+    this.languageId,
+    this.languageName,
   });
 
   factory Surveys.fromJson(Map<String, dynamic> json) {

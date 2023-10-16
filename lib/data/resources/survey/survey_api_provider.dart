@@ -15,10 +15,10 @@ class SurveyApiProvider {
   /// @return: Survey w/ questionnaires
   Future<Surveys> getSurveyWithQuestionnaires({
     required int surveyId,
-    // required int landId,
+    required int languageId,
   }) async {
     final db = await _dbService.database;
-    var path = '/surveys/fetch/$surveyId?langId=1';
+    var path = '/surveys/fetch/$surveyId?langId=$languageId';
     var url = Uri.parse(ApiConfig.baseUrl + path);
     http.Response response = await http.get(
       url,
@@ -37,11 +37,11 @@ class SurveyApiProvider {
     }
 
     Surveys result = Surveys.fromJson(jsonDecode(responseBody));
-    // List<Questions> questionnaires = result.questionnaires ?? [];
-    //
-    // for (var question in questionnaires) {
-    //   Utils.updateQuestionnaireRequiredNum(survey: result, question: question);
-    // }
+    List<Questions> questionnaires = result.questionnaires ?? [];
+
+    for (var question in questionnaires) {
+      Utils.updateQuestionnaireRequiredNum(survey: result, question: question);
+    }
 
     // for (var item in questionnaires) {
     //   item.surveyId = surveyId;

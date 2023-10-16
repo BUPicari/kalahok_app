@@ -9,8 +9,16 @@ class SurveyRepository {
 
   /// @usedFor: Getting a survey w/ questionnaires
   /// @return: If has internet connection get data using api else local db
-  Future<Surveys?> getSurveyWithQuestionnaires({required int surveyId}) async {
-    if (await Utils.hasInternetConnection) return _apiProvider.getSurveyWithQuestionnaires(surveyId: surveyId);
+  Future<Surveys?> getSurveyWithQuestionnaires({
+    required int surveyId,
+    required int languageId,
+  }) async {
+    if (await Utils.hasInternetConnection) {
+      return _apiProvider.getSurveyWithQuestionnaires(
+        surveyId: surveyId,
+        languageId: languageId,
+      );
+    }
     return _dbProvider.getSurveyWithQuestionnaires(surveyId: surveyId);
   }
 
