@@ -87,10 +87,12 @@ class SurveyApiProvider {
 
       SurveyResponse surveyResponse = SurveyResponse(
         surveyId: survey.id,
+        detailsId: survey.detailsId ?? 0,
         questionnaires: questionnaires,
       );
 
       request.fields['survey_id'] = surveyResponse.surveyId.toString();
+      request.fields['detailsId'] = surveyResponse.detailsId.toString();
       surveyResponse.questionnaires.asMap().forEach((index, value) async {
         request.fields['questionnaires[$index][questionnaire_id]'] =
             value.questionnaireId.toString();

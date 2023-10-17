@@ -1,9 +1,11 @@
 class SurveyResponse {
   int surveyId;
+  int detailsId;
   List<ResponseQuestionnaires> questionnaires;
 
   SurveyResponse({
     required this.surveyId,
+    required this.detailsId,
     required this.questionnaires,
   });
 
@@ -13,6 +15,7 @@ class SurveyResponse {
 
     return {
       'survey_id': surveyId,
+      'detailsId': detailsId,
       'questionnaires': questions,
     };
   }
