@@ -103,14 +103,10 @@ class Utils {
           Center(
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(250, 50),
+                minimumSize: const Size(160, 50),
                 backgroundColor: AppColor.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(33),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 16,
                 ),
               ),
               icon: const Icon(Icons.play_arrow),

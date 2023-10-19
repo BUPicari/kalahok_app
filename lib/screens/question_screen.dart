@@ -31,6 +31,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     pageController = PageController();
     question = widget.survey.questionnaires!.first;
+
+    setState(() {
+      question.surveyId = widget.survey.id;
+    });
     // selected = [];
   }
 
@@ -203,6 +207,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     setState(() {
       question = widget.survey.questionnaires![indexPage];
+      question.surveyId = widget.survey.id;
     });
 
     if (jump) {

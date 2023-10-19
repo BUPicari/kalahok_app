@@ -7,6 +7,8 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
 import 'package:kalahok_app/screens/current_location_map_screen.dart';
 import 'package:kalahok_app/screens/review_screen.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SurveyDoneScreen extends StatelessWidget {
   final Surveys survey;
@@ -23,7 +25,8 @@ class SurveyDoneScreen extends StatelessWidget {
       child: BlocBuilder<SurveyBloc, SurveyState>(
         builder: (context, state) {
           if (state is SurveyForReviewState) {
-            return _buildForReview(context);
+            // return _buildForReview(context);
+            return _buildDone(context);
           }
           if (state is SurveyDoneState) {
             return _buildDone(context);
@@ -124,6 +127,8 @@ class SurveyDoneScreen extends StatelessWidget {
   }
 
   Widget _buildDone(BuildContext context) {
+    final gformsSurveyUrl = Uri.parse('https://forms.gle/Lc97er4yWBDN6ipj6');
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -159,7 +164,7 @@ class SurveyDoneScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               SizedBox(
                 child: SvgPicture.asset(
                   'assets/images/survey-participants.svg',
@@ -167,7 +172,7 @@ class SurveyDoneScreen extends StatelessWidget {
                   height: 260,
                 ),
               ),
-              const SizedBox(height: 45),
+              const SizedBox(height: 20),
               SizedBox(
                 child: Text(
                   "You're 1 out of all the users who",
@@ -189,12 +194,46 @@ class SurveyDoneScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 40),
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: SizedBox(
-                    height: 50,
+                    height: 45,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        launchUrl(
+                          gformsSurveyUrl,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(160, 40),
+                        backgroundColor: AppColor.subPrimary,
+                        foregroundColor: AppColor.subSecondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(33),
+                        ),
+                      ),
+                      icon: const Icon(Icons.comment),
+                      label: Text(
+                        "EVALUATE",
+                        style: TextStyle(
+                          color: AppColor.subSecondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
+                  child: SizedBox(
+                    height: 45,
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.push(
@@ -205,7 +244,7 @@ class SurveyDoneScreen extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(180, 40),
+                        minimumSize: const Size(160, 40),
                         backgroundColor: AppColor.subPrimary,
                         foregroundColor: AppColor.subSecondary,
                         shape: RoundedRectangleBorder(
@@ -230,7 +269,7 @@ class SurveyDoneScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: SizedBox(
-                    height: 50,
+                    height: 45,
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.push(
@@ -241,7 +280,7 @@ class SurveyDoneScreen extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(180, 40),
+                        minimumSize: const Size(160, 40),
                         backgroundColor: AppColor.subPrimary,
                         foregroundColor: AppColor.subSecondary,
                         shape: RoundedRectangleBorder(
