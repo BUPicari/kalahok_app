@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalahok_app/blocs/category/category_bloc.dart';
 import 'package:kalahok_app/data/models/category_model.dart';
-import 'package:kalahok_app/data/models/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
 import 'package:kalahok_app/screens/category_screen.dart';
@@ -105,36 +104,18 @@ class CategorySurveyScreen extends StatelessWidget {
   }
 
   Widget _buildCategorySurveys({Category? categoryWithSurvey}) {
-    List<Surveys> newSurveyArr = [];
-    List<Surveys> surveys = categoryWithSurvey?.surveys ?? [];
-
-    for (Surveys survey in surveys) {
-      for (SurveyDetails detail in survey.details!) {
-        Surveys newSurvey = Surveys(
-          id: survey.id,
-          title: survey.title,
-          description: survey.description,
-          startDate: survey.startDate,
-          endDate: survey.endDate,
-          languageId: detail.id,
-          languageName: detail.language.name,
-        );
-        newSurveyArr.add(newSurvey);
-      }
-    }
-
     return SizedBox(
       height: 600,
       child: GridView(
         primary: false,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
+          crossAxisCount: 2,
           childAspectRatio: 4 / 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
-        children: newSurveyArr
-          .map((survey) => CategorySurveyWidget(survey: survey))
+        children: categoryWithSurvey!.surveys!
+          .map((survey) => CategorySurveyWidget(category: category, survey: survey))
           .toList(),
       ),
     );

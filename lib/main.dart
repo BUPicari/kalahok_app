@@ -44,9 +44,9 @@ Future<void> main() async {
     null,
     [
       NotificationChannel(
-          channelKey: 'bosesko_channel',
-          channelName: 'BosesKo Notifications',
-          channelDescription: 'Notification channel for BosesKo'
+        channelKey: 'bosesko_channel',
+        channelName: 'BosesKo Notifications',
+        channelDescription: 'Notification channel for BosesKo'
       ),
     ],
     debug: true,
