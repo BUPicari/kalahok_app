@@ -1,0 +1,140 @@
+import 'package:flutter/material.dart';
+
+import 'package:kalahok_app/data/models/online/answer_model.dart';
+import 'package:kalahok_app/data/models/online/questions_model.dart';
+import 'package:kalahok_app/data/models/online/surveys_model.dart';
+import 'package:kalahok_app/helpers/functions.dart';
+import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/screens/online/category_screen.dart';
+import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
+import 'package:kalahok_app/widgets/online/question_numbers_widget.dart';
+import 'package:kalahok_app/widgets/online/questions_widget.dart';
+
+/// CHECKED
+class QuestionScreen extends StatefulWidget {
+  final Surveys survey;
+
+  const QuestionScreen({
+    Key? key,
+    required this.survey,
+  }) : super(key: key);
+
+  @override
+  State<QuestionScreen> createState() => _QuestionScreenState();
+}
+
+class _QuestionScreenState extends State<QuestionScreen> {
+  late PageController pageController;
+  late Questions question;
+
+  @override
+  void initState() {
+    super.initState();
+
+    pageController = PageController();
+    question = widget.survey.questionnaires!.first;
+
+    setState(() {
+      question.surveyId = widget.survey.id;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    /// Local to API not yet sent items submission
+    Functions.localToApi();
+
+    return Scaffold(
+      appBar: buildAppBar(context: context),
+      resizeToAvoidBottomInset: false,
+      body: QuestionsWidget(
+        survey: widget.survey,
+        pageController: pageController,
+        onChangedPage: (index) => goTo(index: index),
+        onSetResponse: (response) => setResponse(response: response),
+        onPressedPrev: (index) => setPrevQuestion(index: index),
+        onPressedNext: (index) => setNextQuestion(index: index),
+      ),
+    );
+  }
+
+  PreferredSizeWidget buildAppBar({ required context }) {
+    return AppBar(
+      title: Text(widget.survey.title),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: AppColor.linearGradient,
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          ),
+        ),
+      ),
+      leading: GestureDetector(
+        child: Icon(
+          Icons.arrow_back,
+          color: AppColor.subPrimary,
+        ),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => LoadingOverlay(
+            progressText: "OFFLINE MODE",
+            child: const CategoryScreen(),
+          ),
+        )),
+      ),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: QuestionNumbersWidget(
+            questions: widget.survey.questionnaires!,
+            question: question,
+            onClickedNumber: (index) => goTo(
+              index: index,
+              jump: true,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void setResponse({ required Answer response }) {
+    setState(() {
+      question.answer = response;
+    });
+    widget.survey.questionnaires?.forEach((element) {
+      print('Question: ${element.question}');
+      print(element.answer?.toJson());
+      print('----------');
+    });
+    print('*********');
+  }
+
+  void setPrevQuestion({ required int index }) {
+    goTo(
+      index: index - 1,
+      jump: true,
+    );
+  }
+
+  void setNextQuestion({ required int index }) {
+    goTo(
+      index: index + 1,
+      jump: true,
+    );
+  }
+
+  void goTo({ required int index, bool jump = false }) {
+    final indexPage = index;
+
+    setState(() {
+      question = widget.survey.questionnaires![indexPage];
+      question.surveyId = widget.survey.id;
+    });
+
+    if (jump) {
+      pageController.jumpToPage(indexPage);
+    }
+  }
+}

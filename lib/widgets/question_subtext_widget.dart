@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// CHECKED
 class QuestionSubtextWidget extends StatelessWidget {
   final String subText;
 

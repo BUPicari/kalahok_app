@@ -1,13 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+
 import 'package:kalahok_app/helpers/variables.dart';
 
 class TimerController extends ValueNotifier<bool> {
   TimerController({ bool isPlaying = false }) : super(isPlaying);
-
   void startTimer() => value = true;
-
   void stopTimer() => value = false;
 }
 
@@ -58,18 +56,14 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   void startTimer({ bool resets = true }) {
     if (!mounted) return;
-    if (resets) {
-      reset();
-    }
+    if (resets) reset();
 
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
   }
 
   void stopTimer({ bool resets = true }) {
     if (!mounted) return;
-    if (resets) {
-      reset();
-    }
+    if (resets) reset();
 
     setState(() => timer?.cancel());
   }
@@ -77,11 +71,11 @@ class _TimerWidgetState extends State<TimerWidget> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: buildTime(),
+      child: _buildTime(),
     );
   }
 
-  Widget buildTime() {
+  Widget _buildTime() {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     final twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     final twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
