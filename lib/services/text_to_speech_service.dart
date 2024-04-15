@@ -1,5 +1,6 @@
 import 'package:flutter_tts/flutter_tts.dart';
 
+/// CHECKED
 class TextToSpeechService {
   FlutterTts? flutterTts;
 
@@ -7,7 +8,7 @@ class TextToSpeechService {
     flutterTts = FlutterTts();
   }
 
-  void textToSpeech({required String text}) async {
+  void textToSpeech({ required String text }) async {
     await flutterTts?.setLanguage("en-US");
     await flutterTts?.setVolume(1.0);
     await flutterTts?.setSpeechRate(0.5);

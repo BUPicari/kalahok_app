@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 
+import 'package:kalahok_app/helpers/functions.dart';
+
+/// CHECKED
 class CurrentLocationMapScreen extends StatefulWidget {
-  const CurrentLocationMapScreen({Key? key,}) : super(key: key);
+  const CurrentLocationMapScreen({ Key? key }) : super(key: key);
 
   @override
   State<CurrentLocationMapScreen> createState() => _CurrentLocationMapScreenState();
@@ -12,6 +15,9 @@ class CurrentLocationMapScreen extends StatefulWidget {
 class _CurrentLocationMapScreenState extends State<CurrentLocationMapScreen> {
   @override
   Widget build(BuildContext context) {
+    /// Local to API not yet sent items submission
+    Functions.localToApi();
+
     return Scaffold(
       appBar: AppBar(title: const Text("Location")),
       body: FlutterMap(

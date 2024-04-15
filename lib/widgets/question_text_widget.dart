@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/text_to_speech_service.dart';
 
+/// CHECKED
 class QuestionTextWidget extends StatefulWidget {
   final bool isRequired;
   final String question;

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
+/// CHECKED
+/// NOT USED
 class VisualizationWebViewScreen extends StatefulWidget {
-  const VisualizationWebViewScreen({Key? key,}) : super(key: key);
+  const VisualizationWebViewScreen({ Key? key }) : super(key: key);
 
   @override
   State<VisualizationWebViewScreen> createState() => _VisualizationWebViewScreenState();
@@ -15,15 +19,16 @@ class _VisualizationWebViewScreenState extends State<VisualizationWebViewScreen>
 
   @override
   Widget build(BuildContext context) {
+    /// Local to API not yet sent items submission
+    Functions.localToApi();
+
     return WillPopScope(
       onWillPop: () async {
         var isLastPage = await inAppWebViewController.canGoBack();
-
         if (isLastPage) {
           inAppWebViewController.goBack();
           return false;
         }
-
         return true;
       },
       child: SafeArea(
@@ -50,8 +55,8 @@ class _VisualizationWebViewScreenState extends State<VisualizationWebViewScreen>
               ) : const SizedBox()
             ],
           ),
-        )
-      )
+        ),
+      ),
     );
   }
 }

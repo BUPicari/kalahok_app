@@ -1,10 +1,13 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:kalahok_app/helpers/variables.dart';
 import 'package:video_player/video_player.dart';
 
+import 'package:kalahok_app/helpers/functions.dart';
+import 'package:kalahok_app/helpers/variables.dart';
+
+/// CHECKED
 class DemoScreen extends StatefulWidget {
-  const DemoScreen({Key? key,}) : super(key: key);
+  const DemoScreen({ Key? key }) : super(key: key);
 
   @override
   State<DemoScreen> createState() => _DemoScreenState();
@@ -37,7 +40,7 @@ class _DemoScreenState extends State<DemoScreen> {
         aspectRatio: _controller.value.aspectRatio,
         autoPlay: true,
         looping: true,
-        placeholder: _buildPlaceholderImage()
+        placeholder: _buildPlaceholderImage(),
       );
     });
   }
@@ -67,22 +70,25 @@ class _DemoScreenState extends State<DemoScreen> {
         ),
       ),
       child: Center(
-        child: Chewie(controller: _chewieController,),
+        child: Chewie(controller: _chewieController),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    /// Local to API not yet sent items submission
+    Functions.localToApi();
+
     return Scaffold(
-        appBar: AppBar(title: const Text("Toolkit Demo")),
-        body: FutureBuilder(
-          future: _future,
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.waiting) return _buildPlaceholderImage();
-            return _buildChewieImage();
-          },
-        )
+      appBar: AppBar(title: const Text("Toolkit Demo")),
+      body: FutureBuilder(
+        future: _future,
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.waiting) return _buildPlaceholderImage();
+          return _buildChewieImage();
+        },
+      ),
     );
   }
 }

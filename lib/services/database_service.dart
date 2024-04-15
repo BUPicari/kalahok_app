@@ -1,10 +1,11 @@
 import 'dart:io';
-
-import 'package:kalahok_app/helpers/database.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'package:kalahok_app/helpers/database.dart';
+
+/// CHECKED
 class DatabaseService {
   static final DatabaseService dbService = DatabaseService();
 
@@ -28,10 +29,17 @@ class DatabaseService {
   }
 
   void _initDB(Database database, int version) async {
-    await database.execute(DB.surveyCategoryTable);
+    await database.execute(DB.categoryTable);
     await database.execute(DB.surveyTable);
-    await database.execute(DB.surveyQuestionnairesTable);
+    await database.execute(DB.languageTable);
+    await database.execute(DB.surveyDetailTable);
+    await database.execute(DB.questionnairesTable);
+    await database.execute(DB.provinceDropdown);
+    await database.execute(DB.cityDropdown);
+    await database.execute(DB.barangayDropdown);
+    await database.execute(DB.courseDropdown);
+    await database.execute(DB.schoolDropdown);
     await database.execute(DB.surveyResponseTable);
-    await database.execute(DB.surveyQuestionnairesResponsesTable);
+    await database.execute(DB.questionnaireResponseTable);
   }
 }
