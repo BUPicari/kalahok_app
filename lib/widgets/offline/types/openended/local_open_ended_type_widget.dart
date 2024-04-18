@@ -93,7 +93,7 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
       );
     }
 
-    return Column();
+    return const Column();
   }
 
   Widget _buildTextFieldForms() {

@@ -122,7 +122,7 @@ class Functions {
       );
     }
 
-    return Column();
+    return const Column();
   }
 
   /// Checking internet connection availability
@@ -160,8 +160,6 @@ class Functions {
   static void localToApi() async {
     final dbService = DatabaseService.dbService;
     final db = await dbService.database;
-
-    print("Check if there are items that are not yet sent from Local to API");
 
     /// Query db survey responses where is_sent = false
     List<Map<String, dynamic>> dbSurveyResponse = await db.query(
@@ -204,8 +202,6 @@ class Functions {
 
           /// Send is_sent = false questionnaire responses to api post request
           try {
-            print("Start Local to API submission for a not yet sent items");
-
             var request = http.MultipartRequest('POST', url);
             request.headers['X-Requested-With'] = "XMLHttpRequest";
             request.headers['x-api-key'] = ApiConfig.apiKey;
@@ -225,11 +221,8 @@ class Functions {
               }
             });
 
-            var result = await request.send();
+            await request.send();
             audioRename(from: 'SUBMITTED', to: 'DONE');
-
-            print("Done Local to API submission for a not yet sent items");
-            print("Start updating survey response to is_sent = true");
 
             /// Update the survey response to is_sent = true
             await db.update(
@@ -240,9 +233,6 @@ class Functions {
               conflictAlgorithm: ConflictAlgorithm.replace,
             );
 
-            print("Done updating survey response to is_sent = true");
-            print("Notify now the user that the local responses has already been submitted");
-
             /// Call the notification
             await NotificationService.showNotification(
               title: "Local to API responses submitted!",
@@ -250,10 +240,8 @@ class Functions {
               summary: "BosesKo Notification",
               notificationLayout: NotificationLayout.Inbox,
             );
-
-            print("Notified the user that the local responses has already been submitted");
           } catch (error) {
-            print(error);
+            /// todo: log error here
           }
         }
       }

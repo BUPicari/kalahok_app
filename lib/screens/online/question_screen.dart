@@ -103,12 +103,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
     setState(() {
       question.answer = response;
     });
-    widget.survey.questionnaires?.forEach((element) {
-      print('Question: ${element.question}');
-      print(element.answer?.toJson());
-      print('----------');
-    });
-    print('*********');
   }
 
   void setPrevQuestion({ required int index }) {

@@ -23,7 +23,7 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   final ApiToDbRepository _apiToDbRepository = ApiToDbRepository();
 
-  void _offlineMode() async {
+  void _offlineMode(context) async {
     LoadingOverlay.of(context).show();
     await _apiToDbRepository.insertAllDataFromApiToLocalDB();
     await Future.delayed(const Duration(seconds: 60));
@@ -95,7 +95,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 color: Colors.white,
               ),
               tooltip: "Offline Mode",
-              onPressed: _offlineMode,
+              onPressed: () {
+                _offlineMode(context);
+              },
             )
           ],
         ),

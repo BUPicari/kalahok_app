@@ -21,6 +21,6 @@ class QuestionSubtextWidget extends StatelessWidget {
       ]);
     }
 
-    return Column();
+    return const Column();
   }
 }

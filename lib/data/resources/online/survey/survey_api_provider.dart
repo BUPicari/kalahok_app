@@ -89,10 +89,10 @@ class SurveyApiProvider {
         }
       });
 
-      var result = await request.send();
+      await request.send();
       Functions.audioRename(from: 'PENDING', to: 'DONE');
     } catch (error) {
-      print(error);
+      /// todo: log error here
     }
   }
 

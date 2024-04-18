@@ -212,7 +212,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
           ]);
       }).toList();
 
-      Widget addOthersWidget = Column();
+      Widget addOthersWidget = const Column();
       String othersOrSpecifyText = questionnaire.type == 'trueOrFalse' ?
         'Specify:' :
         'Others:';

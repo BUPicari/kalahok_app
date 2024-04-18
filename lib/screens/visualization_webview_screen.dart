@@ -48,11 +48,9 @@ class _VisualizationWebViewScreenState extends State<VisualizationWebViewScreen>
                   });
                 },
               ),
-              _progress < 1 ? Container (
-                child: LinearProgressIndicator(
+              _progress < 1 ? LinearProgressIndicator(
                   value: _progress,
-                ),
-              ) : const SizedBox()
+                ) : const SizedBox(),
             ],
           ),
         ),

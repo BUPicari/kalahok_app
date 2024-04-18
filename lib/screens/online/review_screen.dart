@@ -192,7 +192,7 @@ class ReviewScreen extends StatelessWidget {
         );
       }).toList();
 
-      Widget addOthersWidget = Column();
+      Widget addOthersWidget = const Column();
       String othersOrSpecifyText = question.type == 'trueOrFalse'
         ? 'Specify:'
         : 'Others:';

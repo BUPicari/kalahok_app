@@ -101,12 +101,6 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
     setState(() {
       questionnaire.response = response;
     });
-    widget.questionnaires?.forEach((element) {
-      print('Question: ${element.question}');
-      print(element.response?.toJson());
-      print('----------');
-    });
-    print('*********');
   }
 
   void _setPrevQuestion({ required int index }) {

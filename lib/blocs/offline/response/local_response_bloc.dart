@@ -30,9 +30,6 @@ class LocalResponseBloc extends Bloc<LocalResponseEvent, LocalResponseState> {
           }
         }
 
-        print('numOfRequired: ${event.survey.numOfRequired}');
-        print('numOfRequiredResponses: $numOfRequiredResponses');
-
         if (event.survey.numOfRequired != numOfRequiredResponses) {
           emit(LocalResponseReviewState());
         } else {

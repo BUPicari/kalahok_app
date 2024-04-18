@@ -35,7 +35,7 @@ class LocalCategoryWidget extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
-                    return Column();
+                    return const Column();
                   } else {
                     if (snapshot.data == true) {
                       return Image.network(
@@ -43,11 +43,11 @@ class LocalCategoryWidget extends StatelessWidget {
                         width: 70,
                       );
                     } else {
-                      return Column();
+                      return const Column();
                     }
                   }
                 } else {
-                  return Column();
+                  return const Column();
                 }
               },
             ),

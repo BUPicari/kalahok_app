@@ -132,8 +132,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
 
                 return options.asMap().entries.map((e) => SearchableDropdownMenuItem(
                   value: Result(value: e.key, label: e.value.trim()),
-                  label: e.value.trim() ?? '',
-                  child: Text(e.value.trim() ?? ''),
+                  label: e.value.trim(),
+                  child: Text(e.value.trim()),
                 ))
                     .toList();
               },
@@ -201,8 +201,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                 return paginatedList
                     .map((e) => SearchableDropdownMenuItem(
                   value: Result(value: e.value, label: e.label),
-                  label: e.label ?? '',
-                  child: Text(e.label ?? ''),
+                  label: e.label,
+                  child: Text(e.label),
                 ))
                     .toList();
               },

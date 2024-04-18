@@ -158,8 +158,8 @@ class _LocalDropdownTypeWidgetState extends State<LocalDropdownTypeWidget> {
     return options.asMap().entries.map((e) {
       return SearchableDropdownMenuItem(
         value: Dropdown(value: e.key.toString(), label: e.value.trim()),
-        label: e.value.trim() ?? '',
-        child: Text(e.value.trim() ?? ''),
+        label: e.value.trim(),
+        child: Text(e.value.trim()),
       );
     }).toList();
   }
@@ -177,8 +177,8 @@ class _LocalDropdownTypeWidgetState extends State<LocalDropdownTypeWidget> {
 
     return paginatedList.map((e) => SearchableDropdownMenuItem(
       value: Dropdown(value: e.value, label: e.label),
-      label: e.label ?? '',
-      child: Text(e.label ?? ''),
+      label: e.label,
+      child: Text(e.label),
     )).toList();
   }
 

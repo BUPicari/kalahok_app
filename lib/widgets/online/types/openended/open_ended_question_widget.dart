@@ -93,7 +93,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
       );
     }
 
-    return Column();
+    return const Column();
   }
 
   Widget _buildTextFieldForms() {
