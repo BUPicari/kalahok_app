@@ -32,7 +32,7 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
           leadingWidth: 110,
           leading: Transform.translate(
             offset: const Offset(12, 0),
-            child: Image.asset(AppConfig.logoPreview),
+            child: Image.asset(AppConfig.headerLogo),
           ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(80),

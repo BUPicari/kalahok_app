@@ -47,6 +47,7 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
               ),
             )),
           ),
+          foregroundColor: AppColor.subPrimary,
           title: Text(widget.category.name),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(80),

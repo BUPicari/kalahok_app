@@ -43,6 +43,7 @@ class ReviewButtonWidget extends StatelessWidget {
           );
         },
         style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(33),
           ),
@@ -71,6 +72,7 @@ class ReviewButtonWidget extends StatelessWidget {
           );
         },
         style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(33),
           ),

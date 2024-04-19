@@ -83,7 +83,7 @@ class CategorySurveyWidget extends StatelessWidget {
       languages.add(detail.language.name);
     }
 
-    return languages.join(" | ");
+    return languages.join(" , ");
   }
 
   List<Surveys> _getNewSurveyArr() {

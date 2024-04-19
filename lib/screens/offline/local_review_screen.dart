@@ -44,9 +44,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
                   '* Red boxes are required and has no answers',
                   style: TextStyle(
                     color: AppColor.darkError,
-                    fontStyle: FontStyle.italic,
                     fontSize: 16,
-                    decoration: TextDecoration.underline,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -54,9 +52,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
                   '* Gray boxes are not required and has no answers',
                   style: TextStyle(
                     color: AppColor.secondary,
-                    fontStyle: FontStyle.italic,
                     fontSize: 16,
-                    decoration: TextDecoration.underline,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -64,9 +60,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
                   '* Green boxes have answers',
                   style: TextStyle(
                     color: AppColor.darkSuccess,
-                    fontStyle: FontStyle.italic,
                     fontSize: 16,
-                    decoration: TextDecoration.underline,
                   ),
                 ),
               ],
@@ -101,7 +95,6 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
               questionnaire.question,
               style: TextStyle(
                 color: AppColor.subSecondary,
-                fontStyle: FontStyle.italic,
                 fontSize: 16,
               ),
             ),
@@ -124,6 +117,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: const Text('Recorded Response'),
       flexibleSpace: Container(
         decoration: BoxDecoration(

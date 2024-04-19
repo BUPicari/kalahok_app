@@ -29,6 +29,7 @@ class LocalLanguageWidget extends StatelessWidget {
             ),
           )),
         ),
+        foregroundColor: AppColor.subPrimary,
         title: Text(surveyDetails[0].survey.title),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
@@ -63,7 +64,7 @@ class LocalLanguageWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Active Survey',
+          'Choose your preferred',
           style: TextStyle(fontSize: 16, color: AppColor.subPrimary),
         ),
         Text(
@@ -161,7 +162,7 @@ class LocalLanguageWidget extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               height: 25,
-              width: 100,
+              width: 130,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(

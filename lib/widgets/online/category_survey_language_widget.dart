@@ -30,6 +30,7 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
             builder: (context) => CategorySurveyScreen(category: category),
           )),
         ),
+        foregroundColor: AppColor.subPrimary,
         title: Text(surveys[0].title),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
@@ -64,7 +65,7 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Active Survey',
+          'Choose your preferred',
           style: TextStyle(fontSize: 16, color: AppColor.subPrimary),
         ),
         Text(
@@ -159,7 +160,7 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               height: 25,
-              width: 100,
+              width: 130,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(

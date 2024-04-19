@@ -58,6 +58,7 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
 
   PreferredSizeWidget _buildAppBar({ required context }) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: Text(widget.survey.title),
       flexibleSpace: Container(
         decoration: BoxDecoration(

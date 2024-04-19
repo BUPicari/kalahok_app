@@ -164,6 +164,7 @@ class _RecordScreenState extends State<RecordScreen> {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: const Text('Record Answer'),
       flexibleSpace: Container(
         decoration: BoxDecoration(

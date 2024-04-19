@@ -60,6 +60,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   PreferredSizeWidget buildAppBar({ required context }) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: Text(widget.survey.title),
       flexibleSpace: Container(
         decoration: BoxDecoration(

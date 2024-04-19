@@ -95,7 +95,7 @@ class LocalSurveyWidget extends StatelessWidget {
       languages.add(detail.language.name);
     }
 
-    return languages.join(" | ");
+    return languages.join(" , ");
   }
 
   Future<List<SurveyDetail>> _getDetailsBySurvey() async {

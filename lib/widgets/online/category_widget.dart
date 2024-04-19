@@ -38,10 +38,14 @@ class CategoryWidget extends StatelessWidget {
                     return const Column();
                   } else {
                     if (snapshot.data == true) {
-                      return Image.network(
-                        ApiConfig.baseUrl + category.image,
-                        width: 70,
-                      );
+                      if (category.image != "undefined") {
+                        return Image.network(
+                          ApiConfig.baseUrl + category.image,
+                          width: 70,
+                        );
+                      } else {
+                        return const Column();
+                      }
                     } else {
                       return const Column();
                     }

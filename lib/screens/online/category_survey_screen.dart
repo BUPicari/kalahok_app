@@ -41,6 +41,7 @@ class CategorySurveyScreen extends StatelessWidget {
               ),
             )),
           ),
+          foregroundColor: AppColor.subPrimary,
           title: Text(category.name),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(80),
