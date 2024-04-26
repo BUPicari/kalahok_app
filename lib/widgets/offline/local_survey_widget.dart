@@ -52,8 +52,10 @@ class LocalSurveyWidget extends StatelessWidget {
                 fontSize: 12,
               ),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 10),
             Text(
               "Available Languages:",
               style: TextStyle(
@@ -90,12 +92,10 @@ class LocalSurveyWidget extends StatelessWidget {
   Future<String> _getAvailableLanguages() async {
     List<String> languages = [];
     List<SurveyDetail> details = await _getDetailsBySurvey();
-
     for (var detail in details) {
       languages.add(detail.language.name);
     }
-
-    return languages.join(" , ");
+    return languages.join(", ");
   }
 
   Future<List<SurveyDetail>> _getDetailsBySurvey() async {

@@ -49,8 +49,10 @@ class CategorySurveyWidget extends StatelessWidget {
                 fontSize: 12,
               ),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 10),
             Text(
               "Available Languages:",
               style: TextStyle(
@@ -78,12 +80,10 @@ class CategorySurveyWidget extends StatelessWidget {
   String _getAvailableLanguages() {
     List<String> languages = [];
     List<SurveyDetails> details = survey.details ?? [];
-
     for (SurveyDetails detail in details) {
       languages.add(detail.language.name);
     }
-
-    return languages.join(" , ");
+    return languages.join(", ");
   }
 
   List<Surveys> _getNewSurveyArr() {

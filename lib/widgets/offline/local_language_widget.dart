@@ -120,27 +120,36 @@ class LocalLanguageWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "${surveyDetail.survey.title} - ${surveyDetail.language.name}",
+              "( ${surveyDetail.language.name} )",
+              style: TextStyle(
+                color: AppColor.primary,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            Text(
+              surveyDetail.survey.title,
               style: TextStyle(
                 color: AppColor.warning,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
             const SizedBox(height: 10),
             Text(
               surveyDetail.survey.description.replaceAll("\n", ""),
               style: TextStyle(
                 fontSize: 12,
-                fontStyle: FontStyle.italic,
                 color: AppColor.subSecondary,
               ),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 4,
+              maxLines: 3,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             Text(
               "Available from:",
               style: TextStyle(
@@ -159,7 +168,7 @@ class LocalLanguageWidget extends StatelessWidget {
                 color: AppColor.secondary,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
             SizedBox(
               height: 25,
               width: 130,
