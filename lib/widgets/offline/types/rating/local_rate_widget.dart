@@ -57,7 +57,7 @@ class _LocalRateWidgetState extends State<LocalRateWidget> {
               label.name,
               style: const TextStyle(
                 fontStyle: FontStyle.italic,
-                fontSize: 13,
+                fontSize: 10,
                 fontWeight: FontWeight.bold,
               ),
             );
