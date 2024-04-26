@@ -249,7 +249,10 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
                   borderRadius: BorderRadius.circular(33),
                 ),
               ),
-              icon: const Icon(Icons.play_arrow),
+              icon: Icon(
+                color: AppColor.subPrimary,
+                Icons.play_arrow,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,

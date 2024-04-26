@@ -147,14 +147,24 @@ class _RecordScreenState extends State<RecordScreen> {
           radius: 92,
           backgroundColor: AppColor.primary,
           child: player.isPlaying
-            ? const Icon(Icons.audiotrack_outlined, size: 120)
-            : Column(
+            ? Icon(
+              Icons.audiotrack_outlined,
+              size: 120,
+              color: AppColor.subPrimary,
+            ) : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.mic, size: 32),
+                Icon(
+                  Icons.mic,
+                  size: 32,
+                  color: AppColor.subPrimary,
+                ),
                 TimerWidget(controller: timerController),
                 const SizedBox(height: 8),
-                Text(text),
+                Text(
+                  text,
+                  style: TextStyle(color: AppColor.subPrimary),
+                ),
               ],
             ),
         ),
