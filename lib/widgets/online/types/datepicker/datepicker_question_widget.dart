@@ -59,11 +59,14 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
           ),
           const SizedBox(height: 32),
           Expanded(
-            child: SfDateRangePicker(
-              onSelectionChanged: _setDateSelected,
-              view: DateRangePickerView.month,
-              initialDisplayDate: _getDate(display: true),
-              initialSelectedDate: _getDate(),
+            child: Container(
+              padding: const EdgeInsets.only(left: 35),
+              child: SfDateRangePicker(
+                onSelectionChanged: _setDateSelected,
+                view: DateRangePickerView.month,
+                initialDisplayDate: _getDate(display: true),
+                initialSelectedDate: _getDate(),
+              ),
             ),
           ),
           PreviousNextButtonWidget(
