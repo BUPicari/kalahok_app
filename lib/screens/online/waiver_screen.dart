@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,7 +8,9 @@ import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
+import 'package:kalahok_app/screens/online/category_screen.dart';
 import 'package:kalahok_app/screens/online/question_screen.dart';
+import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
 /// CHECKED
 class WaiverScreen extends StatelessWidget {
@@ -110,9 +113,46 @@ class WaiverScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
+            Row(children: [
+              Expanded(
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoadingOverlayWidget(
+                            progressText: "Please wait while downloading all the data, switching to Offline Mode",
+                            child: CategoryScreen(addresses: addresses),
+                          ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.subPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(33),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Back',
+                          style: TextStyle(
+                            color: AppColor.subSecondary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 25),
+              Expanded(
                 child: SizedBox(
                   height: 50,
                   child: ElevatedButton(
@@ -137,7 +177,7 @@ class WaiverScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'PROCEED',
+                          'Proceed',
                           style: TextStyle(
                             color: AppColor.subSecondary,
                             fontSize: 16,
@@ -149,7 +189,7 @@ class WaiverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ]),
           ],
         ),
       ),

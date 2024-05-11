@@ -8,7 +8,9 @@ import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
+import 'package:kalahok_app/screens/offline/local_category_screen.dart';
 import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
+import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
 /// CHECKED
 class LocalWaiverScreen extends StatefulWidget {
@@ -117,9 +119,46 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
+            Row(children: [
+              Expanded(
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoadingOverlayWidget(
+                            progressText: "Switching back to Online Mode",
+                            child: LocalCategoryScreen(addresses: widget.addresses),
+                          ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.subPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(33),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Back',
+                          style: TextStyle(
+                            color: AppColor.subSecondary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 25),
+              Expanded(
                 child: SizedBox(
                   height: 50,
                   child: ElevatedButton(
@@ -145,7 +184,7 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'PROCEED',
+                          'Proceed',
                           style: TextStyle(
                             color: AppColor.subSecondary,
                             fontSize: 16,
@@ -157,7 +196,7 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                   ),
                 ),
               ),
-            ),
+            ]),
           ],
         ),
       ),
