@@ -8,17 +8,19 @@ import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/category_screen.dart';
-import 'package:kalahok_app/screens/current_location_map_screen.dart';
+// import 'package:kalahok_app/screens/current_location_map_screen.dart';
 import 'package:kalahok_app/screens/online/review_screen.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
 /// CHECKED
 class SurveyDoneScreen extends StatelessWidget {
   final Surveys survey;
+  final List<String> addresses;
 
   const SurveyDoneScreen({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -97,7 +99,10 @@ class SurveyDoneScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ReviewScreen(survey: survey),
+                            builder: (context) => ReviewScreen(
+                              survey: survey,
+                              addresses: addresses,
+                            ),
                           ),
                         );
                       },
@@ -233,6 +238,42 @@ class SurveyDoneScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              // const SizedBox(height: 10),
+              // SizedBox(
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 100),
+              //     child: SizedBox(
+              //       height: 45,
+              //       child: ElevatedButton.icon(
+              //         onPressed: () {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (context) => const CurrentLocationMapScreen(),
+              //             ),
+              //           );
+              //         },
+              //         style: ElevatedButton.styleFrom(
+              //           minimumSize: const Size(160, 40),
+              //           backgroundColor: AppColor.subPrimary,
+              //           foregroundColor: AppColor.subSecondary,
+              //           shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(33),
+              //           ),
+              //         ),
+              //         icon: const Icon(Icons.pin_drop),
+              //         label: Text(
+              //           "LOCATION",
+              //           style: TextStyle(
+              //             color: AppColor.subSecondary,
+              //             fontSize: 16,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 10),
               SizedBox(
                 child: Padding(
@@ -244,45 +285,9 @@ class SurveyDoneScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const CurrentLocationMapScreen(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(160, 40),
-                        backgroundColor: AppColor.subPrimary,
-                        foregroundColor: AppColor.subSecondary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(33),
-                        ),
-                      ),
-                      icon: const Icon(Icons.pin_drop),
-                      label: Text(
-                        "LOCATION",
-                        style: TextStyle(
-                          color: AppColor.subSecondary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100),
-                  child: SizedBox(
-                    height: 45,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoadingOverlay(
-                              progressText: "OFFLINE MODE",
-                              child: const CategoryScreen(),
+                            builder: (context) => LoadingOverlayWidget(
+                              progressText: "Please wait while downloading all the data, switching to Offline Mode",
+                              child: CategoryScreen(addresses: addresses),
                             ),
                           ),
                         );

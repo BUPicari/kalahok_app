@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
 /// CHECKED
-class LoadingOverlay extends StatelessWidget {
-  LoadingOverlay({
+class LoadingOverlayWidget extends StatelessWidget {
+  LoadingOverlayWidget({
     Key? key,
     required this.child,
     required this.progressText,
@@ -18,8 +18,8 @@ class LoadingOverlay extends StatelessWidget {
   final String progressText;
   final Duration delay;
 
-  static LoadingOverlay of(BuildContext context) {
-    return context.findAncestorWidgetOfExactType<LoadingOverlay>()!;
+  static LoadingOverlayWidget of(BuildContext context) {
+    return context.findAncestorWidgetOfExactType<LoadingOverlayWidget>()!;
   }
 
   void show() {
@@ -42,9 +42,12 @@ class LoadingOverlay extends StatelessWidget {
             if (value)
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-                child: const Opacity(
+                child: Opacity(
                   opacity: 0.8,
-                  child: ModalBarrier(dismissible: false, color: Colors.black),
+                  child: ModalBarrier(
+                    dismissible: false,
+                    color: AppColor.subSecondary,
+                  ),
                 ),
               ),
             if (value)
@@ -68,33 +71,41 @@ class LoadingOverlay extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
             width: MediaQuery.of(context).size.width,
-            height: 80,
+            height: 200,
             child: ElevatedButton(
               onPressed: null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircularProgressIndicator(
-                    color: AppColor.subPrimary,
+                    strokeWidth: 10,
+                    color: AppColor.primary,
+                    backgroundColor: AppColor.warning,
                   ),
-                  Text(
-                    progressText,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    child: Text(
+                      progressText,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: AppColor.subPrimary,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
           ),
-      ]),
+        ],
+      ),
     );
   }
 }

@@ -12,6 +12,7 @@ class LocalGotoWidget extends StatelessWidget {
   final Questionnaire questionnaire;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalGotoWidget({
     Key? key,
@@ -20,6 +21,7 @@ class LocalGotoWidget extends StatelessWidget {
     required this.questionnaire,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -88,6 +90,7 @@ class LocalGotoWidget extends StatelessWidget {
               builder: (context) => LocalReviewScreen(
                 survey: questionnaire.survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );
@@ -120,6 +123,7 @@ class LocalGotoWidget extends StatelessWidget {
               builder: (context) => LocalDoneScreen(
                 survey: questionnaire.survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );

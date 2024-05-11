@@ -4,16 +4,19 @@ import 'package:kalahok_app/data/models/online/category_model.dart';
 import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/online/category_survey_language_widget.dart';
+import 'package:kalahok_app/widgets/online/passcode_widget.dart';
 
 /// CHECKED
 class CategorySurveyWidget extends StatelessWidget {
   final Category category;
   final Surveys survey;
+  final List<String> addresses;
 
   const CategorySurveyWidget({
     Key? key,
     required this.category,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -23,7 +26,14 @@ class CategorySurveyWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CategorySurveyLanguageWidget(category: category, surveys: _getNewSurveyArr()),
+            builder: (context) => PasscodeWidget(
+              progressText: "Enter the passcode:",
+              child: CategorySurveyLanguageWidget(
+                category: category,
+                surveys: _getNewSurveyArr(),
+                addresses: addresses,
+              ),
+            ),
           ),
         );
       },
@@ -98,6 +108,7 @@ class CategorySurveyWidget extends StatelessWidget {
         endDate: survey.endDate,
         languageId: detail.id,
         languageName: detail.language.name,
+        passcode: survey.passcode,
       );
       newSurveyArr.add(newSurvey);
     }

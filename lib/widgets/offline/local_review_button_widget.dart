@@ -10,11 +10,13 @@ import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
 class LocalReviewButtonWidget extends StatelessWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;
+  final List<String> addresses;
 
   const LocalReviewButtonWidget({
     Key? key,
     required this.survey,
     required this.questionnaires,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -44,6 +46,7 @@ class LocalReviewButtonWidget extends StatelessWidget {
               builder: (context) => LocalQuestionnaireScreen(
                 survey: survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );
@@ -76,6 +79,7 @@ class LocalReviewButtonWidget extends StatelessWidget {
               builder: (context) => LocalDoneScreen(
                 survey: survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );

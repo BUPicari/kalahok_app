@@ -5,16 +5,19 @@ import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/category_survey_screen.dart';
 import 'package:kalahok_app/screens/online/waiver_screen.dart';
+import 'package:kalahok_app/widgets/online/passcode_widget.dart';
 
 /// CHECKED
 class CategorySurveyLanguageWidget extends StatelessWidget {
   final Category category;
   final List<Surveys> surveys;
+  final List<String> addresses;
 
   const CategorySurveyLanguageWidget({
     Key? key,
     required this.category,
     required this.surveys,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -27,7 +30,10 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
             color: AppColor.subPrimary,
           ),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CategorySurveyScreen(category: category),
+            builder: (context) => CategorySurveyScreen(
+              category: category,
+              addresses: addresses,
+            ),
           )),
         ),
         foregroundColor: AppColor.subPrimary,
@@ -172,12 +178,22 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
               width: 130,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WaiverScreen(survey: survey),
-                    ),
-                  );
+                  if (survey.passcode != "" && survey.passcode != null) {
+                    PasscodeWidget.of(context).show(
+                      survey: survey,
+                      addresses: addresses,
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WaiverScreen(
+                          survey: survey,
+                          addresses: addresses,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.primary,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 /// CHECKED
 class AppColor {
-  static Color splash = Colors.blue.shade600;
   static MaterialColor primary = Colors.indigo;
   static MaterialColor secondary = Colors.blueGrey;
   static Color subPrimary = Colors.white;
@@ -32,6 +31,5 @@ class ApiConfig {
 class AppConfig {
   static String name = "BosesKo";
   static String logo = "assets/images/bosesko-logo.png";
-  static String headerLogo = "assets/images/bosesko-header-logo.png";
   static String demoVideo = "assets/videos/demo.mp4";
 }

@@ -16,6 +16,7 @@ class DatePickerQuestionWidget extends StatefulWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const DatePickerQuestionWidget({
     Key? key,
@@ -25,6 +26,7 @@ class DatePickerQuestionWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -75,6 +77,7 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
             survey: widget.survey,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),

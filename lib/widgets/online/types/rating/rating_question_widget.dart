@@ -15,6 +15,7 @@ class RatingQuestionWidget extends StatelessWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const RatingQuestionWidget({
     Key? key,
@@ -24,6 +25,7 @@ class RatingQuestionWidget extends StatelessWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -51,6 +53,7 @@ class RatingQuestionWidget extends StatelessWidget {
             survey: survey,
             onPressedPrev: onPressedPrev,
             onPressedNext: onPressedNext,
+            addresses: addresses,
           ),
         ],
       ),

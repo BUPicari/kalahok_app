@@ -13,6 +13,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
   final Surveys survey;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const PreviousNextButtonWidget({
     Key? key,
@@ -21,6 +22,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
     required this.survey,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -86,7 +88,10 @@ class PreviousNextButtonWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ReviewScreen(survey: survey),
+              builder: (context) => ReviewScreen(
+                survey: survey,
+                addresses: addresses,
+              ),
             ),
           );
         },
@@ -115,7 +120,10 @@ class PreviousNextButtonWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SurveyDoneScreen(survey: survey),
+              builder: (context) => SurveyDoneScreen(
+                survey: survey,
+                addresses: addresses,
+              ),
             ),
           );
         },

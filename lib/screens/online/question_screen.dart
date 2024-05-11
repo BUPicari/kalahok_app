@@ -13,10 +13,12 @@ import 'package:kalahok_app/widgets/online/questions_widget.dart';
 /// CHECKED
 class QuestionScreen extends StatefulWidget {
   final Surveys survey;
+  final List<String> addresses;
 
   const QuestionScreen({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -54,6 +56,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         onSetResponse: (response) => setResponse(response: response),
         onPressedPrev: (index) => setPrevQuestion(index: index),
         onPressedNext: (index) => setNextQuestion(index: index),
+        addresses: widget.addresses,
       ),
     );
   }
@@ -77,9 +80,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
           color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LoadingOverlay(
-            progressText: "OFFLINE MODE",
-            child: const CategoryScreen(),
+          builder: (context) => LoadingOverlayWidget(
+            progressText: "Please wait while downloading all the data, switching to Offline Mode",
+            child: CategoryScreen(addresses: widget.addresses),
           ),
         )),
       ),

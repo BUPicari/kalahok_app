@@ -10,11 +10,13 @@ import 'package:kalahok_app/screens/online/record_screen.dart';
 class RecordAnswerWidget extends StatefulWidget {
   final Questions question;
   final Surveys survey;
+  final List<String> addresses;
 
   const RecordAnswerWidget({
     Key? key,
     required this.question,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -73,6 +75,7 @@ class _RecordAnswerWidgetState extends State<RecordAnswerWidget> {
               question: widget.question,
               survey: widget.survey,
               screen: "Question",
+              addresses: widget.addresses,
             ),
           ),
         );

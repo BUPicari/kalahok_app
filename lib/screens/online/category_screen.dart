@@ -14,7 +14,12 @@ import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
 /// CHECKED
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({ Key? key }) : super(key: key);
+  final List<String> addresses;
+
+  const CategoryScreen({
+    Key? key,
+    required this.addresses,
+  }) : super(key: key);
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -22,20 +27,38 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   final ApiToDbRepository _apiToDbRepository = ApiToDbRepository();
+  bool isSwitched = true;
+  var textValue = "You're in Online Mode";
 
-  void _offlineMode(context) async {
-    LoadingOverlay.of(context).show();
+  void _toggleSwitch(bool value) {
+    if(isSwitched == false) {
+      setState(() {
+        isSwitched = true;
+        textValue = "You're in Online Mode";
+      });
+    } else {
+      setState(() {
+        isSwitched = false;
+        textValue = "You're in Offline Mode";
+      });
+
+      _switchToOfflineMode(context);
+    }
+  }
+
+  void _switchToOfflineMode(context) async {
+    LoadingOverlayWidget.of(context).show();
     await _apiToDbRepository.insertAllDataFromApiToLocalDB();
     await Future.delayed(const Duration(seconds: 60));
-    LoadingOverlay.of(context).hide();
+    LoadingOverlayWidget.of(context).hide();
 
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LoadingOverlay(
-            progressText: "ONLINE MODE",
-            child: const LocalCategoryScreen(),
+          builder: (context) => LoadingOverlayWidget(
+            progressText: "Switching back to Online Mode",
+            child: LocalCategoryScreen(addresses: widget.addresses),
           ),
         ),
       );
@@ -54,10 +77,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
           leadingWidth: 110,
           leading: Transform.translate(
             offset: const Offset(12, 0),
-            child: Image.asset(AppConfig.headerLogo),
+            child: Image.asset(AppConfig.logo),
           ),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(80),
+            preferredSize: const Size.fromHeight(130),
             child: Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.centerLeft,
@@ -89,16 +112,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 );
               },
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.offline_bolt_outlined,
-                color: Colors.white,
-              ),
-              tooltip: "Offline Mode",
-              onPressed: () {
-                _offlineMode(context);
-              },
-            )
           ],
         ),
         body: BlocBuilder<CategoryBloc, CategoryState>(
@@ -145,6 +158,30 @@ class _CategoryScreenState extends State<CategoryScreen> {
             color: AppColor.subPrimary,
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children:[
+            Switch(
+              onChanged: _toggleSwitch,
+              value: isSwitched,
+              activeColor: AppColor.primary,
+              activeTrackColor: AppColor.warning,
+              inactiveThumbColor: AppColor.secondary,
+              inactiveTrackColor: AppColor.neutral,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              textValue,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: AppColor.success,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -161,8 +198,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
           mainAxisSpacing: 10,
         ),
         children: categories
-          .map((category) => CategoryWidget(category: category))
-          .toList(),
+          .map((category) => CategoryWidget(
+            category: category,
+            addresses: widget.addresses,
+          ),
+        ).toList(),
       ),
     );
   }

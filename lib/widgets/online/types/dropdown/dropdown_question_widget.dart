@@ -18,6 +18,7 @@ class DropdownQuestionWidget extends StatefulWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const DropdownQuestionWidget({
     Key? key,
@@ -27,6 +28,7 @@ class DropdownQuestionWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -87,6 +89,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
             survey: widget.survey,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),

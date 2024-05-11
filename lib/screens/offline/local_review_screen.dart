@@ -12,11 +12,13 @@ import 'package:kalahok_app/widgets/offline/local_review_button_widget.dart';
 class LocalReviewScreen extends StatefulWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;
+  final List<String> addresses;
 
   const LocalReviewScreen({
     Key? key,
     required this.survey,
     required this.questionnaires,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -78,6 +80,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
             LocalReviewButtonWidget(
               survey: widget.survey,
               questionnaires: widget.questionnaires,
+              addresses: widget.addresses,
             ),
           ],
         ),
@@ -137,6 +140,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
           builder: (context) => LocalQuestionnaireScreen(
             survey: widget.survey,
             questionnaires: widget.questionnaires,
+            addresses: widget.addresses,
           ),
         )),
       ),
@@ -262,6 +266,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
                       questionnaires: widget.questionnaires,
                       survey: widget.survey,
                       screen: "Review",
+                      addresses: widget.addresses,
                     ),
                   ),
                 );

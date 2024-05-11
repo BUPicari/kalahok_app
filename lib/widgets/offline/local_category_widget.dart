@@ -9,17 +9,22 @@ import 'package:kalahok_app/screens/offline/local_survey_screen.dart';
 /// CHECKED
 class LocalCategoryWidget extends StatelessWidget {
   final Category category;
+  final List<String> addresses;
 
   const LocalCategoryWidget({
     Key? key,
     required this.category,
+    required this.addresses,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => LocalSurveyScreen(category: category),
+        builder: (context) => LocalSurveyScreen(
+          category: category,
+          addresses: addresses,
+        ),
       )),
       child: Container(
         padding: const EdgeInsets.all(12),

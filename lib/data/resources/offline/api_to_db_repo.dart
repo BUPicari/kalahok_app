@@ -6,7 +6,7 @@ class ApiToDbRepository {
 
   Future<void> insertAllDataFromApiToLocalDB() async {
     await _provider.insertData();
-    await _provider.getAddressesDropdown();
+    // await _provider.getAddressesDropdown();
     await _provider.getCoursesDropdown();
     await _provider.getSchoolsDropdown(page: 1);
   }

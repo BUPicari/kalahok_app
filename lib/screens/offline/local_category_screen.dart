@@ -13,13 +13,53 @@ import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
 /// CHECKED
 class LocalCategoryScreen extends StatefulWidget {
-  const LocalCategoryScreen({ Key? key }) : super(key: key);
+  final List<String> addresses;
+
+  const LocalCategoryScreen({
+    Key? key,
+    required this.addresses,
+  }) : super(key: key);
 
   @override
   State<LocalCategoryScreen> createState() => _LocalCategoryScreenState();
 }
 
 class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
+  bool isSwitched = false;
+  var textValue = "You're in offline mode";
+
+  void _toggleSwitch(bool value) {
+    if(isSwitched == false) {
+      setState(() {
+        isSwitched = true;
+        textValue = "You're in Online Mode";
+      });
+
+      _switchToOnlineMode();
+    } else {
+      setState(() {
+        isSwitched = false;
+        textValue = "You're in Offline Mode";
+      });
+    }
+  }
+
+  void _switchToOnlineMode() {
+    LoadingOverlayWidget.of(context).show();
+    Future.delayed(const Duration(seconds: 10), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoadingOverlayWidget(
+            progressText: "Please wait while downloading all the data, switching to Offline Mode",
+            child: CategoryScreen(addresses: widget.addresses),
+          ),
+        ),
+      );
+      LoadingOverlayWidget.of(context).hide();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     /// Local to API not yet sent items submission
@@ -32,10 +72,10 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
           leadingWidth: 110,
           leading: Transform.translate(
             offset: const Offset(12, 0),
-            child: Image.asset(AppConfig.headerLogo),
+            child: Image.asset(AppConfig.logo),
           ),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(80),
+            preferredSize: const Size.fromHeight(130),
             child: Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.centerLeft,
@@ -65,28 +105,6 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
                     builder: (context) => const DemoScreen(),
                   ),
                 );
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.offline_bolt_outlined,
-                color: AppColor.subPrimary,
-              ),
-              tooltip: "Online Mode",
-              onPressed: () {
-                LoadingOverlay.of(context).show();
-                Future.delayed(const Duration(seconds: 10), () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoadingOverlay(
-                        progressText: "OFFLINE MODE",
-                        child: const CategoryScreen(),
-                      ),
-                    ),
-                  );
-                  LoadingOverlay.of(context).hide();
-                });
               },
             ),
           ],
@@ -135,6 +153,30 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
             color: AppColor.subPrimary,
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children:[
+            Switch(
+              onChanged: _toggleSwitch,
+              value: isSwitched,
+              activeColor: AppColor.primary,
+              activeTrackColor: AppColor.warning,
+              inactiveThumbColor: AppColor.secondary,
+              inactiveTrackColor: AppColor.neutral,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              textValue,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: AppColor.neutral,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -151,8 +193,11 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
           mainAxisSpacing: 10,
         ),
         children: categories
-          .map((category) => LocalCategoryWidget(category: category))
-          .toList()
+          .map((category) => LocalCategoryWidget(
+            category: category,
+            addresses: widget.addresses,
+          ),
+        ).toList()
       ),
     );
   }

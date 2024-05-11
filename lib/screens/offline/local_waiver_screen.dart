@@ -13,10 +13,12 @@ import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
 /// CHECKED
 class LocalWaiverScreen extends StatefulWidget {
   final SurveyDetail surveyDetail;
+  final List<String> addresses;
 
   const LocalWaiverScreen({
     Key? key,
     required this.surveyDetail,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -128,6 +130,7 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                           builder: (context) => LocalQuestionnaireScreen(
                             survey: widget.surveyDetail.survey,
                             questionnaires: questionnaires,
+                            addresses: widget.addresses,
                           ),
                         ),
                       );

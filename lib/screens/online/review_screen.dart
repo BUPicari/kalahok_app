@@ -11,10 +11,12 @@ import 'package:kalahok_app/widgets/online/review_button_widget.dart';
 /// CHECKED
 class ReviewScreen extends StatelessWidget {
   final Surveys survey;
+  final List<String> addresses;
 
   const ReviewScreen({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -68,7 +70,7 @@ class ReviewScreen extends StatelessWidget {
                 ),
               ),
             ),
-            ReviewButtonWidget(survey: survey),
+            ReviewButtonWidget(survey: survey, addresses: addresses),
           ],
         ),
       ),
@@ -121,7 +123,10 @@ class ReviewScreen extends StatelessWidget {
           color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => QuestionScreen(survey: survey),
+          builder: (context) => QuestionScreen(
+            survey: survey,
+            addresses: addresses,
+          ),
         )),
       ),
     );
@@ -241,6 +246,7 @@ class ReviewScreen extends StatelessWidget {
                       question: question,
                       survey: survey,
                       screen: "Review",
+                      addresses: addresses,
                     ),
                   ),
                 );

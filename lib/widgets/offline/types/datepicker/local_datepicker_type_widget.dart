@@ -15,6 +15,7 @@ class LocalDatePickerTypeWidget extends StatefulWidget {
   final ValueChanged<Response> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalDatePickerTypeWidget({
     Key? key,
@@ -24,6 +25,7 @@ class LocalDatePickerTypeWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -71,6 +73,7 @@ class _LocalDatePickerTypeWidgetState extends State<LocalDatePickerTypeWidget> {
             questionnaire: widget.questionnaire,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),

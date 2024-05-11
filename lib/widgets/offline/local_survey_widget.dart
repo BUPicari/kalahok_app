@@ -5,14 +5,17 @@ import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/data/resources/offline/local_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/offline/local_language_widget.dart';
+import 'package:kalahok_app/widgets/offline/local_passcode_widget.dart';
 
 /// CHECKED
 class LocalSurveyWidget extends StatelessWidget {
   final Survey survey;
+  final List<String> addresses;
 
   const LocalSurveyWidget({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -23,8 +26,12 @@ class LocalSurveyWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => LocalLanguageWidget(
-                surveyDetails: value,
+              builder: (context) => LocalPasscodeWidget(
+                progressText: "Enter the passcode:",
+                child: LocalLanguageWidget(
+                  surveyDetails: value,
+                  addresses: addresses,
+                ),
               ),
             ),
           );

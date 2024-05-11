@@ -9,17 +9,22 @@ import 'package:kalahok_app/screens/online/category_survey_screen.dart';
 /// CHECKED
 class CategoryWidget extends StatelessWidget {
   final Category category;
+  final List<String> addresses;
 
   const CategoryWidget({
     Key? key,
     required this.category,
+    required this.addresses,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => CategorySurveyScreen(category: category),
+        builder: (context) => CategorySurveyScreen(
+          category: category,
+          addresses: addresses,
+        ),
       )),
       child: Container(
         padding: const EdgeInsets.all(12),

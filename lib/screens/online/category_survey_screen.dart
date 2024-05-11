@@ -13,10 +13,12 @@ import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 /// CHECKED
 class CategorySurveyScreen extends StatelessWidget {
   final Category category;
+  final List<String> addresses;
 
   const CategorySurveyScreen({
     Key? key,
     required this.category,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -35,9 +37,9 @@ class CategorySurveyScreen extends StatelessWidget {
               color: AppColor.subPrimary,
             ),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => LoadingOverlay(
-                progressText: "OFFLINE MODE",
-                child: const CategoryScreen(),
+              builder: (context) => LoadingOverlayWidget(
+                progressText: "Please wait while downloading all the data, switching to Offline Mode",
+                child: CategoryScreen(addresses: addresses),
               ),
             )),
           ),
@@ -126,8 +128,11 @@ class CategorySurveyScreen extends StatelessWidget {
           mainAxisSpacing: 10,
         ),
         children: categoryWithSurvey!.surveys!
-          .map((survey) => CategorySurveyWidget(category: category, survey: survey))
-          .toList(),
+          .map((survey) => CategorySurveyWidget(
+            category: category,
+            survey: survey,
+            addresses: addresses,
+          )).toList(),
       ),
     );
   }

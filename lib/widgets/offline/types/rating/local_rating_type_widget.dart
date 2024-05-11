@@ -14,6 +14,7 @@ class LocalRatingTypeWidget extends StatelessWidget {
   final ValueChanged<Response> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalRatingTypeWidget({
     Key? key,
@@ -23,6 +24,7 @@ class LocalRatingTypeWidget extends StatelessWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -50,6 +52,7 @@ class LocalRatingTypeWidget extends StatelessWidget {
             questionnaire: questionnaire,
             onPressedPrev: onPressedPrev,
             onPressedNext: onPressedNext,
+            addresses: addresses,
           ),
         ],
       ),

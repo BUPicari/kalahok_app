@@ -12,10 +12,12 @@ import 'package:kalahok_app/screens/online/question_screen.dart';
 /// CHECKED
 class WaiverScreen extends StatelessWidget {
   final Surveys survey;
+  final List<String> addresses;
 
   const WaiverScreen({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -118,7 +120,10 @@ class WaiverScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QuestionScreen(survey: surveyWithQuestionnaires!),
+                          builder: (context) => QuestionScreen(
+                            survey: surveyWithQuestionnaires!,
+                            addresses: addresses,
+                          ),
                         ),
                       );
                     },

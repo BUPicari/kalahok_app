@@ -17,6 +17,7 @@ class OpenEndedQuestionWidget extends StatefulWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const OpenEndedQuestionWidget({
     Key? key,
@@ -26,6 +27,7 @@ class OpenEndedQuestionWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -70,6 +72,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             survey: widget.survey,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),
@@ -88,6 +91,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
           RecordAnswerWidget(
             question: widget.question,
             survey: widget.survey,
+            addresses: widget.addresses,
           ),
         ],
       );

@@ -4,14 +4,17 @@ import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_survey_screen.dart';
 import 'package:kalahok_app/screens/offline/local_waiver_screen.dart';
+import 'package:kalahok_app/widgets/offline/local_passcode_widget.dart';
 
 /// CHECKED
 class LocalLanguageWidget extends StatelessWidget {
   final List<SurveyDetail> surveyDetails;
+  final List<String> addresses;
 
   const LocalLanguageWidget({
     Key? key,
     required this.surveyDetails,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -26,6 +29,7 @@ class LocalLanguageWidget extends StatelessWidget {
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => LocalSurveyScreen(
               category: surveyDetails[0].survey.category,
+              addresses: addresses,
             ),
           )),
         ),
@@ -174,12 +178,22 @@ class LocalLanguageWidget extends StatelessWidget {
               width: 130,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LocalWaiverScreen(surveyDetail: surveyDetail),
-                    ),
-                  );
+                  if (surveyDetail.survey.passcode.isNotEmpty) {
+                    LocalPasscodeWidget.of(context).show(
+                      surveyDetail: surveyDetail,
+                      addresses: addresses,
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LocalWaiverScreen(
+                          surveyDetail: surveyDetail,
+                          addresses: addresses,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.primary,

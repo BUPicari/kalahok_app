@@ -14,11 +14,13 @@ import 'package:kalahok_app/widgets/offline/local_questionnaire_widget.dart';
 class LocalQuestionnaireScreen extends StatefulWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;
+  final List<String> addresses;
 
   const LocalQuestionnaireScreen({
     Key? key,
     required this.survey,
     required this.questionnaires,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,7 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
         onSetResponse: (response) => _setResponse(response: response),
         onPressedPrev: (index) => _setPrevQuestion(index: index),
         onPressedNext: (index) => _setNextQuestion(index: index),
+        addresses: widget.addresses,
       ),
     );
   }
@@ -75,9 +78,9 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
           color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LoadingOverlay(
-            progressText: "ONLINE MODE",
-            child: const LocalCategoryScreen(),
+          builder: (context) => LoadingOverlayWidget(
+            progressText: "Switching back to Online Mode",
+            child: LocalCategoryScreen(addresses: widget.addresses),
           ),
         )),
       ),

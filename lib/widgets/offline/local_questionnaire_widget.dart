@@ -17,6 +17,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
   final ValueChanged<Response> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalQuestionnaireWidget({
     Key? key,
@@ -26,6 +27,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -58,6 +60,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "openEnded":
         return LocalOpenEndedTypeWidget(
@@ -67,6 +70,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "trueOrFalse":
         return LocalChoiceTypeWidget(
@@ -77,6 +81,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "rating":
         return LocalRatingTypeWidget(
@@ -86,6 +91,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "datepicker":
         return LocalDatePickerTypeWidget(
@@ -95,6 +101,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "dropdown":
         return LocalDropdownTypeWidget(
@@ -104,6 +111,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       default:
         return const UnknownQuestionTypeWidget();
