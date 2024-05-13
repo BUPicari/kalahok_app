@@ -148,7 +148,7 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                           'Back',
                           style: TextStyle(
                             color: AppColor.subSecondary,
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -187,7 +187,7 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                           'Proceed',
                           style: TextStyle(
                             color: AppColor.subSecondary,
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

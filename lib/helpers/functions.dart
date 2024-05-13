@@ -106,17 +106,17 @@ class Functions {
       surveyId: surveyId,
     );
 
-    String filename = temp != '' ? "recorded.aac" : '';
+    String filename = temp != '' ? "recorded" : '';
 
     if (filename != '') {
       return ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(100, 40),
         ),
-        icon: const Icon(Icons.music_note_rounded),
+        icon: const Icon(Icons.music_note_rounded, size: 20),
         label: Text(
           filename,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
         ),
         onPressed: null,
       );

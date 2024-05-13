@@ -55,7 +55,7 @@ class LocalLanguageWidget extends StatelessWidget {
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(10),
         children: [
           _buildSurveyWithLanguageGridView(context),
         ],
@@ -85,14 +85,14 @@ class LocalLanguageWidget extends StatelessWidget {
 
   Widget _buildSurveyWithLanguageGridView(context) {
     return SizedBox(
-      height: 600,
+      height: 570,
       child: GridView(
         primary: false,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
           childAspectRatio: 4 / 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         children: surveyDetails
           .map((detail) => _buildSurveyWithLanguageGridViewWidget(
@@ -110,7 +110,7 @@ class LocalLanguageWidget extends StatelessWidget {
   }) {
     return GestureDetector(
       child: Container(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: AppColor.bgNeutral,
           border: Border(
@@ -129,6 +129,7 @@ class LocalLanguageWidget extends StatelessWidget {
                 color: AppColor.primary,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
+                fontSize: 10,
               ),
             ),
             Text(
@@ -142,7 +143,7 @@ class LocalLanguageWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Text(
               surveyDetail.survey.description.replaceAll("\n", ""),
               style: TextStyle(
@@ -153,7 +154,7 @@ class LocalLanguageWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             Text(
               "Available from:",
               style: TextStyle(
@@ -162,17 +163,16 @@ class LocalLanguageWidget extends StatelessWidget {
                 color: AppColor.neutral,
               ),
             ),
-            const SizedBox(height: 5),
             Text(
               "${surveyDetail.survey.startDate} to ${surveyDetail.survey.endDate}",
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
                 color: AppColor.secondary,
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             SizedBox(
               height: 25,
               width: 130,

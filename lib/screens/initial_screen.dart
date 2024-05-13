@@ -170,7 +170,7 @@ class _InitialScreenState extends State<InitialScreen> {
           'START',
           style: TextStyle(
             color: txtColor,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),

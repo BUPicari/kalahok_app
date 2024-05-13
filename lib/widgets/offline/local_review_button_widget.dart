@@ -61,7 +61,7 @@ class LocalReviewButtonWidget extends StatelessWidget {
           'ANSWER',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -94,7 +94,7 @@ class LocalReviewButtonWidget extends StatelessWidget {
           'SUBMIT',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),

@@ -42,9 +42,9 @@ class PreviousNextButtonWidget extends StatelessWidget {
     if (survey.questionnaires?.last == question) {
       return Row(children: [
         _buildPrevBtn(),
-        const SizedBox(width: 20),
+        const SizedBox(width: 10),
         _buildReviewBtn(context),
-        const SizedBox(width: 20),
+        const SizedBox(width: 10),
         _buildSubmitBtn(context),
       ]);
     }
@@ -73,7 +73,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
           'Prev',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -105,7 +105,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
           'Review',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -137,7 +137,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
           'Submit',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -162,7 +162,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
           'Next',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),

@@ -63,23 +63,28 @@ class CategorySurveyWidget extends StatelessWidget {
               maxLines: 4,
             ),
             const SizedBox(height: 10),
-            Text(
-              "Available Languages:",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: AppColor.neutral,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              _getAvailableLanguages(),
-              style: TextStyle(
-                fontSize: 11,
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold,
-                color: AppColor.secondary,
-              ),
+            Wrap(
+              runSpacing: 5,
+              spacing: 5,
+              children: [
+                Text(
+                  "Languages:",
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.neutral,
+                  ),
+                ),
+                Text(
+                  _getAvailableLanguages(),
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.secondary,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

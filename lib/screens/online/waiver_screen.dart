@@ -142,7 +142,7 @@ class WaiverScreen extends StatelessWidget {
                           'Back',
                           style: TextStyle(
                             color: AppColor.subSecondary,
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -180,7 +180,7 @@ class WaiverScreen extends StatelessWidget {
                           'Proceed',
                           style: TextStyle(
                             color: AppColor.subSecondary,
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -119,7 +119,7 @@ class SurveyDoneScreen extends StatelessWidget {
                             'BACK TO REVIEW',
                             style: TextStyle(
                               color: AppColor.subSecondary,
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -230,7 +230,7 @@ class SurveyDoneScreen extends StatelessWidget {
                         "EVALUATE",
                         style: TextStyle(
                           color: AppColor.subSecondary,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -266,7 +266,7 @@ class SurveyDoneScreen extends StatelessWidget {
               //           "LOCATION",
               //           style: TextStyle(
               //             color: AppColor.subSecondary,
-              //             fontSize: 16,
+              //             fontSize: 13,
               //             fontWeight: FontWeight.bold,
               //           ),
               //         ),
@@ -305,7 +305,7 @@ class SurveyDoneScreen extends StatelessWidget {
                         'HOME',
                         style: TextStyle(
                           color: AppColor.subSecondary,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

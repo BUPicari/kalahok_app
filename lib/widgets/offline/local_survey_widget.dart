@@ -63,20 +63,22 @@ class LocalSurveyWidget extends StatelessWidget {
               maxLines: 4,
             ),
             const SizedBox(height: 10),
-            Text(
-              "Available Languages:",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: AppColor.neutral,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Center(
-              child: FutureBuilder(
-                future: _getAvailableLanguages(),
-                builder: (context, snapshot) {
-                  return snapshot.connectionState == ConnectionState.done ?
+            Wrap(
+              runSpacing: 5,
+              spacing: 5,
+              children: [
+                Text(
+                  "Languages:",
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.neutral,
+                  ),
+                ),
+                FutureBuilder(
+                  future: _getAvailableLanguages(),
+                  builder: (context, snapshot) {
+                    return snapshot.connectionState == ConnectionState.done ?
                     Text(
                       snapshot.data.toString(),
                       style: TextStyle(
@@ -87,8 +89,9 @@ class LocalSurveyWidget extends StatelessWidget {
                       ),
                     ) :
                     const SizedBox();
-                },
-              ),
+                  },
+                ),
+              ],
             ),
           ],
         ),

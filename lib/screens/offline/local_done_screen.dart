@@ -135,7 +135,7 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
                             'BACK TO REVIEW',
                             style: TextStyle(
                               color: AppColor.subSecondary,
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -246,7 +246,7 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
                         "EVALUATE",
                         style: TextStyle(
                           color: AppColor.subSecondary,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -282,7 +282,7 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
               //           "LOCATION",
               //           style: TextStyle(
               //             color: AppColor.subSecondary,
-              //             fontSize: 16,
+              //             fontSize: 13,
               //             fontWeight: FontWeight.bold,
               //           ),
               //         ),
@@ -323,7 +323,7 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
                         'HOME',
                         style: TextStyle(
                           color: AppColor.subSecondary,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

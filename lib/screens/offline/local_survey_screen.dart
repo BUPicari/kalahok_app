@@ -79,7 +79,7 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
             if (state is LocalSurveyByCategoryLoadedState) {
               return ListView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(10),
                 children: [
                   _buildSurveys(surveys: state.surveys),
                 ],
@@ -124,8 +124,8 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3 / 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         children: surveys
           .map((survey) => LocalSurveyWidget(
