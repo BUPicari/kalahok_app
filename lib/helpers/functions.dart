@@ -130,10 +130,6 @@ class Functions {
     return await InternetConnectionChecker().hasConnection;
   }
 
-  /// PENDING - kakarecord plng and di pa na balik sa waiver
-  /// DENY - lahat ng record na PENDING before tas di na submit
-  /// SUBMITTED - lahat ng record na PENDING before ang na save sa sqlite or na submit
-  /// DONE - lahat ng record na from SUBMITTED to post requested to api
   static void audioRename({ required String from, required String to }) async {
     String appDirFolderPath = await getRecordingPath();
     final recordDir = Directory(appDirFolderPath);
@@ -222,7 +218,7 @@ class Functions {
             });
 
             await request.send();
-            audioRename(from: 'SUBMITTED', to: 'DONE');
+            audioRename(from: 'LOCAL', to: 'DONE');
 
             /// Update the survey response to is_sent = true
             await db.update(

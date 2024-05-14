@@ -98,7 +98,6 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
 
   Widget _buildDropdownForms() {
     bool useStaticDropdown = widget.question.config.useStaticDropdown ?? false;
-    /// todo: refactor this code, masyado ulit ulit and make sure na ok offline
 
     if (useStaticDropdown) {
       return _buildStaticForm();
@@ -109,9 +108,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
 
   Widget _buildStaticForm() {
     return ListView(
-      children: widget.question.labels
-          .map(
-            (label) => Column(
+      children: widget.question.labels.map(
+        (label) => Column(
           children: [
             SearchableDropdown<Result>.paginated(
               backgroundDecoration: (child) => Card(
@@ -119,8 +117,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                 shape: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide(
-                      color: AppColor.neutral,
-                      width: 2.0
+                    color: AppColor.neutral,
+                    width: 2.0,
                   ),
                 ),
                 child: Padding(
@@ -137,20 +135,17 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                   value: Result(value: e.key, label: e.value.trim()),
                   label: e.value.trim(),
                   child: Text(e.value.trim()),
-                ))
-                    .toList();
+                )).toList();
               },
               requestItemCount: 10,
               onChanged: (Result? val) {
                 setState(() {
-                  /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
-                  /// todo: if getting from local db ~ try getting from json data\
                   int index = widget.question.labels.indexOf(label);
 
                   responses.isNotEmpty
-                      ? responses[index] = (val?.label).toString()
-                      : responses = List.generate(widget.question.labels.length, (i) =>
-                  i == index ? (val?.label).toString() : '');
+                    ? responses[index] = (val?.label).toString()
+                    : responses = List.generate(widget.question.labels.length, (i) =>
+                      i == index ? (val?.label).toString() : '');
                 });
 
                 if (widget.question.answer == null) {
@@ -163,8 +158,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
             const SizedBox(height: 10),
           ],
         ),
-      )
-          .toList(),
+      ).toList(),
     );
   }
 
@@ -180,8 +174,8 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                 shape: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide(
-                      color: AppColor.neutral,
-                      width: 2.0
+                    color: AppColor.neutral,
+                    width: 2.0,
                   ),
                 ),
                 child: Padding(
@@ -199,29 +193,22 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
                   q: searchKey != null ? searchKey.toString() : '',
                 );
 
-                /// todo: fix this, nag tutuloy and data kahit nasa pinaka dulo na data na siya
-
-                return paginatedList
-                    .map((e) => SearchableDropdownMenuItem(
+                return paginatedList.map((e) => SearchableDropdownMenuItem(
                   value: Result(value: e.value, label: e.label),
                   label: e.label,
                   child: Text(e.label),
-                ))
-                    .toList();
+                )).toList();
               },
               requestItemCount: 10,
               onChanged: (Result? val) {
                 setState(() {
                   _tempId = (val?.value)?.toInt() ?? 0;
-
-                  /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
-                  /// todo: if getting from local db ~ try getting from json data\
                   int index = widget.question.labels.indexOf(label);
 
                   responses.isNotEmpty
-                      ? responses[index] = (val?.label).toString()
-                      : responses = List.generate(widget.question.labels.length, (i) =>
-                  i == index ? (val?.label).toString() : '');
+                    ? responses[index] = (val?.label).toString()
+                    : responses = List.generate(widget.question.labels.length, (i) =>
+                      i == index ? (val?.label).toString() : '');
                 });
 
                 if (widget.question.answer == null) {
@@ -234,8 +221,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
             const SizedBox(height: 10),
           ],
         ),
-      )
-          .toList(),
+      ).toList(),
     );
   }
 

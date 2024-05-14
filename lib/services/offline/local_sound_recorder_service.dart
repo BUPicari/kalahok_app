@@ -49,16 +49,20 @@ class LocalSoundRecorderService {
       'recording-$timestamp-question#${_questionnaire.id}-survey#${_questionnaire.survey.id}@PENDING.aac',
     );
 
+    String recorded = join(
+      appDirFolderPath,
+      'recording-$timestamp-question#${_questionnaire.id}-survey#${_questionnaire.survey.id}@LOCAL.aac',
+    );
     if (_questionnaire.response == null) {
       _questionnaire.response = Response(
         surveyQuestion: _questionnaire.question,
         questionFieldTexts: List.generate(1, (i) => _questionnaire.question),
         responses: [],
         otherResponse: '',
-        file: path,
+        file: recorded,
       );
     } else {
-      _questionnaire.response?.file = path;
+      _questionnaire.response?.file = recorded;
     }
     _questionnaire.hasRecording = true;
     _questionnaire.hasInput = false;

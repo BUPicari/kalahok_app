@@ -337,7 +337,7 @@ class LocalProvider {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
 
-      Functions.audioRename(from: 'PENDING', to: 'SUBMITTED');
+      Functions.audioRename(from: 'PENDING', to: 'LOCAL');
     }
   }
 
