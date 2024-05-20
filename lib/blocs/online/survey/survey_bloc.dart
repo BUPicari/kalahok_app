@@ -38,10 +38,12 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
 
         for (var question in questionnaires) {
           if (question.config.isRequired) {
-            var answer = question.answer;
-            if ((answer != null && answer.answers.isNotEmpty) ||
-              (answer != null && answer.otherAnswer.isNotEmpty) ||
-              (answer != null && answer.file != null)) {
+            String otherAnswer = question.answer?.otherAnswer ?? '';
+            List<String> answer = question.answer?.answers ?? [];
+            String file = question.answer?.file ?? '';
+
+            if ((answer.isNotEmpty && Functions.arrDoesNotOnlyContainsEmptyString(strArr: answer)) ||
+              (otherAnswer.isNotEmpty) || (file.isNotEmpty)) {
               numOfRequiredResponses += 1;
             }
           }

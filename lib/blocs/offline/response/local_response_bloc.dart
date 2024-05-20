@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/survey.dart';
 import 'package:kalahok_app/data/resources/offline/local_repo.dart';
+import 'package:kalahok_app/helpers/functions.dart';
 
 part 'local_response_event.dart';
 part 'local_response_state.dart';
@@ -21,10 +22,12 @@ class LocalResponseBloc extends Bloc<LocalResponseEvent, LocalResponseState> {
 
         for (var question in event.questionnaires) {
           if (question.configs.isRequired) {
-            var answer = question.response;
-            if ((answer != null && answer.responses.isNotEmpty) ||
-              (answer != null && answer.otherResponse.isNotEmpty) ||
-              (answer != null && answer.file != null)) {
+            String otherResponse = question.response?.otherResponse ?? '';
+            List<String> response = question.response?.responses ?? [];
+            String file = question.response?.file ?? '';
+
+            if ((response.isNotEmpty && Functions.arrDoesNotOnlyContainsEmptyString(strArr: response)) ||
+              (otherResponse.isNotEmpty) || (file.isNotEmpty)) {
               numOfRequiredResponses += 1;
             }
           }
