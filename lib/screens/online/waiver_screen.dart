@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -123,7 +122,7 @@ class WaiverScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LoadingOverlayWidget(
-                            progressText: "Please wait while downloading all the data, switching to Offline Mode",
+                            progressText: AppConfig.offlineModeText,
                             child: CategoryScreen(addresses: addresses),
                           ),
                         ),

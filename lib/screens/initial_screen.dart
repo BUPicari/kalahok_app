@@ -152,7 +152,7 @@ class _InitialScreenState extends State<InitialScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => LoadingOverlayWidget(
-                progressText: "Please wait while downloading all the data, switching to Offline Mode",
+                progressText: AppConfig.offlineModeText,
                 child: CategoryScreen(addresses: responses),
               ),
             ),

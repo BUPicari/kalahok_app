@@ -129,7 +129,7 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LoadingOverlayWidget(
-                            progressText: "Switching back to Online Mode",
+                            progressText: AppConfig.onlineModeText,
                             child: LocalCategoryScreen(addresses: widget.addresses),
                           ),
                         ),

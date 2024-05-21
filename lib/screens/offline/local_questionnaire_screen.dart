@@ -79,7 +79,7 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => LoadingOverlayWidget(
-            progressText: "Switching back to Online Mode",
+            progressText: AppConfig.onlineModeText,
             child: LocalCategoryScreen(addresses: widget.addresses),
           ),
         )),

@@ -302,7 +302,7 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => LoadingOverlayWidget(
-                              progressText: "Switching back to Online Mode",
+                              progressText: AppConfig.onlineModeText,
                               child: LocalCategoryScreen(
                                 addresses: widget.addresses,
                               ),

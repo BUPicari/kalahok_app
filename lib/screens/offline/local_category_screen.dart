@@ -51,7 +51,7 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => LoadingOverlayWidget(
-            progressText: "Please wait while downloading all the data, switching to Offline Mode",
+            progressText: AppConfig.offlineModeText,
             child: CategoryScreen(addresses: widget.addresses),
           ),
         ),
