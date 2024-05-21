@@ -40,14 +40,25 @@ class PasscodeWidget extends StatefulWidget {
 
 /// todo: You can refactor this so that it can be reusable, no need for same code as the local
 class _PasscodeWidgetState extends State<PasscodeWidget> {
-  late String passcode;
-  late TextEditingController fieldController;
+  String passcode = '';
+  TextEditingController fieldController = TextEditingController();
+  bool correct = false;
+  bool clickedSubmit = false;
 
   @override
   void initState() {
+    fieldController.addListener(() {
+      setState(() {
+        passcode = fieldController.text;
+      });
+    });
     super.initState();
-    passcode = "";
-    fieldController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    fieldController.dispose();
+    super.dispose();
   }
 
   @override
@@ -97,6 +108,7 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
           const SizedBox(height: 20),
           _buildTextFieldForms(),
           const SizedBox(height: 50),
+          (clickedSubmit && !correct) ? _errorMessage() : Container(),
           Row(
             children: [
               Expanded(child: _cancelButton(context)),
@@ -106,6 +118,22 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _errorMessage() {
+    return Column(
+      children: [
+        Text(
+          "Please enter the correct passcode!",
+          style: TextStyle(
+            color: AppColor.error,
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+        const SizedBox(height: 20),
+      ],
     );
   }
 
@@ -138,36 +166,38 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
   }
 
   Widget _submitButton(context) {
-    bool condition = widget.survey.passcode == passcode ? true : false;
-    var btnColor = condition ? AppColor.warning : AppColor.neutral;
-    var txtColor = condition ? AppColor.subSecondary : AppColor.secondary;
-
     return SizedBox(
       height: 50,
       child: ElevatedButton.icon(
-        onPressed: !condition ? null : () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WaiverScreen(
-                survey: widget.survey,
-                addresses: widget.addresses,
+        onPressed: () {
+          if (correct) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WaiverScreen(
+                  survey: widget.survey,
+                  addresses: widget.addresses,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            setState(() {
+              clickedSubmit = true;
+            });
+          }
         },
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(150, 40),
-          backgroundColor: btnColor,
+          backgroundColor: AppColor.warning,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        icon: Icon(Icons.start, color: txtColor),
+        icon: Icon(Icons.start, color: AppColor.subSecondary),
         label: Text(
           'Submit',
           style: TextStyle(
-            color: txtColor,
+            color: AppColor.subSecondary,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -179,6 +209,9 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
   Widget _buildTextFieldForms() {
     return TextField(
       controller: fieldController,
+      obscureText: true,
+      enableSuggestions: false,
+      autocorrect: false,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -191,13 +224,22 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
         hintText: "Passcode",
         hintStyle: TextStyle(color: AppColor.subPrimary),
       ),
-      maxLines: null,
-      keyboardType: TextInputType.multiline,
       style: TextStyle(height: 2.0, color: AppColor.subPrimary),
       onChanged: (value) {
         setState(() {
           passcode = value;
+          clickedSubmit = false;
         });
+
+        if (widget.survey.passcode == passcode) {
+          setState(() {
+            correct = true;
+          });
+        } else {
+          setState(() {
+            correct = false;
+          });
+        }
       },
     );
   }
