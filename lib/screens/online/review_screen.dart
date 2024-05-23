@@ -4,7 +4,6 @@ import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/online/question_screen.dart';
 import 'package:kalahok_app/screens/online/record_screen.dart';
 import 'package:kalahok_app/widgets/online/review_button_widget.dart';
 
@@ -122,12 +121,10 @@ class ReviewScreen extends StatelessWidget {
           Icons.arrow_back,
           color: AppColor.subPrimary,
         ),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => QuestionScreen(
-            survey: survey,
-            addresses: addresses,
-          ),
-        )),
+        onTap: () {
+          // Navigate back to the previous screen by popping the current route
+          Navigator.of(context).pop();
+        },
       ),
     );
   }

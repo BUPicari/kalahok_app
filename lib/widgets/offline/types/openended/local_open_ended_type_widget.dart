@@ -92,6 +92,7 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
             questionnaires: widget.questionnaires,
             survey: widget.questionnaire.survey,
             addresses: widget.addresses,
+            index: widget.index,
           ),
         ],
       );

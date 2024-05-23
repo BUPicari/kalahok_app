@@ -18,6 +18,7 @@ class RecordScreen extends StatefulWidget {
   final Surveys survey;
   final String screen;
   final List<String> addresses;
+  final int? index;
 
   const RecordScreen({
     Key? key,
@@ -25,6 +26,7 @@ class RecordScreen extends StatefulWidget {
     required this.survey,
     required this.screen,
     required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -193,8 +195,14 @@ class _RecordScreenState extends State<RecordScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => widget.screen == "Question" ?
-                QuestionScreen(survey: widget.survey, addresses: widget.addresses) :
-                ReviewScreen(survey: widget.survey, addresses: widget.addresses),
+                QuestionScreen(
+                  survey: widget.survey,
+                  addresses: widget.addresses,
+                  index: widget.index,
+                ) : ReviewScreen(
+                  survey: widget.survey,
+                  addresses: widget.addresses,
+                ),
             ),
           );
         },

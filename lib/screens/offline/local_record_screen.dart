@@ -19,6 +19,7 @@ class LocalRecordScreen extends StatefulWidget {
   final Survey survey;
   final String screen;
   final List<String> addresses;
+  final int? index;
 
   const LocalRecordScreen({
     Key? key,
@@ -27,6 +28,7 @@ class LocalRecordScreen extends StatefulWidget {
     required this.survey,
     required this.screen,
     required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -199,8 +201,8 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
                   survey: widget.survey,
                   questionnaires: widget.questionnaires,
                   addresses: widget.addresses,
-                ) :
-                LocalReviewScreen(
+                  index: widget.index,
+                ) : LocalReviewScreen(
                   survey: widget.survey,
                   questionnaires: widget.questionnaires,
                   addresses: widget.addresses,

@@ -4,7 +4,6 @@ import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/survey.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
 import 'package:kalahok_app/screens/offline/local_record_screen.dart';
 import 'package:kalahok_app/widgets/offline/local_review_button_widget.dart';
 
@@ -136,13 +135,10 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
           Icons.arrow_back,
           color: AppColor.subPrimary,
         ),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LocalQuestionnaireScreen(
-            survey: widget.survey,
-            questionnaires: widget.questionnaires,
-            addresses: widget.addresses,
-          ),
-        )),
+        onTap: () {
+          // Navigate back to the previous screen by popping the current route
+          Navigator.of(context).pop();
+        },
       ),
     );
   }

@@ -43,7 +43,7 @@ class CategoryWidget extends StatelessWidget {
                     return const Column();
                   } else {
                     if (snapshot.data == true) {
-                      if (category.image != "undefined") {
+                      if (category.image != "undefined" && category.image != "NULL") {
                         return Image.network(
                           ApiConfig.baseUrl + category.image,
                           width: 70,

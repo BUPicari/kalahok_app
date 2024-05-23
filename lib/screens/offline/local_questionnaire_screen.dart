@@ -15,12 +15,14 @@ class LocalQuestionnaireScreen extends StatefulWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;
   final List<String> addresses;
+  final int? index;
 
   const LocalQuestionnaireScreen({
     Key? key,
     required this.survey,
     required this.questionnaires,
     required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -35,8 +37,8 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
   void initState() {
     super.initState();
 
-    pageController = PageController();
-    questionnaire = widget.questionnaires.first;
+    pageController = PageController(initialPage: widget.index ?? 0);
+    questionnaire = widget.questionnaires[widget.index ?? 0];
   }
 
   @override

@@ -14,11 +14,13 @@ import 'package:kalahok_app/widgets/online/questions_widget.dart';
 class QuestionScreen extends StatefulWidget {
   final Surveys survey;
   final List<String> addresses;
+  final int? index;
 
   const QuestionScreen({
     Key? key,
     required this.survey,
     required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -33,8 +35,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
   void initState() {
     super.initState();
 
-    pageController = PageController();
-    question = widget.survey.questionnaires!.first;
+    pageController = PageController(initialPage: widget.index ?? 0);
+    question = widget.survey.questionnaires![widget.index ?? 0];
 
     setState(() {
       question.surveyId = widget.survey.id;

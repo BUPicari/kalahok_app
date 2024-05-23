@@ -18,7 +18,7 @@ class ApiToDbProvider {
 
   Future<void> _insertCategories() async {
     final db = await _dbService.database;
-    var path = '/survey/categories/all/with-active-survey-only';
+    var path = '/domains/all/with-active-survey-only';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(
@@ -45,7 +45,7 @@ class ApiToDbProvider {
 
   Future<void> _insertSurveys({ required int categoryId }) async {
     final db = await _dbService.database;
-    var path = '/survey/categories/$categoryId/surveys';
+    var path = '/domains/$categoryId/surveys';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(

@@ -92,6 +92,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             question: widget.question,
             survey: widget.survey,
             addresses: widget.addresses,
+            index: widget.index,
           ),
         ],
       );

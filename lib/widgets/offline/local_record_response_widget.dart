@@ -12,6 +12,7 @@ class LocalRecordResponseWidget extends StatefulWidget {
   final List<Questionnaire> questionnaires;
   final Survey survey;
   final List<String> addresses;
+  final int index;
 
   const LocalRecordResponseWidget({
     Key? key,
@@ -19,6 +20,7 @@ class LocalRecordResponseWidget extends StatefulWidget {
     required this.questionnaires,
     required this.survey,
     required this.addresses,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -79,6 +81,7 @@ class _LocalRecordResponseWidgetState extends State<LocalRecordResponseWidget> {
               survey: widget.survey,
               screen: "Question",
               addresses: widget.addresses,
+              index: widget.index,
             ),
           ),
         );
