@@ -31,7 +31,7 @@ class ApiConfig {
 class AppConfig {
   static String name = "BosesKo";
   static String logo = "assets/images/bosesko-logo.png";
-  static String demoVideo = "assets/videos/demo.mp4";
+  static String demoVideo = "assets/videos/howto.mp4";
   static String offlineModeText = "Switching to offline mode. Please wait while the data is being downloaded ...";
   static String onlineModeText = "Switching to online mode ...";
 }
