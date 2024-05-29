@@ -104,6 +104,8 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
       backgroundColor: backgroundC,
       icon: icon,
       onClicked: () async {
+        if (recorder.isRecording) return;
+
         await player.togglePlaying(whenFinished: () => setState(() {}));
         setState(() {});
       },

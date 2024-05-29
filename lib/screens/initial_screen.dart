@@ -17,10 +17,11 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-  late int _tempId;
   late DropdownRepository _dropdownRepository;
   late List<Label> labels;
   List<String> responses = [];
+  List<int> filters = [];
+  bool isReset = false;
 
   Future<List<Result>> _getData({
     required path,
@@ -42,7 +43,6 @@ class _InitialScreenState extends State<InitialScreen> {
   void initState() {
     super.initState();
 
-    _tempId = 0;
     _dropdownRepository = DropdownRepository();
     labels = [];
 
@@ -81,8 +81,8 @@ class _InitialScreenState extends State<InitialScreen> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView(children: labels.map(
-                (label) => Column(children: [
+              child: ListView(children: labels.asMap().map((index, label)
+                => MapEntry(index, Column(children: [
                   SearchableDropdown<Result>.paginated(
                     backgroundDecoration: (child) => Card(
                       margin: EdgeInsets.zero,
@@ -101,10 +101,14 @@ class _InitialScreenState extends State<InitialScreen> {
                     hintText: Text('Select a ${label.name}'),
                     margin: const EdgeInsets.all(15),
                     paginatedRequest: (int page, String? searchKey) async {
+                      String f = (index == 0) ? "0" :
+                        (index > 0 && filters.isNotEmpty && filters[index-1] != 0) ?
+                          filters[index-1].toString() : '';
+
                       final paginatedList = await _getData(
                         path: '/${label.endpoint}',
                         page: page,
-                        filter: _tempId != 0 ? _tempId.toString() : '',
+                        filter: f,
                         q: searchKey != null ? searchKey.toString() : '',
                       );
 
@@ -117,8 +121,23 @@ class _InitialScreenState extends State<InitialScreen> {
                     requestItemCount: 10,
                     onChanged: (Result? val) {
                       setState(() {
-                        _tempId = (val?.value)?.toInt() ?? 0;
-                        int index = labels.indexOf(label);
+                        if (index == 0 &&
+                          responses.isNotEmpty &&
+                          responses[index+1] != '') {
+                          isReset = true;
+                        } else {
+                          isReset = false;
+                        }
+
+                        if (index == 0) {
+                          filters = [];
+                          responses = [];
+                        }
+
+                        filters.isNotEmpty ?
+                          filters[index] = (val?.value) ?? 0 :
+                          filters = List.generate(labels.length, (i) =>
+                            i == index ? (val?.value) ?? 0 : 0);
 
                         responses.isNotEmpty ?
                           responses[index] = (val?.label).toString() :
@@ -128,13 +147,34 @@ class _InitialScreenState extends State<InitialScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-                ]),
-              ).toList()),
+                ]))).values.toList()),
             ),
+            isReset ? _errorMessage() : Container(),
             _startButton(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _errorMessage() {
+    return Column(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Responses has been reset, please select new City.",
+              style: TextStyle(
+                color: AppColor.error,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+      ],
     );
   }
 

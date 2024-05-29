@@ -48,7 +48,6 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
 
     return Scaffold(
       appBar: _buildAppBar(context: context),
-      resizeToAvoidBottomInset: false,
       body: LocalQuestionnaireWidget(
         questionnaires: widget.questionnaires,
         pageController: pageController,

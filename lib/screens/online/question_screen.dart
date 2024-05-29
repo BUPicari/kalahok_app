@@ -50,7 +50,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     return Scaffold(
       appBar: buildAppBar(context: context),
-      resizeToAvoidBottomInset: false,
       body: QuestionsWidget(
         survey: widget.survey,
         pageController: pageController,
