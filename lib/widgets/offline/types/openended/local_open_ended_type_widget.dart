@@ -135,9 +135,9 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
             keyboardType: TextInputType.multiline,
             style: const TextStyle(height: 2.0),
             onChanged: (value) {
+              int index = widget.questionnaire.labels.indexOf(label);
+              var cursorPos = fieldControllers[index].selection;
               setState(() {
-                int index = widget.questionnaire.labels.indexOf(label);
-
                 responses.isNotEmpty
                   ? responses[index] = value
                   : responses = List.generate(
@@ -146,10 +146,11 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
 
                 if (fieldControllers.isNotEmpty) {
                   fieldControllers[index].text = value;
-                  fieldControllers[index].selection =
-                    TextSelection.fromPosition(
-                      TextPosition(offset: fieldControllers[index].text.length),
-                    );
+                  if (cursorPos.start > value.length) {
+                    cursorPos = TextSelection.fromPosition(
+                      TextPosition(offset: value.length));
+                  }
+                  fieldControllers[index].selection = cursorPos;
                 } else {
                   fieldControllers = List.generate(
                     widget.questionnaire.labels.length, (j) =>

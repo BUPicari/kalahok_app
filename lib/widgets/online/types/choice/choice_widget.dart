@@ -38,6 +38,12 @@ class _ChoiceWidgetState extends State<ChoiceWidget> {
   }
 
   @override
+  void dispose() {
+    addOthersController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -138,13 +144,15 @@ class _ChoiceWidgetState extends State<ChoiceWidget> {
       ),
       style: const TextStyle(height: 2.0),
       onChanged: (value) {
+        var cursorPos = addOthersController.selection;
         setState(() {
           otherAnswer = value;
           addOthersController.text = value;
-          addOthersController.selection =
-            TextSelection.fromPosition(
-              TextPosition(offset: addOthersController.text.length),
-            );
+          if (cursorPos.start > value.length) {
+            cursorPos = TextSelection.fromPosition(
+              TextPosition(offset: value.length));
+          }
+          addOthersController.selection = cursorPos;
         });
         _setResponse();
       },

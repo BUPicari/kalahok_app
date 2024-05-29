@@ -226,9 +226,17 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
       ),
       style: TextStyle(height: 2.0, color: AppColor.subPrimary),
       onChanged: (value) {
+        var cursorPos = fieldController.selection;
         setState(() {
           passcode = value;
           clickedSubmit = false;
+
+          fieldController.text = value;
+          if (cursorPos.start > value.length) {
+            cursorPos = TextSelection.fromPosition(
+              TextPosition(offset: value.length));
+          }
+          fieldController.selection = cursorPos;
         });
 
         if (widget.survey.passcode == passcode) {

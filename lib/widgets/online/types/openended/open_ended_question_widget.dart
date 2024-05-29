@@ -135,9 +135,9 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             keyboardType: TextInputType.multiline,
             style: const TextStyle(height: 2.0),
             onChanged: (value) {
+              int index = widget.question.labels.indexOf(label);
+              var cursorPos = fieldControllers[index].selection;
               setState(() {
-                int index = widget.question.labels.indexOf(label);
-
                 responses.isNotEmpty
                   ? responses[index] = value
                   : responses = List.generate(widget.question.labels.length, (i) =>
@@ -145,8 +145,11 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
 
                 if (fieldControllers.isNotEmpty) {
                   fieldControllers[index].text = value;
-                  fieldControllers[index].selection =
-                    TextSelection.fromPosition(TextPosition(offset: fieldControllers[index].text.length));
+                  if (cursorPos.start > value.length) {
+                    cursorPos = TextSelection.fromPosition(
+                      TextPosition(offset: value.length));
+                  }
+                  fieldControllers[index].selection = cursorPos;
                 } else {
                   fieldControllers = List.generate(widget.question.labels.length, (j) => j == index
                     ? TextEditingController(text: value)
