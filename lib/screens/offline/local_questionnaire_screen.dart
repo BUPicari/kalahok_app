@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrollview_observer/scrollview_observer.dart';
 
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
@@ -32,6 +33,8 @@ class LocalQuestionnaireScreen extends StatefulWidget {
 class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
   late PageController pageController;
   late Questionnaire questionnaire;
+  late ScrollController scrollController;
+  late ListObserverController observerController;
 
   @override
   void initState() {
@@ -39,6 +42,8 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
 
     pageController = PageController(initialPage: widget.index ?? 0);
     questionnaire = widget.questionnaires[widget.index ?? 0];
+    scrollController = ScrollController();
+    observerController = ListObserverController(controller: scrollController);
   }
 
   @override
@@ -96,6 +101,8 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
               index: index,
               jump: true,
             ),
+            scrollController: scrollController,
+            observerController: observerController,
           ),
         ),
       ),
@@ -131,6 +138,15 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
 
     if (jump) {
       pageController.jumpToPage(indexPage);
+      scrollTo(i: index);
     }
+  }
+
+  void scrollTo({ required int i }) {
+    observerController.animateTo(
+      index: i,
+      duration: const Duration(seconds: 1),
+      curve: Curves.ease,
+    );
   }
 }

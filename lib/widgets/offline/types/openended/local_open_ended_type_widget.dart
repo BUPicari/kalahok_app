@@ -136,7 +136,6 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
             style: const TextStyle(height: 2.0),
             onChanged: (value) {
               int index = widget.questionnaire.labels.indexOf(label);
-              var cursorPos = fieldControllers[index].selection;
               setState(() {
                 responses.isNotEmpty
                   ? responses[index] = value
@@ -145,6 +144,7 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
                       i == index ? value : '');
 
                 if (fieldControllers.isNotEmpty) {
+                  var cursorPos = fieldControllers[index].selection;
                   fieldControllers[index].text = value;
                   if (cursorPos.start > value.length) {
                     cursorPos = TextSelection.fromPosition(

@@ -136,7 +136,6 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             style: const TextStyle(height: 2.0),
             onChanged: (value) {
               int index = widget.question.labels.indexOf(label);
-              var cursorPos = fieldControllers[index].selection;
               setState(() {
                 responses.isNotEmpty
                   ? responses[index] = value
@@ -144,6 +143,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
                     i == index ? value : '');
 
                 if (fieldControllers.isNotEmpty) {
+                  var cursorPos = fieldControllers[index].selection;
                   fieldControllers[index].text = value;
                   if (cursorPos.start > value.length) {
                     cursorPos = TextSelection.fromPosition(

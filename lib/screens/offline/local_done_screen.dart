@@ -36,6 +36,7 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
     Functions.localToApi();
 
     /// Updating num of required survey questionnaires
+    widget.survey.numOfRequired = 0;
     for (var question in widget.questionnaires) {
       _updateQuestionnaireRequiredNum(questionnaire: question);
     }

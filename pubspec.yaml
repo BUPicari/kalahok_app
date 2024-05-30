@@ -30,6 +30,7 @@ dependencies:
   flutter_map_location_marker: ^6.0.0
   url_launcher: ^6.1.11
   flutter_tts: ^3.8.3
+  scrollview_observer: ^1.20.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
