@@ -25,52 +25,54 @@ class ReviewScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                Text(
-                  '* Red boxes are required and has no answers',
-                  style: TextStyle(
-                    color: AppColor.darkError,
-                    fontSize: 16,
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Red boxes are required and has no answers',
+                    style: TextStyle(
+                      color: AppColor.darkError,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '* Gray boxes are not required and has no answers',
-                  style: TextStyle(
-                    color: AppColor.secondary,
-                    fontSize: 16,
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Gray boxes are not required and has no answers',
+                    style: TextStyle(
+                      color: AppColor.secondary,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '* Green boxes have answers',
-                  style: TextStyle(
-                    color: AppColor.darkSuccess,
-                    fontSize: 16,
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Green boxes have answers',
+                    style: TextStyle(
+                      color: AppColor.darkSuccess,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            Expanded(
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                children: Functions.heightBetween(
-                  _buildListViewChildren(context),
-                  height: 8,
+                ],
+              ),
+              const SizedBox(height: 15),
+              Expanded(
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  children: Functions.heightBetween(
+                    _buildListViewChildren(context),
+                    height: 8,
+                  ),
                 ),
               ),
-            ),
-            ReviewButtonWidget(survey: survey, addresses: addresses),
-          ],
+              ReviewButtonWidget(survey: survey, addresses: addresses),
+            ],
+          ),
         ),
       ),
     );

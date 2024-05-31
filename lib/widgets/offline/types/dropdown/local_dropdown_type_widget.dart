@@ -131,7 +131,9 @@ class _LocalDropdownTypeWidgetState extends State<LocalDropdownTypeWidget> {
                 child: child,
               ),
             ),
-            hintText: Text('Select a ${label.name}'),
+            hintText: responses.isNotEmpty && responses[i] != '' ?
+              Text(responses[i]) :
+              Text('Select a ${label.name}'),
             margin: const EdgeInsets.all(15),
             paginatedRequest: (int page, String? searchKey) async {
               if (i == 0) {

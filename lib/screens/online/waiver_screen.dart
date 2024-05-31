@@ -33,27 +33,29 @@ class WaiverScreen extends StatelessWidget {
         languageId: survey.languageId ?? 1,
       )),
       child: Scaffold(
-        body: BlocBuilder<SurveyBloc, SurveyState>(
-          builder: (context, state) {
-            if (state is SurveyLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is SurveyLoadedState) {
-              if (state.surveyWithQuestionnaires?.title == "none") {
-                return const ErrorScreen(
-                  error: "Unable to Take the Survey!",
+        body: SafeArea(
+          child: BlocBuilder<SurveyBloc, SurveyState>(
+            builder: (context, state) {
+              if (state is SurveyLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
-              return _buildContent(context: context, surveyWithQuestionnaires: state.surveyWithQuestionnaires);
-            }
-            if (state is SurveyErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+              if (state is SurveyLoadedState) {
+                if (state.surveyWithQuestionnaires?.title == "none") {
+                  return const ErrorScreen(
+                    error: "Unable to Take the Survey!",
+                  );
+                }
+                return _buildContent(context: context, surveyWithQuestionnaires: state.surveyWithQuestionnaires);
+              }
+              if (state is SurveyErrorState) {
+                /// todo: fix this ui later
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );

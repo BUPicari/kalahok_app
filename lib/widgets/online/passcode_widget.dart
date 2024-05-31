@@ -64,28 +64,30 @@ class _PasscodeWidgetState extends State<PasscodeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ValueListenableBuilder<bool>(
-        valueListenable: widget._isLoadingNotifier,
-        child: widget.child,
-        builder: (context, value, child) {
-          return Stack(
-            children: [
-              child!,
-              if (value)
-                BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-                  child: Opacity(
-                    opacity: 0.8,
-                    child: ModalBarrier(dismissible: false, color: AppColor.subSecondary),
+      body: SafeArea(
+        child: ValueListenableBuilder<bool>(
+          valueListenable: widget._isLoadingNotifier,
+          child: widget.child,
+          builder: (context, value, child) {
+            return Stack(
+              children: [
+                child!,
+                if (value)
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                    child: Opacity(
+                      opacity: 0.8,
+                      child: ModalBarrier(dismissible: false, color: AppColor.subSecondary),
+                    ),
                   ),
-                ),
-              if (value)
-                Center(
-                  child: _passcodeTextField(context),
-                ),
-            ],
-          );
-        },
+                if (value)
+                  Center(
+                    child: _passcodeTextField(context),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

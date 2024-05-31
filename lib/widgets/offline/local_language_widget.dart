@@ -53,12 +53,14 @@ class LocalLanguageWidget extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(10),
-        children: [
-          _buildSurveyWithLanguageGridView(context),
-        ],
+      body: SafeArea(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(10),
+          children: [
+            _buildSurveyWithLanguageGridView(context),
+          ],
+        ),
       ),
     );
   }

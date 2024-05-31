@@ -55,14 +55,16 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     return Scaffold(
       appBar: buildAppBar(context: context),
-      body: QuestionsWidget(
-        survey: widget.survey,
-        pageController: pageController,
-        onChangedPage: (index) => goTo(index: index),
-        onSetResponse: (response) => setResponse(response: response),
-        onPressedPrev: (index) => setPrevQuestion(index: index),
-        onPressedNext: (index) => setNextQuestion(index: index),
-        addresses: widget.addresses,
+      body: SafeArea(
+        child: QuestionsWidget(
+          survey: widget.survey,
+          pageController: pageController,
+          onChangedPage: (index) => goTo(index: index),
+          onSetResponse: (response) => setResponse(response: response),
+          onPressedPrev: (index) => setPrevQuestion(index: index),
+          onPressedNext: (index) => setNextQuestion(index: index),
+          addresses: widget.addresses,
+        ),
       ),
     );
   }

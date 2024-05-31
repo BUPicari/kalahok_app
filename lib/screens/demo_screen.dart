@@ -82,12 +82,14 @@ class _DemoScreenState extends State<DemoScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Toolkit Demo")),
-      body: FutureBuilder(
-        future: _future,
-        builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.waiting) return _buildPlaceholderImage();
-          return _buildChewieImage();
-        },
+      body: SafeArea(
+        child: FutureBuilder(
+          future: _future,
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.waiting) return _buildPlaceholderImage();
+            return _buildChewieImage();
+          },
+        ),
       ),
     );
   }

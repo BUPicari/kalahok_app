@@ -62,91 +62,93 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
 
   Widget _buildForReview(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: AppColor.linearGradient,
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: AppColor.linearGradient,
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 100),
-              SizedBox(
-                child: SvgPicture.asset(
-                  'assets/images/survey-required.svg',
-                  semanticsLabel: 'Survey required',
-                  height: 260,
-                ),
-              ),
-              const SizedBox(height: 40),
-              SizedBox(
-                child: Text(
-                  "Please answer all the",
-                  style: TextStyle(
-                    fontSize: 23,
-                    color: AppColor.error,
-                    fontWeight: FontWeight.bold,
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 100),
+                SizedBox(
+                  child: SvgPicture.asset(
+                    'assets/images/survey-required.svg',
+                    semanticsLabel: 'Survey required',
+                    height: 260,
                   ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              SizedBox(
-                child: Text(
-                  "required questions!",
-                  style: TextStyle(
-                    fontSize: 23,
-                    color: AppColor.error,
-                    fontWeight: FontWeight.bold,
+                const SizedBox(height: 40),
+                SizedBox(
+                  child: Text(
+                    "Please answer all the",
+                    style: TextStyle(
+                      fontSize: 23,
+                      color: AppColor.error,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 140),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100),
-                  child: SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LocalReviewScreen(
-                              survey: widget.survey,
-                              questionnaires: widget.questionnaires,
-                              addresses: widget.addresses,
+                const SizedBox(height: 2),
+                SizedBox(
+                  child: Text(
+                    "required questions!",
+                    style: TextStyle(
+                      fontSize: 23,
+                      color: AppColor.error,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 140),
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 100),
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LocalReviewScreen(
+                                survey: widget.survey,
+                                questionnaires: widget.questionnaires,
+                                addresses: widget.addresses,
+                              ),
                             ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.subPrimary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(33),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.subPrimary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(33),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'BACK TO REVIEW',
-                            style: TextStyle(
-                              color: AppColor.subSecondary,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'BACK TO REVIEW',
+                              style: TextStyle(
+                                color: AppColor.subSecondary,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -157,182 +159,184 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
     final formsSurveyUrl = Uri.parse('https://forms.gle/Lc97er4yWBDN6ipj6');
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: AppColor.linearGradient,
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: AppColor.linearGradient,
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 100),
-              SizedBox(
-                child: Text(
-                  'THANK YOU!',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: AppColor.subPrimary,
-                    fontWeight: FontWeight.bold,
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 100),
+                SizedBox(
+                  child: Text(
+                    'THANK YOU!',
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: AppColor.subPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              SizedBox(
-                child: Text(
-                  "You're part of the solution!",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: AppColor.subPrimary,
-                    fontWeight: FontWeight.bold,
+                const SizedBox(height: 15),
+                SizedBox(
+                  child: Text(
+                    "You're part of the solution!",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: AppColor.subPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 30),
-              SizedBox(
-                child: SvgPicture.asset(
-                  'assets/images/survey-participants.svg',
-                  semanticsLabel: 'Survey done',
-                  height: 260,
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                child: Text(
-                  "You're 1 out of all the users who",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: AppColor.subPrimary,
-                    fontWeight: FontWeight.bold,
+                const SizedBox(height: 30),
+                SizedBox(
+                  child: SvgPicture.asset(
+                    'assets/images/survey-participants.svg',
+                    semanticsLabel: 'Survey done',
+                    height: 260,
                   ),
                 ),
-              ),
-              const SizedBox(height: 5),
-              SizedBox(
-                child: Text(
-                  "participated in this initiative",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: AppColor.subPrimary,
-                    fontWeight: FontWeight.bold,
+                const SizedBox(height: 20),
+                SizedBox(
+                  child: Text(
+                    "You're 1 out of all the users who",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: AppColor.subPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100),
-                  child: SizedBox(
-                    height: 45,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        launchUrl(
-                          formsSurveyUrl,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(160, 40),
-                        backgroundColor: AppColor.subPrimary,
-                        foregroundColor: AppColor.subSecondary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(33),
+                const SizedBox(height: 5),
+                SizedBox(
+                  child: Text(
+                    "participated in this initiative",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: AppColor.subPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 100),
+                    child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          launchUrl(
+                            formsSurveyUrl,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(160, 40),
+                          backgroundColor: AppColor.subPrimary,
+                          foregroundColor: AppColor.subSecondary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(33),
+                          ),
                         ),
-                      ),
-                      icon: const Icon(Icons.comment),
-                      label: Text(
-                        "EVALUATE",
-                        style: TextStyle(
-                          color: AppColor.subSecondary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
+                        icon: const Icon(Icons.comment),
+                        label: Text(
+                          "EVALUATE",
+                          style: TextStyle(
+                            color: AppColor.subSecondary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // const SizedBox(height: 10),
-              // SizedBox(
-              //   child: Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 100),
-              //     child: SizedBox(
-              //       height: 45,
-              //       child: ElevatedButton.icon(
-              //         onPressed: () {
-              //           Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (context) => const CurrentLocationMapScreen(),
-              //             ),
-              //           );
-              //         },
-              //         style: ElevatedButton.styleFrom(
-              //           minimumSize: const Size(160, 40),
-              //           backgroundColor: AppColor.subPrimary,
-              //           foregroundColor: AppColor.subSecondary,
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(33),
-              //           ),
-              //         ),
-              //         icon: const Icon(Icons.pin_drop),
-              //         label: Text(
-              //           "LOCATION",
-              //           style: TextStyle(
-              //             color: AppColor.subSecondary,
-              //             fontSize: 13,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(height: 10),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100),
-                  child: SizedBox(
-                    height: 45,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoadingOverlayWidget(
-                              progressText: AppConfig.onlineModeText,
-                              child: LocalCategoryScreen(
-                                addresses: widget.addresses,
+                // const SizedBox(height: 10),
+                // SizedBox(
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 100),
+                //     child: SizedBox(
+                //       height: 45,
+                //       child: ElevatedButton.icon(
+                //         onPressed: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const CurrentLocationMapScreen(),
+                //             ),
+                //           );
+                //         },
+                //         style: ElevatedButton.styleFrom(
+                //           minimumSize: const Size(160, 40),
+                //           backgroundColor: AppColor.subPrimary,
+                //           foregroundColor: AppColor.subSecondary,
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(33),
+                //           ),
+                //         ),
+                //         icon: const Icon(Icons.pin_drop),
+                //         label: Text(
+                //           "LOCATION",
+                //           style: TextStyle(
+                //             color: AppColor.subSecondary,
+                //             fontSize: 13,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 100),
+                    child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoadingOverlayWidget(
+                                progressText: AppConfig.onlineModeText,
+                                child: LocalCategoryScreen(
+                                  addresses: widget.addresses,
+                                ),
                               ),
                             ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(160, 40),
+                          backgroundColor: AppColor.subPrimary,
+                          foregroundColor: AppColor.subSecondary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(33),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(160, 40),
-                        backgroundColor: AppColor.subPrimary,
-                        foregroundColor: AppColor.subSecondary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(33),
                         ),
-                      ),
-                      icon: const Icon(Icons.home),
-                      label: Text(
-                        'HOME',
-                        style: TextStyle(
-                          color: AppColor.subSecondary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
+                        icon: const Icon(Icons.home),
+                        label: Text(
+                          'HOME',
+                          style: TextStyle(
+                            color: AppColor.subSecondary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

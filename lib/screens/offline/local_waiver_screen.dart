@@ -39,25 +39,27 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
         detailsId: widget.surveyDetail.id,
       )),
       child: Scaffold(
-        body: BlocBuilder<LocalQuestionnaireBloc, LocalQuestionnaireState>(
-          builder: (context, state) {
-            if (state is LocalQuestionnaireByDetailLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is LocalQuestionnaireByDetailLoadedState) {
-              return _buildContent(
-                context: context,
-                questionnaires: state.questionnaires,
-              );
-            }
-            if (state is LocalQuestionnaireErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+        body: SafeArea(
+          child: BlocBuilder<LocalQuestionnaireBloc, LocalQuestionnaireState>(
+            builder: (context, state) {
+              if (state is LocalQuestionnaireByDetailLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is LocalQuestionnaireByDetailLoadedState) {
+                return _buildContent(
+                  context: context,
+                  questionnaires: state.questionnaires,
+                );
+              }
+              if (state is LocalQuestionnaireErrorState) {
+                /// todo: fix this ui later
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );

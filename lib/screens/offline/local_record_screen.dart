@@ -70,18 +70,20 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
         if (snapshot.hasData) {
           return Scaffold(
             appBar: _buildAppBar(context),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildPlayer(),
-                  const SizedBox(height: 16),
-                  _buildStart(),
-                  const SizedBox(height: 20),
-                  _buildPlay(),
-                  const SizedBox(height: 20),
-                  snapshot.data,
-                ],
+            body: SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildPlayer(),
+                    const SizedBox(height: 16),
+                    _buildStart(),
+                    const SizedBox(height: 20),
+                    _buildPlay(),
+                    const SizedBox(height: 20),
+                    snapshot.data,
+                  ],
+                ),
               ),
             ),
           );

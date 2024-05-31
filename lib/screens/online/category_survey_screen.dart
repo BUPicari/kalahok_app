@@ -63,34 +63,36 @@ class CategorySurveyScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: BlocBuilder<CategoryBloc, CategoryState>(
-          builder: (context, state) {
-            if (state is CategoryWithSurveyLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is CategoryWithSurveyLoadedState) {
-              if (state.categoryWithSurvey?.name == "none") {
-                return const ErrorScreen(
-                  error: "No Active Survey as of the moment!",
+        body: SafeArea(
+          child: BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryWithSurveyLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
+              if (state is CategoryWithSurveyLoadedState) {
+                if (state.categoryWithSurvey?.name == "none") {
+                  return const ErrorScreen(
+                    error: "No Active Survey as of the moment!",
+                  );
+                }
 
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(10),
-                children: [
-                  _buildCategorySurveys(categoryWithSurvey: state.categoryWithSurvey),
-                ],
-              );
-            }
-            if (state is CategoryErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+                return ListView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    _buildCategorySurveys(categoryWithSurvey: state.categoryWithSurvey),
+                  ],
+                );
+              }
+              if (state is CategoryErrorState) {
+                /// todo: fix this ui later
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );

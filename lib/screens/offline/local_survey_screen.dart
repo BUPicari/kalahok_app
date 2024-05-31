@@ -69,28 +69,30 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
             ),
           ),
         ),
-        body: BlocBuilder<LocalSurveyBloc, LocalSurveyState>(
-          builder: (context, state) {
-            if (state is LocalSurveyByCategoryLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is LocalSurveyByCategoryLoadedState) {
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(10),
-                children: [
-                  _buildSurveys(surveys: state.surveys),
-                ],
-              );
-            }
-            if (state is LocalSurveyErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+        body: SafeArea(
+          child: BlocBuilder<LocalSurveyBloc, LocalSurveyState>(
+            builder: (context, state) {
+              if (state is LocalSurveyByCategoryLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is LocalSurveyByCategoryLoadedState) {
+                return ListView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    _buildSurveys(surveys: state.surveys),
+                  ],
+                );
+              }
+              if (state is LocalSurveyErrorState) {
+                /// todo: fix this ui later
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );

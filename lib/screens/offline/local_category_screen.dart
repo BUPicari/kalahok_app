@@ -109,29 +109,31 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
             ),
           ],
         ),
-        body: BlocBuilder<LocalCategoryBloc, LocalCategoryState>(
-          builder: (context, state) {
-            if (state is LocalCategoryLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is LocalCategoryLoadedState) {
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                children: [
-                  const SizedBox(height: 8),
-                  _buildCategories(categories: state.categories),
-                ],
-              );
-            }
-            if (state is LocalCategoryErrorState) {
-              /// todo:  fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          }
+        body: SafeArea(
+          child: BlocBuilder<LocalCategoryBloc, LocalCategoryState>(
+              builder: (context, state) {
+                if (state is LocalCategoryLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is LocalCategoryLoadedState) {
+                  return ListView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      const SizedBox(height: 8),
+                      _buildCategories(categories: state.categories),
+                    ],
+                  );
+                }
+                if (state is LocalCategoryErrorState) {
+                  /// todo:  fix this ui later
+                  return ErrorScreen(error: state.error);
+                }
+                return Container();
+              }
+          ),
         ),
       ),
     );

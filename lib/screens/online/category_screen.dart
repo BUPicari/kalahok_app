@@ -114,29 +114,31 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
           ],
         ),
-        body: BlocBuilder<CategoryBloc, CategoryState>(
-          builder: (context, state) {
-            if (state is CategoryLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is CategoryLoadedState) {
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                children: [
-                  const SizedBox(height: 8),
-                  _buildCategories(categories: state.categories),
-                ],
-              );
-            }
-            if (state is CategoryErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+        body: SafeArea(
+          child: BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is CategoryLoadedState) {
+                return ListView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(16),
+                  children: [
+                    const SizedBox(height: 8),
+                    _buildCategories(categories: state.categories),
+                  ],
+                );
+              }
+              if (state is CategoryErrorState) {
+                /// todo: fix this ui later
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );

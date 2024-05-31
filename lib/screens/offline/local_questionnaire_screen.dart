@@ -53,14 +53,16 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
 
     return Scaffold(
       appBar: _buildAppBar(context: context),
-      body: LocalQuestionnaireWidget(
-        questionnaires: widget.questionnaires,
-        pageController: pageController,
-        onChangedPage: (index) => _goTo(index: index),
-        onSetResponse: (response) => _setResponse(response: response),
-        onPressedPrev: (index) => _setPrevQuestion(index: index),
-        onPressedNext: (index) => _setNextQuestion(index: index),
-        addresses: widget.addresses,
+      body: SafeArea(
+        child: LocalQuestionnaireWidget(
+          questionnaires: widget.questionnaires,
+          pageController: pageController,
+          onChangedPage: (index) => _goTo(index: index),
+          onSetResponse: (response) => _setResponse(response: response),
+          onPressedPrev: (index) => _setPrevQuestion(index: index),
+          onPressedNext: (index) => _setNextQuestion(index: index),
+          addresses: widget.addresses,
+        ),
       ),
     );
   }
