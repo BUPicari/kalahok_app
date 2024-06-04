@@ -47,6 +47,12 @@ class CategoryWidget extends StatelessWidget {
                         return Image.network(
                           ApiConfig.baseUrl + category.image,
                           width: 70,
+                          errorBuilder: (
+                            BuildContext context,
+                            Object exception,
+                            StackTrace? stackTrace) {
+                            return const Column();
+                          },
                         );
                       } else {
                         return const Column();

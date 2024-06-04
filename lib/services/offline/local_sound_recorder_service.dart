@@ -1,5 +1,4 @@
 import 'package:flutter_sound_lite/flutter_sound.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -67,7 +66,12 @@ class LocalSoundRecorderService {
     _questionnaire.hasRecording = true;
     _questionnaire.hasInput = false;
 
-    await _audioRecorder!.startRecorder(toFile: path);
+    try {
+      await _audioRecorder?.startRecorder(toFile: path);
+      print('Recorder started successfully');
+    } catch(e) {
+      print('Error starting recorder: $e');
+    }
   }
 
   Future _stop() async {

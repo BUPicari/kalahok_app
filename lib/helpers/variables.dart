@@ -18,14 +18,18 @@ class AppColor {
 }
 
 class ApiConfig {
+  /// UPDATED URL
+  static String updaterUrl = "";
   /// SERVER URL
   static String baseUrl = "https://chedlakas.mab.com.ph:8001";
+  /// SERVER API KEY
+  static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
   /// VISUALIZATION URL
   static String visualizationUrl = "https://chedlakas.mab.com.ph:8004/admin";
   /// LOCAL URL
-  // static String baseUrl = "http://10.10.14.80:3001";
-  /// API KEY
-  static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
+  // static String baseUrl = "http://10.10.16.117:3001";
+  /// LOCAL API KEY
+  // static String apiKey = "BIBgAolNJodHxR95ghUnR2soX4JvzSSbIKWMo9IKg60";
 }
 
 class AppConfig {
