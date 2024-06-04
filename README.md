@@ -1,6 +1,6 @@
-# kalahok_app
+# BosesKo App
 
-Kalahok (E-Participation v2.0) Mobile App
+BosesKo App
 
 ## Getting Started
 
