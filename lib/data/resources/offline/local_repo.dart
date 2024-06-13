@@ -5,7 +5,6 @@ import 'package:kalahok_app/data/models/offline/survey.dart';
 import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/data/resources/offline/local_provider.dart';
 
-/// CHECKED
 class LocalRepository {
   final _provider = LocalProvider();
 

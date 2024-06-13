@@ -1,6 +1,5 @@
 part of 'local_survey_bloc.dart';
 
-/// CHECKED
 @immutable
 abstract class LocalSurveyState extends Equatable {
   const LocalSurveyState();

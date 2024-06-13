@@ -7,7 +7,6 @@ import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/online/types/rating/rate_widget.dart';
 
-/// CHECKED
 class RatingQuestionWidget extends StatelessWidget {
   final int index;
   final Surveys survey;

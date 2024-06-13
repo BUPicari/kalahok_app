@@ -8,7 +8,6 @@ import 'package:kalahok_app/data/models/offline/category.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/database_service.dart';
 
-/// CHECKED
 class ApiToDbProvider {
   final _dbService = DatabaseService.dbService;
 

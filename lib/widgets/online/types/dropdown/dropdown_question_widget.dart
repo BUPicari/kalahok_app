@@ -10,7 +10,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 
-/// NOT CHECK
 class DropdownQuestionWidget extends StatefulWidget {
   final int index;
   final Surveys survey;

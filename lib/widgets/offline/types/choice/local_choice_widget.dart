@@ -5,7 +5,6 @@ import 'package:kalahok_app/data/models/offline/response.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class LocalChoiceWidget extends StatefulWidget {
   final Questionnaire questionnaire;
   final ValueChanged<Response> onSetResponse;

@@ -7,7 +7,6 @@ import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 
-/// CHECKED
 class LocalSoundRecorderService {
   FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialised = false;

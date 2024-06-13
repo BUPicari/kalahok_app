@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:kalahok_app/data/models/online/dropdown_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class DropdownProvider {
   Future<Dropdown> getDropdownList({
     required String path,

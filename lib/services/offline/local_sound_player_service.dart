@@ -8,7 +8,6 @@ import 'package:path/path.dart';
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 
-/// CHECKED
 class LocalSoundPlayerService {
   FlutterSoundPlayer? _audioPlayer;
   late Questionnaire _questionnaire;

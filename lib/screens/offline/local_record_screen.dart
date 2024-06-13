@@ -12,7 +12,6 @@ import 'package:kalahok_app/services/offline/local_sound_recorder_service.dart';
 import 'package:kalahok_app/widgets/audio_button_widget.dart';
 import 'package:kalahok_app/widgets/timer_widget.dart';
 
-/// CHECKED
 class LocalRecordScreen extends StatefulWidget {
   final Questionnaire questionnaire;
   final List<Questionnaire> questionnaires;

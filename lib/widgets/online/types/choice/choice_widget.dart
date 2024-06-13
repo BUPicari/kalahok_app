@@ -6,7 +6,6 @@ import 'package:kalahok_app/data/models/online/choice_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class ChoiceWidget extends StatefulWidget {
   final Questions question;
   final ValueChanged<Answer> onSetResponse;

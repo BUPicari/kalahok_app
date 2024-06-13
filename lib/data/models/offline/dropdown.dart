@@ -1,4 +1,3 @@
-/// CHECKED
 class Dropdown {
   int? id;
   String label;

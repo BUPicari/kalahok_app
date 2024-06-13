@@ -12,7 +12,6 @@ import 'package:kalahok_app/services/online/sound_recorder_service.dart';
 import 'package:kalahok_app/widgets/audio_button_widget.dart';
 import 'package:kalahok_app/widgets/timer_widget.dart';
 
-/// CHECKED
 class RecordScreen extends StatefulWidget {
   final Questions question;
   final Surveys survey;

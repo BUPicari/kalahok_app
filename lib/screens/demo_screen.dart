@@ -5,7 +5,6 @@ import 'package:video_player/video_player.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class DemoScreen extends StatefulWidget {
   const DemoScreen({ Key? key }) : super(key: key);
 

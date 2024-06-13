@@ -11,7 +11,6 @@ import 'package:kalahok_app/screens/online/category_screen.dart';
 import 'package:kalahok_app/widgets/offline/local_category_widget.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class LocalCategoryScreen extends StatefulWidget {
   final List<String> addresses;
 
@@ -128,7 +127,6 @@ class _LocalCategoryScreenState extends State<LocalCategoryScreen> {
                   );
                 }
                 if (state is LocalCategoryErrorState) {
-                  /// todo:  fix this ui later
                   return ErrorScreen(error: state.error);
                 }
                 return Container();

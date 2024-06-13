@@ -5,7 +5,6 @@ import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/waiver_screen.dart';
 
-/// CHECKED
 class PasscodeWidget extends StatefulWidget {
   late final Surveys survey;
   late final List<String> addresses;
@@ -38,7 +37,6 @@ class PasscodeWidget extends StatefulWidget {
   State<PasscodeWidget> createState() => _PasscodeWidgetState();
 }
 
-/// todo: You can refactor this so that it can be reusable, no need for same code as the local
 class _PasscodeWidgetState extends State<PasscodeWidget> {
   String passcode = '';
   TextEditingController fieldController = TextEditingController();

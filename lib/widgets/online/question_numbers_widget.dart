@@ -5,7 +5,6 @@ import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class QuestionNumbersWidget extends StatelessWidget {
   final List<Questions> questions;
   final Questions question;

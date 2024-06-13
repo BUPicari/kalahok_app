@@ -4,7 +4,6 @@ import 'survey.dart';
 import 'survey_detail.dart';
 import 'response.dart';
 
-/// CHECKED
 class Questionnaire {
   int id;
   Survey survey;

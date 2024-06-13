@@ -9,7 +9,6 @@ import 'package:kalahok_app/helpers/functions.dart';
 part 'local_questionnaire_event.dart';
 part 'local_questionnaire_state.dart';
 
-/// CHECKED
 class LocalQuestionnaireBloc extends Bloc<LocalQuestionnaireEvent, LocalQuestionnaireState> {
   final LocalRepository _localRepository = LocalRepository();
 

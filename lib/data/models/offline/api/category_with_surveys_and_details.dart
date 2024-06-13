@@ -1,4 +1,3 @@
-/// CHECKED
 class CategoryWithSurveysAndDetails {
   int id;
   String name;

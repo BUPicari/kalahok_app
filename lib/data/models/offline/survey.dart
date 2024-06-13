@@ -1,6 +1,5 @@
 import 'category.dart';
 
-/// CHECKED
 class Survey {
   int id;
   Category category;

@@ -1,6 +1,5 @@
 import 'package:kalahok_app/data/resources/offline/api_to_db_provider.dart';
 
-/// CHECKED
 class ApiToDbRepository {
   final _provider = ApiToDbProvider();
 

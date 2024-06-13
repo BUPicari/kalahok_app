@@ -7,7 +7,6 @@ import 'package:kalahok_app/screens/online/category_survey_screen.dart';
 import 'package:kalahok_app/screens/online/waiver_screen.dart';
 import 'package:kalahok_app/widgets/online/passcode_widget.dart';
 
-/// CHECKED
 class CategorySurveyLanguageWidget extends StatelessWidget {
   final Category category;
   final List<Surveys> surveys;

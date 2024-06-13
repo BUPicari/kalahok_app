@@ -13,7 +13,6 @@ import 'package:kalahok_app/data/models/offline/survey_response.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/database_service.dart';
 
-/// CHECKED
 class Functions {
   /// Check if the array does not only contains empty string
   static bool arrDoesNotOnlyContainsEmptyString({
@@ -237,7 +236,7 @@ class Functions {
               notificationLayout: NotificationLayout.Inbox,
             );
           } catch (error) {
-            /// todo: log error here
+            print("Error: $error");
           }
         }
       }

@@ -7,7 +7,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_record_screen.dart';
 import 'package:kalahok_app/widgets/offline/local_review_button_widget.dart';
 
-/// CHECKED
 class LocalReviewScreen extends StatefulWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;

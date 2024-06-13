@@ -10,7 +10,6 @@ import 'package:kalahok_app/helpers/functions.dart';
 part 'survey_event.dart';
 part 'survey_state.dart';
 
-/// CHECKED
 class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   final SurveyRepository _surveyRepository = SurveyRepository();
 

@@ -9,7 +9,6 @@ import 'package:kalahok_app/widgets/offline/types/openended/local_open_ended_typ
 import 'package:kalahok_app/widgets/offline/types/rating/local_rating_type_widget.dart';
 import 'package:kalahok_app/widgets/unkown_question_type_widget.dart';
 
-/// CHECKED
 class LocalQuestionnaireWidget extends StatelessWidget {
   final List<Questionnaire> questionnaires;
   final PageController pageController;

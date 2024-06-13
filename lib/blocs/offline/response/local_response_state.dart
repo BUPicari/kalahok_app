@@ -1,6 +1,5 @@
 part of 'local_response_bloc.dart';
 
-/// CHECKED
 @immutable
 abstract class LocalResponseState extends Equatable {
   const LocalResponseState();

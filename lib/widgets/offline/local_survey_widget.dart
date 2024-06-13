@@ -7,7 +7,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/offline/local_language_widget.dart';
 import 'package:kalahok_app/widgets/offline/local_passcode_widget.dart';
 
-/// CHECKED
 class LocalSurveyWidget extends StatelessWidget {
   final Survey survey;
   final List<String> addresses;

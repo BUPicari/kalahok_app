@@ -10,7 +10,6 @@ import 'package:kalahok_app/helpers/functions.dart';
 part 'local_response_event.dart';
 part 'local_response_state.dart';
 
-/// CHECKED
 class LocalResponseBloc extends Bloc<LocalResponseEvent, LocalResponseState> {
   final LocalRepository _localRepository = LocalRepository();
 

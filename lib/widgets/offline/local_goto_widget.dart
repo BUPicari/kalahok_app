@@ -5,7 +5,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_done_screen.dart';
 import 'package:kalahok_app/screens/offline/local_review_screen.dart';
 
-/// CHECKED
 class LocalGotoWidget extends StatelessWidget {
   final int index;
   final List<Questionnaire> questionnaires;

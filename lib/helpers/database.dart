@@ -1,4 +1,3 @@
-/// CHECKED
 class DB {
   static String dbName = 'bosesko.db';
 

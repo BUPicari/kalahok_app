@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// CHECKED
 class AppColor {
   static MaterialColor primary = Colors.indigo;
   static MaterialColor secondary = Colors.blueGrey;
@@ -18,8 +17,10 @@ class AppColor {
 }
 
 class ApiConfig {
-  /// UPDATED URL
+  /// UPDATER URL
   static String updaterUrl = "";
+  /// UPDATER API KEY
+  static String updaterApiKey = "";
   /// SERVER URL
   static String baseUrl = "https://chedlakas.mab.com.ph:8001";
   /// SERVER API KEY

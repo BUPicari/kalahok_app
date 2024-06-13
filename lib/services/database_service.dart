@@ -5,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:kalahok_app/helpers/database.dart';
 
-/// CHECKED
 class DatabaseService {
   static final DatabaseService dbService = DatabaseService();
 

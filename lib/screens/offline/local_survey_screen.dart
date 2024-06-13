@@ -11,7 +11,6 @@ import 'package:kalahok_app/screens/offline/local_category_screen.dart';
 import 'package:kalahok_app/widgets/offline/local_survey_widget.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class LocalSurveyScreen extends StatefulWidget {
   final Category category;
   final List<String> addresses;
@@ -87,7 +86,6 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
                 );
               }
               if (state is LocalSurveyErrorState) {
-                /// todo: fix this ui later
                 return ErrorScreen(error: state.error);
               }
               return Container();

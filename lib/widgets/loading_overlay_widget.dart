@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class LoadingOverlayWidget extends StatelessWidget {
   LoadingOverlayWidget({
     Key? key,

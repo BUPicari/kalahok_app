@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:kalahok_app/data/models/online/category_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class CategoryApiProvider {
   /// Get all categories
   Future<List<Category>> getCategoryList() async {

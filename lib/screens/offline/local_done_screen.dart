@@ -9,7 +9,6 @@ import 'package:kalahok_app/data/models/offline/survey.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_category_screen.dart';
-// import 'package:kalahok_app/screens/current_location_map_screen.dart';
 import 'package:kalahok_app/screens/offline/local_review_screen.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
@@ -258,42 +257,6 @@ class _LocalDoneScreenState extends State<LocalDoneScreen> {
                     ),
                   ),
                 ),
-                // const SizedBox(height: 10),
-                // SizedBox(
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(horizontal: 100),
-                //     child: SizedBox(
-                //       height: 45,
-                //       child: ElevatedButton.icon(
-                //         onPressed: () {
-                //           Navigator.push(
-                //             context,
-                //             MaterialPageRoute(
-                //               builder: (context) => const CurrentLocationMapScreen(),
-                //             ),
-                //           );
-                //         },
-                //         style: ElevatedButton.styleFrom(
-                //           minimumSize: const Size(160, 40),
-                //           backgroundColor: AppColor.subPrimary,
-                //           foregroundColor: AppColor.subSecondary,
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(33),
-                //           ),
-                //         ),
-                //         icon: const Icon(Icons.pin_drop),
-                //         label: Text(
-                //           "LOCATION",
-                //           style: TextStyle(
-                //             color: AppColor.subSecondary,
-                //             fontSize: 13,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 const SizedBox(height: 10),
                 SizedBox(
                   child: Padding(

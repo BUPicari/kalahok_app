@@ -7,7 +7,6 @@ import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class SurveyApiProvider {
   /// Get survey with questionnaires
   Future<Surveys> getSurveyWithQuestionnaires({
@@ -92,7 +91,7 @@ class SurveyApiProvider {
       await request.send();
       Functions.audioRename(from: 'PENDING', to: 'DONE');
     } catch (error) {
-      /// todo: log error here
+      print("Error: $error");
     }
   }
 

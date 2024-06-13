@@ -7,7 +7,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/record_screen.dart';
 import 'package:kalahok_app/widgets/online/review_button_widget.dart';
 
-/// CHECKED
 class ReviewScreen extends StatelessWidget {
   final Surveys survey;
   final List<String> addresses;

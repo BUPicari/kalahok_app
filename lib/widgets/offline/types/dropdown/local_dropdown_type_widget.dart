@@ -10,7 +10,6 @@ import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class LocalDropdownTypeWidget extends StatefulWidget {
   final int index;
   final List<Questionnaire> questionnaires;
@@ -139,7 +138,6 @@ class _LocalDropdownTypeWidgetState extends State<LocalDropdownTypeWidget> {
               if (i == 0) {
                 _filter = '';
               }
-              /// todo: add filter too sa static
               if (useStaticDropdown) {
                 return _staticPaginatedRequest(label: label);
               }

@@ -12,7 +12,6 @@ import 'package:kalahok_app/screens/offline/local_category_screen.dart';
 import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class LocalWaiverScreen extends StatefulWidget {
   final SurveyDetail surveyDetail;
   final List<String> addresses;
@@ -54,7 +53,6 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                 );
               }
               if (state is LocalQuestionnaireErrorState) {
-                /// todo: fix this ui later
                 return ErrorScreen(error: state.error);
               }
               return Container();

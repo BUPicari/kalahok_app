@@ -6,7 +6,6 @@ import 'package:kalahok_app/data/models/online/category_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/category_survey_screen.dart';
 
-/// CHECKED
 class CategoryWidget extends StatelessWidget {
   final Category category;
   final List<String> addresses;

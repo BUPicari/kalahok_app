@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class AudioButtonWidget extends StatelessWidget {
   final String text;
   final Color color;

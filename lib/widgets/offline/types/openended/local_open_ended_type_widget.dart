@@ -8,7 +8,6 @@ import 'package:kalahok_app/widgets/offline/local_goto_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/offline/local_record_response_widget.dart';
 
-/// CHECKED
 class LocalOpenEndedTypeWidget extends StatefulWidget {
   final int index;
   final List<Questionnaire> questionnaires;

@@ -1,6 +1,5 @@
 part of 'survey_bloc.dart';
 
-/// CHECKED
 @immutable
 abstract class SurveyEvent extends Equatable {
   const SurveyEvent();

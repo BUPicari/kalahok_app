@@ -7,7 +7,6 @@ import 'package:kalahok_app/widgets/question_subtext_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/offline/types/choice/local_choice_widget.dart';
 
-/// CHECKED
 class LocalChoiceTypeWidget extends StatelessWidget {
   final int index;
   final List<Questionnaire> questionnaires;

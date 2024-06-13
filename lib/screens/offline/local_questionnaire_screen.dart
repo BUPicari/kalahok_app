@@ -11,7 +11,6 @@ import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 import 'package:kalahok_app/widgets/offline/local_questionnaire_orders_widget.dart';
 import 'package:kalahok_app/widgets/offline/local_questionnaire_widget.dart';
 
-/// CHECKED
 class LocalQuestionnaireScreen extends StatefulWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;

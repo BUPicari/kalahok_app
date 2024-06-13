@@ -10,7 +10,6 @@ import 'package:kalahok_app/screens/online/category_screen.dart';
 import 'package:kalahok_app/widgets/online/category_survey_widget.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class CategorySurveyScreen extends StatelessWidget {
   final Category category;
   final List<String> addresses;
@@ -87,7 +86,6 @@ class CategorySurveyScreen extends StatelessWidget {
                 );
               }
               if (state is CategoryErrorState) {
-                /// todo: fix this ui later
                 return ErrorScreen(error: state.error);
               }
               return Container();

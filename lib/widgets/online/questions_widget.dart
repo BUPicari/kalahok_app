@@ -10,7 +10,6 @@ import 'package:kalahok_app/widgets/online/types/rating/rating_question_widget.d
 import 'package:kalahok_app/widgets/unkown_question_type_widget.dart';
 import 'package:kalahok_app/widgets/online/types/choice/with_choices_question_widget.dart';
 
-/// CHECKED
 class QuestionsWidget extends StatelessWidget {
   final Surveys survey;
   final PageController pageController;

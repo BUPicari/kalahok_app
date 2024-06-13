@@ -5,7 +5,6 @@ import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class LocalQuestionnaireOrdersWidget extends StatelessWidget {
   final List<Questionnaire> questionnaires;
   final Questionnaire questionnaire;

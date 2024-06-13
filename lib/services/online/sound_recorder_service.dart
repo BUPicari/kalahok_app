@@ -7,7 +7,6 @@ import 'package:kalahok_app/data/models/online/answer_model.dart';
 import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 
-/// CHECKED
 class SoundRecorderService {
   FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialised = false;

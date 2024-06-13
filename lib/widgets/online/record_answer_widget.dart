@@ -6,7 +6,6 @@ import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/record_screen.dart';
 
-/// CHECKED
 class RecordAnswerWidget extends StatefulWidget {
   final Questions question;
   final Surveys survey;

@@ -9,7 +9,6 @@ import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/online/record_answer_widget.dart';
 
-/// CHECKED
 class OpenEndedQuestionWidget extends StatefulWidget {
   final int index;
   final Surveys survey;

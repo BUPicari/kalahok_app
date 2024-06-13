@@ -1,7 +1,6 @@
 import 'questions_model.dart';
 
-/// CHECKED
-class Surveys { /// todo: Make this Survey only
+class Surveys {
   int id;
   int? categoryId;
   int? detailsId;
@@ -16,9 +15,9 @@ class Surveys { /// todo: Make this Survey only
   String? updatedAt;
   List<Questions>? questionnaires;
   List<SurveyDetails>? details;
-  int? numOfRequired; /// only for getting the num if required questions in a survey
-  int? languageId; /// for getting the detail id of a language json
-  String? languageName; /// for getting the string value of the language name
+  int? numOfRequired;
+  int? languageId;
+  String? languageName;
 
   Surveys({
     required this.id,
@@ -77,7 +76,7 @@ class Surveys { /// todo: Make this Survey only
       );
     }
 
-    return Surveys( /// todo: make this reusable that can add a key/value pair
+    return Surveys(
       id: json['id'],
       categoryId: json['category_id'],
       detailsId: json['detailsId'],
@@ -128,7 +127,7 @@ class Surveys { /// todo: Make this Survey only
       };
     }
 
-    return { /// todo: make this reusable that can add a key/value pair
+    return {
       'id': id,
       'category_id': categoryId,
       'details_id': detailsId,

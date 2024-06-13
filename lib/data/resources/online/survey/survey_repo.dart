@@ -1,7 +1,6 @@
 import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/data/resources/online/survey/survey_api_provider.dart';
 
-/// CHECKED
 class SurveyRepository {
   final _provider = SurveyApiProvider();
 

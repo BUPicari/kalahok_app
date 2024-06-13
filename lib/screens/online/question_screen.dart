@@ -11,7 +11,6 @@ import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 import 'package:kalahok_app/widgets/online/question_numbers_widget.dart';
 import 'package:kalahok_app/widgets/online/questions_widget.dart';
 
-/// CHECKED
 class QuestionScreen extends StatefulWidget {
   final Surveys survey;
   final List<String> addresses;

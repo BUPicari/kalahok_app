@@ -11,7 +11,6 @@ import 'package:kalahok_app/screens/online/category_screen.dart';
 import 'package:kalahok_app/screens/online/question_screen.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class WaiverScreen extends StatelessWidget {
   final Surveys survey;
   final List<String> addresses;
@@ -50,7 +49,6 @@ class WaiverScreen extends StatelessWidget {
                 return _buildContent(context: context, surveyWithQuestionnaires: state.surveyWithQuestionnaires);
               }
               if (state is SurveyErrorState) {
-                /// todo: fix this ui later
                 return ErrorScreen(error: state.error);
               }
               return Container();

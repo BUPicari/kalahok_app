@@ -8,7 +8,6 @@ import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
 
-/// CHECKED
 class LocalDatePickerTypeWidget extends StatefulWidget {
   final int index;
   final List<Questionnaire> questionnaires;

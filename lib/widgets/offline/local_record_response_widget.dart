@@ -6,7 +6,6 @@ import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_record_screen.dart';
 
-/// CHECKED
 class LocalRecordResponseWidget extends StatefulWidget {
   final Questionnaire questionnaire;
   final List<Questionnaire> questionnaires;

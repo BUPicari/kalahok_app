@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:kalahok_app/helpers/functions.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/data/models/offline/category.dart';
 import 'package:kalahok_app/data/models/offline/dropdown.dart';
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
@@ -9,7 +9,6 @@ import 'package:kalahok_app/data/models/offline/survey.dart';
 import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/services/database_service.dart';
 
-/// CHECKED
 class LocalProvider {
   final _dbService = DatabaseService.dbService;
 

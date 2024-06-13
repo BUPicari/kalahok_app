@@ -1,4 +1,3 @@
-/// CHECKED
 class Label {
   String name;
   String endpoint;

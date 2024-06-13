@@ -8,7 +8,6 @@ import 'package:kalahok_app/data/resources/offline/local_repo.dart';
 part 'local_survey_event.dart';
 part 'local_survey_state.dart';
 
-/// CHECKED
 class LocalSurveyBloc extends Bloc<LocalSurveyEvent, LocalSurveyState> {
   final LocalRepository _localRepository = LocalRepository();
 

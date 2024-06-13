@@ -6,7 +6,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/review_screen.dart';
 import 'package:kalahok_app/screens/online/survey_done_screen.dart';
 
-/// CHECKED
 class PreviousNextButtonWidget extends StatelessWidget {
   final int index;
   final Questions question;

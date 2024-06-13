@@ -6,7 +6,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/initial_screen.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class NotificationService {
   static Future<void> initializeNotification() async {
     await AwesomeNotifications().initialize(

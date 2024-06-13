@@ -6,7 +6,6 @@ import 'package:kalahok_app/data/models/offline/category.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_survey_screen.dart';
 
-/// CHECKED
 class LocalCategoryWidget extends StatelessWidget {
   final Category category;
   final List<String> addresses;

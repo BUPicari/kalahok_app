@@ -6,7 +6,6 @@ import 'package:kalahok_app/screens/offline/local_survey_screen.dart';
 import 'package:kalahok_app/screens/offline/local_waiver_screen.dart';
 import 'package:kalahok_app/widgets/offline/local_passcode_widget.dart';
 
-/// CHECKED
 class LocalLanguageWidget extends StatelessWidget {
   final List<SurveyDetail> surveyDetails;
   final List<String> addresses;

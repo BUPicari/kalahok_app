@@ -8,7 +8,6 @@ import 'package:kalahok_app/data/resources/online/category/category_repo.dart';
 part 'category_event.dart';
 part 'category_state.dart';
 
-/// CHECKED
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final CategoryRepository _categoryRepository = CategoryRepository();
 

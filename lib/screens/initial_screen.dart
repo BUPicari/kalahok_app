@@ -8,7 +8,6 @@ import 'package:kalahok_app/data/models/online/dropdown_model.dart';
 import 'package:kalahok_app/data/resources/online/dropdown/dropdown_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class InitialScreen extends StatefulWidget {
   const InitialScreen({ Key? key }) : super(key: key);
 
