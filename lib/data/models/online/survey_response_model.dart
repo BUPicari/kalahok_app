@@ -1,4 +1,3 @@
-/// CHECKED
 class SurveyResponse {
   int surveyId;
   int detailsId;

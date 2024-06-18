@@ -1,6 +1,5 @@
 import 'surveys_model.dart';
 
-/// CHECKED
 class Category {
   int id;
   String name;
@@ -27,7 +26,7 @@ class Category {
       );
     }
 
-    return Category( /// todo: make this reusable that can add a key/value pair
+    return Category(
       id: json['id'],
       name: json['name'],
       image: json['image'],
@@ -46,7 +45,7 @@ class Category {
       };
     }
 
-    return { /// todo: make this reusable that can add a key/value pair
+    return {
       'id': id,
       'name': name,
       'image': image,

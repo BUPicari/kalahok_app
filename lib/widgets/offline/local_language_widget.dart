@@ -4,14 +4,16 @@ import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_survey_screen.dart';
 import 'package:kalahok_app/screens/offline/local_waiver_screen.dart';
+import 'package:kalahok_app/widgets/offline/local_passcode_widget.dart';
 
-/// CHECKED
 class LocalLanguageWidget extends StatelessWidget {
   final List<SurveyDetail> surveyDetails;
+  final List<String> addresses;
 
   const LocalLanguageWidget({
     Key? key,
     required this.surveyDetails,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -26,9 +28,11 @@ class LocalLanguageWidget extends StatelessWidget {
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => LocalSurveyScreen(
               category: surveyDetails[0].survey.category,
+              addresses: addresses,
             ),
           )),
         ),
+        foregroundColor: AppColor.subPrimary,
         title: Text(surveyDetails[0].survey.title),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
@@ -48,12 +52,14 @@ class LocalLanguageWidget extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildSurveyWithLanguageGridView(context),
-        ],
+      body: SafeArea(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(10),
+          children: [
+            _buildSurveyWithLanguageGridView(context),
+          ],
+        ),
       ),
     );
   }
@@ -63,7 +69,7 @@ class LocalLanguageWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Active Survey',
+          'Choose your preferred',
           style: TextStyle(fontSize: 16, color: AppColor.subPrimary),
         ),
         Text(
@@ -80,14 +86,14 @@ class LocalLanguageWidget extends StatelessWidget {
 
   Widget _buildSurveyWithLanguageGridView(context) {
     return SizedBox(
-      height: 600,
+      height: 570,
       child: GridView(
         primary: false,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
           childAspectRatio: 4 / 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         children: surveyDetails
           .map((detail) => _buildSurveyWithLanguageGridViewWidget(
@@ -105,7 +111,7 @@ class LocalLanguageWidget extends StatelessWidget {
   }) {
     return GestureDetector(
       child: Container(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: AppColor.bgNeutral,
           border: Border(
@@ -119,27 +125,37 @@ class LocalLanguageWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "${surveyDetail.survey.title} - ${surveyDetail.language.name}",
+              "( ${surveyDetail.language.name} )",
+              style: TextStyle(
+                color: AppColor.primary,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                fontSize: 10,
+              ),
+            ),
+            Text(
+              surveyDetail.survey.title,
               style: TextStyle(
                 color: AppColor.warning,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Text(
               surveyDetail.survey.description.replaceAll("\n", ""),
               style: TextStyle(
                 fontSize: 12,
-                fontStyle: FontStyle.italic,
                 color: AppColor.subSecondary,
               ),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 4,
+              maxLines: 3,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text(
               "Available from:",
               style: TextStyle(
@@ -148,11 +164,10 @@ class LocalLanguageWidget extends StatelessWidget {
                 color: AppColor.neutral,
               ),
             ),
-            const SizedBox(height: 5),
             Text(
               "${surveyDetail.survey.startDate} to ${surveyDetail.survey.endDate}",
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
                 color: AppColor.secondary,
@@ -161,15 +176,25 @@ class LocalLanguageWidget extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               height: 25,
-              width: 100,
+              width: 130,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LocalWaiverScreen(surveyDetail: surveyDetail),
-                    ),
-                  );
+                  if (surveyDetail.survey.passcode.isNotEmpty) {
+                    LocalPasscodeWidget.of(context).show(
+                      surveyDetail: surveyDetail,
+                      addresses: addresses,
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LocalWaiverScreen(
+                          surveyDetail: surveyDetail,
+                          addresses: addresses,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.primary,

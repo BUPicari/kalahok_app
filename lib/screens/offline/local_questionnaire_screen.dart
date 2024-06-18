@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrollview_observer/scrollview_observer.dart';
 
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
@@ -10,15 +11,18 @@ import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 import 'package:kalahok_app/widgets/offline/local_questionnaire_orders_widget.dart';
 import 'package:kalahok_app/widgets/offline/local_questionnaire_widget.dart';
 
-/// CHECKED
 class LocalQuestionnaireScreen extends StatefulWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;
+  final List<String> addresses;
+  final int? index;
 
   const LocalQuestionnaireScreen({
     Key? key,
     required this.survey,
     required this.questionnaires,
+    required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -28,13 +32,17 @@ class LocalQuestionnaireScreen extends StatefulWidget {
 class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
   late PageController pageController;
   late Questionnaire questionnaire;
+  late ScrollController scrollController;
+  late ListObserverController observerController;
 
   @override
   void initState() {
     super.initState();
 
-    pageController = PageController();
-    questionnaire = widget.questionnaires.first;
+    pageController = PageController(initialPage: widget.index ?? 0);
+    questionnaire = widget.questionnaires[widget.index ?? 0];
+    scrollController = ScrollController();
+    observerController = ListObserverController(controller: scrollController);
   }
 
   @override
@@ -44,20 +52,23 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
 
     return Scaffold(
       appBar: _buildAppBar(context: context),
-      resizeToAvoidBottomInset: false,
-      body: LocalQuestionnaireWidget(
-        questionnaires: widget.questionnaires,
-        pageController: pageController,
-        onChangedPage: (index) => _goTo(index: index),
-        onSetResponse: (response) => _setResponse(response: response),
-        onPressedPrev: (index) => _setPrevQuestion(index: index),
-        onPressedNext: (index) => _setNextQuestion(index: index),
+      body: SafeArea(
+        child: LocalQuestionnaireWidget(
+          questionnaires: widget.questionnaires,
+          pageController: pageController,
+          onChangedPage: (index) => _goTo(index: index),
+          onSetResponse: (response) => _setResponse(response: response),
+          onPressedPrev: (index) => _setPrevQuestion(index: index),
+          onPressedNext: (index) => _setNextQuestion(index: index),
+          addresses: widget.addresses,
+        ),
       ),
     );
   }
 
   PreferredSizeWidget _buildAppBar({ required context }) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: Text(widget.survey.title),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -74,9 +85,9 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
           color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LoadingOverlay(
-            progressText: "ONLINE MODE",
-            child: const LocalCategoryScreen(),
+          builder: (context) => LoadingOverlayWidget(
+            progressText: AppConfig.onlineModeText,
+            child: LocalCategoryScreen(addresses: widget.addresses),
           ),
         )),
       ),
@@ -91,6 +102,8 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
               index: index,
               jump: true,
             ),
+            scrollController: scrollController,
+            observerController: observerController,
           ),
         ),
       ),
@@ -101,12 +114,6 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
     setState(() {
       questionnaire.response = response;
     });
-    widget.questionnaires?.forEach((element) {
-      print('Question: ${element.question}');
-      print(element.response?.toJson());
-      print('----------');
-    });
-    print('*********');
   }
 
   void _setPrevQuestion({ required int index }) {
@@ -132,6 +139,15 @@ class _LocalQuestionnaireScreenState extends State<LocalQuestionnaireScreen> {
 
     if (jump) {
       pageController.jumpToPage(indexPage);
+      scrollTo(i: index);
     }
+  }
+
+  void scrollTo({ required int i }) {
+    observerController.animateTo(
+      index: i,
+      duration: const Duration(seconds: 1),
+      curve: Curves.ease,
+    );
   }
 }

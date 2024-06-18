@@ -5,13 +5,14 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/question_screen.dart';
 import 'package:kalahok_app/screens/online/survey_done_screen.dart';
 
-/// CHECKED
 class ReviewButtonWidget extends StatelessWidget {
   final Surveys survey;
+  final List<String> addresses;
 
   const ReviewButtonWidget({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -38,11 +39,15 @@ class ReviewButtonWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => QuestionScreen(survey: survey),
+              builder: (context) => QuestionScreen(
+                survey: survey,
+                addresses: addresses,
+              ),
             ),
           );
         },
         style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(33),
           ),
@@ -51,7 +56,7 @@ class ReviewButtonWidget extends StatelessWidget {
           'ANSWER',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -66,11 +71,15 @@ class ReviewButtonWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SurveyDoneScreen(survey: survey),
+              builder: (context) => SurveyDoneScreen(
+                survey: survey,
+                addresses: addresses,
+              ),
             ),
           );
         },
         style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(33),
           ),
@@ -79,7 +88,7 @@ class ReviewButtonWidget extends StatelessWidget {
           'SUBMIT',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),

@@ -1,4 +1,3 @@
-/// CHECKED
 class QuestionnaireResponse {
   int id;
   int surveyResponseId;

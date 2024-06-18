@@ -1,5 +1,4 @@
 import 'package:flutter_sound_lite/flutter_sound.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -8,7 +7,6 @@ import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 
-/// CHECKED
 class LocalSoundRecorderService {
   FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialised = false;
@@ -49,21 +47,30 @@ class LocalSoundRecorderService {
       'recording-$timestamp-question#${_questionnaire.id}-survey#${_questionnaire.survey.id}@PENDING.aac',
     );
 
+    String recorded = join(
+      appDirFolderPath,
+      'recording-$timestamp-question#${_questionnaire.id}-survey#${_questionnaire.survey.id}@LOCAL.aac',
+    );
     if (_questionnaire.response == null) {
       _questionnaire.response = Response(
         surveyQuestion: _questionnaire.question,
         questionFieldTexts: List.generate(1, (i) => _questionnaire.question),
         responses: [],
         otherResponse: '',
-        file: path,
+        file: recorded,
       );
     } else {
-      _questionnaire.response?.file = path;
+      _questionnaire.response?.file = recorded;
     }
     _questionnaire.hasRecording = true;
     _questionnaire.hasInput = false;
 
-    await _audioRecorder!.startRecorder(toFile: path);
+    try {
+      await _audioRecorder?.startRecorder(toFile: path);
+      print('Recorder started successfully');
+    } catch(e) {
+      print('Error starting recorder: $e');
+    }
   }
 
   Future _stop() async {

@@ -6,8 +6,7 @@ import 'config_model.dart';
 import 'rate_model.dart';
 import 'label_model.dart';
 
-/// CHECKED
-class Questions { /// todo: Make this Question only
+class Questions {
   int id;
   int? surveyId;
   String question;

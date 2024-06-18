@@ -4,11 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:kalahok_app/data/models/online/category_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class CategoryApiProvider {
   /// Get all categories
   Future<List<Category>> getCategoryList() async {
-    var path = '/survey/categories/all/with-active-survey-only';
+    var path = '/domains/all/with-active-survey-only';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(
@@ -25,7 +24,7 @@ class CategoryApiProvider {
 
   /// Get all active surveys of a category
   Future<Category> getCategoryWithSurvey({ required int categoryId }) async {
-    var path = '/survey/categories/$categoryId/surveys';
+    var path = '/domains/$categoryId/surveys';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(

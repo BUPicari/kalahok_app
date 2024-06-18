@@ -11,13 +11,14 @@ import 'package:kalahok_app/screens/offline/local_category_screen.dart';
 import 'package:kalahok_app/widgets/offline/local_survey_widget.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class LocalSurveyScreen extends StatefulWidget {
   final Category category;
+  final List<String> addresses;
 
   const LocalSurveyScreen({
     Key? key,
     required this.category,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -41,12 +42,13 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
               color: AppColor.subPrimary,
             ),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => LoadingOverlay(
-                progressText: "ONLINE MODE",
-                child: const LocalCategoryScreen(),
+              builder: (context) => LoadingOverlayWidget(
+                progressText: AppConfig.onlineModeText,
+                child: LocalCategoryScreen(addresses: widget.addresses),
               ),
             )),
           ),
+          foregroundColor: AppColor.subPrimary,
           title: Text(widget.category.name),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(80),
@@ -66,28 +68,29 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
             ),
           ),
         ),
-        body: BlocBuilder<LocalSurveyBloc, LocalSurveyState>(
-          builder: (context, state) {
-            if (state is LocalSurveyByCategoryLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is LocalSurveyByCategoryLoadedState) {
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                children: [
-                  _buildSurveys(surveys: state.surveys),
-                ],
-              );
-            }
-            if (state is LocalSurveyErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+        body: SafeArea(
+          child: BlocBuilder<LocalSurveyBloc, LocalSurveyState>(
+            builder: (context, state) {
+              if (state is LocalSurveyByCategoryLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is LocalSurveyByCategoryLoadedState) {
+                return ListView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    _buildSurveys(surveys: state.surveys),
+                  ],
+                );
+              }
+              if (state is LocalSurveyErrorState) {
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
@@ -121,12 +124,14 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3 / 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         children: surveys
-          .map((survey) => LocalSurveyWidget(survey: survey))
-          .toList()
+          .map((survey) => LocalSurveyWidget(
+            survey: survey,
+            addresses: widget.addresses,
+          )).toList()
       ),
     );
   }

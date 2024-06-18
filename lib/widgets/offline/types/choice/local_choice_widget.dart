@@ -5,7 +5,6 @@ import 'package:kalahok_app/data/models/offline/response.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class LocalChoiceWidget extends StatefulWidget {
   final Questionnaire questionnaire;
   final ValueChanged<Response> onSetResponse;
@@ -34,6 +33,12 @@ class _LocalChoiceWidgetState extends State<LocalChoiceWidget> {
     otherResponse = widget.questionnaire.response?.otherResponse ?? '';
     selected = widget.questionnaire.response?.responses ?? [];
     fieldTexts = List.generate(1, (i) => widget.questionnaire.question);
+  }
+
+  @override
+  void dispose() {
+    addOthersController.dispose();
+    super.dispose();
   }
 
   @override
@@ -136,13 +141,15 @@ class _LocalChoiceWidgetState extends State<LocalChoiceWidget> {
       ),
       style: const TextStyle(height: 2.0),
       onChanged: (value) {
+        var cursorPos = addOthersController.selection;
         setState(() {
           otherResponse = value;
           addOthersController.text = value;
-          addOthersController.selection =
-            TextSelection.fromPosition(
-              TextPosition(offset: addOthersController.text.length),
-            );
+          if (cursorPos.start > value.length) {
+            cursorPos = TextSelection.fromPosition(
+              TextPosition(offset: value.length));
+          }
+          addOthersController.selection = cursorPos;
         });
         _setResponse();
       },

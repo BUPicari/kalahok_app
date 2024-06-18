@@ -1,4 +1,3 @@
-/// CHECKED
 class Answer {
   String surveyQuestion;
   List<String> questionFieldTexts;

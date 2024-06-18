@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrollview_observer/scrollview_observer.dart';
 
 import 'package:kalahok_app/data/models/online/answer_model.dart';
 import 'package:kalahok_app/data/models/online/questions_model.dart';
@@ -10,13 +11,16 @@ import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 import 'package:kalahok_app/widgets/online/question_numbers_widget.dart';
 import 'package:kalahok_app/widgets/online/questions_widget.dart';
 
-/// CHECKED
 class QuestionScreen extends StatefulWidget {
   final Surveys survey;
+  final List<String> addresses;
+  final int? index;
 
   const QuestionScreen({
     Key? key,
     required this.survey,
+    required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -26,13 +30,17 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   late PageController pageController;
   late Questions question;
+  late ScrollController scrollController;
+  late ListObserverController observerController;
 
   @override
   void initState() {
     super.initState();
 
-    pageController = PageController();
-    question = widget.survey.questionnaires!.first;
+    pageController = PageController(initialPage: widget.index ?? 0);
+    question = widget.survey.questionnaires![widget.index ?? 0];
+    scrollController = ScrollController(initialScrollOffset: 2.0);
+    observerController = ListObserverController(controller: scrollController);
 
     setState(() {
       question.surveyId = widget.survey.id;
@@ -46,20 +54,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     return Scaffold(
       appBar: buildAppBar(context: context),
-      resizeToAvoidBottomInset: false,
-      body: QuestionsWidget(
-        survey: widget.survey,
-        pageController: pageController,
-        onChangedPage: (index) => goTo(index: index),
-        onSetResponse: (response) => setResponse(response: response),
-        onPressedPrev: (index) => setPrevQuestion(index: index),
-        onPressedNext: (index) => setNextQuestion(index: index),
+      body: SafeArea(
+        child: QuestionsWidget(
+          survey: widget.survey,
+          pageController: pageController,
+          onChangedPage: (index) => goTo(index: index),
+          onSetResponse: (response) => setResponse(response: response),
+          onPressedPrev: (index) => setPrevQuestion(index: index),
+          onPressedNext: (index) => setNextQuestion(index: index),
+          addresses: widget.addresses,
+        ),
       ),
     );
   }
 
   PreferredSizeWidget buildAppBar({ required context }) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: Text(widget.survey.title),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -76,9 +87,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
           color: AppColor.subPrimary,
         ),
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LoadingOverlay(
-            progressText: "OFFLINE MODE",
-            child: const CategoryScreen(),
+          builder: (context) => LoadingOverlayWidget(
+            progressText: AppConfig.offlineModeText,
+            child: CategoryScreen(addresses: widget.addresses),
           ),
         )),
       ),
@@ -93,6 +104,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
               index: index,
               jump: true,
             ),
+            scrollController: scrollController,
+            observerController: observerController,
           ),
         ),
       ),
@@ -103,12 +116,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
     setState(() {
       question.answer = response;
     });
-    widget.survey.questionnaires?.forEach((element) {
-      print('Question: ${element.question}');
-      print(element.answer?.toJson());
-      print('----------');
-    });
-    print('*********');
   }
 
   void setPrevQuestion({ required int index }) {
@@ -135,6 +142,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     if (jump) {
       pageController.jumpToPage(indexPage);
+      scrollTo(i: index);
     }
+  }
+
+  void scrollTo({ required int i }) {
+    observerController.animateTo(
+      index: i,
+      duration: const Duration(seconds: 1),
+      curve: Curves.ease,
+    );
   }
 }

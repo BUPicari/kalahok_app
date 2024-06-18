@@ -1,6 +1,5 @@
 part of 'local_category_bloc.dart';
 
-/// CHECKED
 @immutable
 abstract class LocalCategoryEvent extends Equatable {
   const LocalCategoryEvent();

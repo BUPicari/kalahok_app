@@ -6,15 +6,18 @@ import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/record_screen.dart';
 
-/// CHECKED
 class RecordAnswerWidget extends StatefulWidget {
   final Questions question;
   final Surveys survey;
+  final List<String> addresses;
+  final int index;
 
   const RecordAnswerWidget({
     Key? key,
     required this.question,
     required this.survey,
+    required this.addresses,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -73,6 +76,8 @@ class _RecordAnswerWidgetState extends State<RecordAnswerWidget> {
               question: widget.question,
               survey: widget.survey,
               screen: "Question",
+              addresses: widget.addresses,
+              index: widget.index,
             ),
           ),
         );

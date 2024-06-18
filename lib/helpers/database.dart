@@ -1,6 +1,5 @@
-/// CHECKED
 class DB {
-  static String dbName = 'Kalahok.db';
+  static String dbName = 'bosesko.db';
 
   static String categoryTable = "CREATE TABLE category ("
     "id INTEGER PRIMARY KEY AUTOINCREMENT,"

@@ -6,7 +6,6 @@ import 'package:kalahok_app/data/models/online/choice_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class ChoiceWidget extends StatefulWidget {
   final Questions question;
   final ValueChanged<Answer> onSetResponse;
@@ -35,6 +34,12 @@ class _ChoiceWidgetState extends State<ChoiceWidget> {
     otherAnswer = widget.question.answer?.otherAnswer ?? '';
     selected = widget.question.answer?.answers ?? [];
     fieldTexts = List.generate(1, (i) => widget.question.question);
+  }
+
+  @override
+  void dispose() {
+    addOthersController.dispose();
+    super.dispose();
   }
 
   @override
@@ -138,13 +143,15 @@ class _ChoiceWidgetState extends State<ChoiceWidget> {
       ),
       style: const TextStyle(height: 2.0),
       onChanged: (value) {
+        var cursorPos = addOthersController.selection;
         setState(() {
           otherAnswer = value;
           addOthersController.text = value;
-          addOthersController.selection =
-            TextSelection.fromPosition(
-              TextPosition(offset: addOthersController.text.length),
-            );
+          if (cursorPos.start > value.length) {
+            cursorPos = TextSelection.fromPosition(
+              TextPosition(offset: value.length));
+          }
+          addOthersController.selection = cursorPos;
         });
         _setResponse();
       },

@@ -5,7 +5,6 @@ import 'package:kalahok_app/data/models/online/answer_model.dart';
 import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 
-/// CHECKED
 class RateWidget extends StatefulWidget {
   final Questions question;
   final ValueChanged<Answer> onSetResponse;
@@ -56,7 +55,7 @@ class _RateWidgetState extends State<RateWidget> {
               label.name,
               style: const TextStyle(
                 fontStyle: FontStyle.italic,
-                fontSize: 13,
+                fontSize: 10,
                 fontWeight: FontWeight.bold,
               ),
             );

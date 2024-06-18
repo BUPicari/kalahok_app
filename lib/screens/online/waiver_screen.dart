@@ -7,15 +7,18 @@ import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
+import 'package:kalahok_app/screens/online/category_screen.dart';
 import 'package:kalahok_app/screens/online/question_screen.dart';
+import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class WaiverScreen extends StatelessWidget {
   final Surveys survey;
+  final List<String> addresses;
 
   const WaiverScreen({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -29,27 +32,28 @@ class WaiverScreen extends StatelessWidget {
         languageId: survey.languageId ?? 1,
       )),
       child: Scaffold(
-        body: BlocBuilder<SurveyBloc, SurveyState>(
-          builder: (context, state) {
-            if (state is SurveyLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is SurveyLoadedState) {
-              if (state.surveyWithQuestionnaires?.title == "none") {
-                return const ErrorScreen(
-                  error: "Unable to Take the Survey!",
+        body: SafeArea(
+          child: BlocBuilder<SurveyBloc, SurveyState>(
+            builder: (context, state) {
+              if (state is SurveyLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
-              return _buildContent(context: context, surveyWithQuestionnaires: state.surveyWithQuestionnaires);
-            }
-            if (state is SurveyErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+              if (state is SurveyLoadedState) {
+                if (state.surveyWithQuestionnaires?.title == "none") {
+                  return const ErrorScreen(
+                    error: "Unable to Take the Survey!",
+                  );
+                }
+                return _buildContent(context: context, surveyWithQuestionnaires: state.surveyWithQuestionnaires);
+              }
+              if (state is SurveyErrorState) {
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
@@ -108,9 +112,8 @@ class WaiverScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
+            Row(children: [
+              Expanded(
                 child: SizedBox(
                   height: 50,
                   child: ElevatedButton(
@@ -118,7 +121,10 @@ class WaiverScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QuestionScreen(survey: surveyWithQuestionnaires!),
+                          builder: (context) => LoadingOverlayWidget(
+                            progressText: AppConfig.offlineModeText,
+                            child: CategoryScreen(addresses: addresses),
+                          ),
                         ),
                       );
                     },
@@ -132,10 +138,10 @@ class WaiverScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'PROCEED',
+                          'Back',
                           style: TextStyle(
                             color: AppColor.subSecondary,
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -144,7 +150,45 @@ class WaiverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+              const SizedBox(width: 25),
+              Expanded(
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuestionScreen(
+                            survey: surveyWithQuestionnaires!,
+                            addresses: addresses,
+                          ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.subPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(33),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Proceed',
+                          style: TextStyle(
+                            color: AppColor.subSecondary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ]),
           ],
         ),
       ),

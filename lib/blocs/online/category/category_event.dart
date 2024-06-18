@@ -1,6 +1,5 @@
 part of 'category_bloc.dart';
 
-/// CHECKED
 @immutable
 abstract class CategoryEvent extends Equatable {
   const CategoryEvent();

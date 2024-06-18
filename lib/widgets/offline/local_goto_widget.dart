@@ -5,13 +5,13 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_done_screen.dart';
 import 'package:kalahok_app/screens/offline/local_review_screen.dart';
 
-/// CHECKED
 class LocalGotoWidget extends StatelessWidget {
   final int index;
   final List<Questionnaire> questionnaires;
   final Questionnaire questionnaire;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalGotoWidget({
     Key? key,
@@ -20,6 +20,7 @@ class LocalGotoWidget extends StatelessWidget {
     required this.questionnaire,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -39,9 +40,9 @@ class LocalGotoWidget extends StatelessWidget {
     if (questionnaires.last == questionnaire) {
       return Row(children: [
         _buildPrevBtn(),
-        const SizedBox(width: 20),
+        const SizedBox(width: 10),
         _buildReviewBtn(context),
-        const SizedBox(width: 20),
+        const SizedBox(width: 10),
         _buildSubmitBtn(context),
       ]);
     }
@@ -70,7 +71,7 @@ class LocalGotoWidget extends StatelessWidget {
           'Prev',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -88,6 +89,7 @@ class LocalGotoWidget extends StatelessWidget {
               builder: (context) => LocalReviewScreen(
                 survey: questionnaire.survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );
@@ -102,7 +104,7 @@ class LocalGotoWidget extends StatelessWidget {
           'Review',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -120,6 +122,7 @@ class LocalGotoWidget extends StatelessWidget {
               builder: (context) => LocalDoneScreen(
                 survey: questionnaire.survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );
@@ -134,7 +137,7 @@ class LocalGotoWidget extends StatelessWidget {
           'Submit',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -159,7 +162,7 @@ class LocalGotoWidget extends StatelessWidget {
           'Next',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),

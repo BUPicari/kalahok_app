@@ -8,7 +8,6 @@ import 'package:kalahok_app/widgets/offline/local_goto_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/offline/local_record_response_widget.dart';
 
-/// CHECKED
 class LocalOpenEndedTypeWidget extends StatefulWidget {
   final int index;
   final List<Questionnaire> questionnaires;
@@ -16,6 +15,7 @@ class LocalOpenEndedTypeWidget extends StatefulWidget {
   final ValueChanged<Response> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalOpenEndedTypeWidget({
     Key? key,
@@ -25,6 +25,7 @@ class LocalOpenEndedTypeWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -69,6 +70,7 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
             questionnaire: widget.questionnaire,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),
@@ -88,12 +90,14 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
             questionnaire: widget.questionnaire,
             questionnaires: widget.questionnaires,
             survey: widget.questionnaire.survey,
+            addresses: widget.addresses,
+            index: widget.index,
           ),
         ],
       );
     }
 
-    return Column();
+    return const Column();
   }
 
   Widget _buildTextFieldForms() {
@@ -130,9 +134,8 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
             keyboardType: TextInputType.multiline,
             style: const TextStyle(height: 2.0),
             onChanged: (value) {
+              int index = widget.questionnaire.labels.indexOf(label);
               setState(() {
-                int index = widget.questionnaire.labels.indexOf(label);
-
                 responses.isNotEmpty
                   ? responses[index] = value
                   : responses = List.generate(
@@ -140,11 +143,13 @@ class _LocalOpenEndedTypeWidgetState extends State<LocalOpenEndedTypeWidget> {
                       i == index ? value : '');
 
                 if (fieldControllers.isNotEmpty) {
+                  var cursorPos = fieldControllers[index].selection;
                   fieldControllers[index].text = value;
-                  fieldControllers[index].selection =
-                    TextSelection.fromPosition(
-                      TextPosition(offset: fieldControllers[index].text.length),
-                    );
+                  if (cursorPos.start > value.length) {
+                    cursorPos = TextSelection.fromPosition(
+                      TextPosition(offset: value.length));
+                  }
+                  fieldControllers[index].selection = cursorPos;
                 } else {
                   fieldControllers = List.generate(
                     widget.questionnaire.labels.length, (j) =>

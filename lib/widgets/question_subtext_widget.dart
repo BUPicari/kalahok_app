@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// CHECKED
 class QuestionSubtextWidget extends StatelessWidget {
   final String subText;
 
@@ -21,6 +20,6 @@ class QuestionSubtextWidget extends StatelessWidget {
       ]);
     }
 
-    return Column();
+    return const Column();
   }
 }

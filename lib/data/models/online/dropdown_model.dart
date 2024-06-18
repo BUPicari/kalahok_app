@@ -1,4 +1,3 @@
-/// CHECKED
 class Dropdown {
   List<Result> result;
 

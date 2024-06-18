@@ -1,13 +1,13 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 
 import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 
-/// CHECKED
 class SoundPlayerService {
   FlutterSoundPlayer? _audioPlayer;
   late Questions _question;
@@ -34,10 +34,16 @@ class SoundPlayerService {
       'recording-$timestamp-question#${_question.id}-survey#${_question.surveyId}@PENDING.aac',
     );
 
-    await _audioPlayer!.startPlayer(
-      fromURI: path,
-      whenFinished: whenFinished,
-    );
+    try {
+      Uint8List audioData = await loadAudioData(path);
+      await _audioPlayer?.startPlayer(
+        fromDataBuffer: audioData,
+        whenFinished: whenFinished,
+      );
+      print('Player started successfully');
+    } catch(e) {
+      print('Error starting player: $e');
+    }
   }
 
   Future _stop() async {
@@ -50,5 +56,10 @@ class SoundPlayerService {
     } else {
       await _stop();
     }
+  }
+
+  Future<Uint8List> loadAudioData(String filePath) async {
+    File file = File(filePath);
+    return await file.readAsBytes();
   }
 }

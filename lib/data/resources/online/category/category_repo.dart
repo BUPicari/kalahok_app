@@ -1,7 +1,6 @@
 import 'package:kalahok_app/data/models/online/category_model.dart';
 import 'package:kalahok_app/data/resources/online/category/category_api_provider.dart';
 
-/// CHECKED
 class CategoryRepository {
   final _provider = CategoryApiProvider();
 

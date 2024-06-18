@@ -6,15 +6,16 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_done_screen.dart';
 import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
 
-/// CHECKED
 class LocalReviewButtonWidget extends StatelessWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;
+  final List<String> addresses;
 
   const LocalReviewButtonWidget({
     Key? key,
     required this.survey,
     required this.questionnaires,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -44,11 +45,13 @@ class LocalReviewButtonWidget extends StatelessWidget {
               builder: (context) => LocalQuestionnaireScreen(
                 survey: survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );
         },
         style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(33),
           ),
@@ -57,7 +60,7 @@ class LocalReviewButtonWidget extends StatelessWidget {
           'ANSWER',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -75,11 +78,13 @@ class LocalReviewButtonWidget extends StatelessWidget {
               builder: (context) => LocalDoneScreen(
                 survey: survey,
                 questionnaires: questionnaires,
+                addresses: addresses,
               ),
             ),
           );
         },
         style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(33),
           ),
@@ -88,7 +93,7 @@ class LocalReviewButtonWidget extends StatelessWidget {
           'SUBMIT',
           style: TextStyle(
             color: AppColor.subPrimary,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
           ),
         ),

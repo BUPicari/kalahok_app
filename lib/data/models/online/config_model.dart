@@ -1,4 +1,3 @@
-/// CHECKED
 class Config {
   bool multipleAnswer = false;
   bool canAddOthers = false;

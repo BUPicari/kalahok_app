@@ -12,12 +12,13 @@ import 'package:kalahok_app/services/offline/local_sound_recorder_service.dart';
 import 'package:kalahok_app/widgets/audio_button_widget.dart';
 import 'package:kalahok_app/widgets/timer_widget.dart';
 
-/// CHECKED
 class LocalRecordScreen extends StatefulWidget {
   final Questionnaire questionnaire;
   final List<Questionnaire> questionnaires;
   final Survey survey;
   final String screen;
+  final List<String> addresses;
+  final int? index;
 
   const LocalRecordScreen({
     Key? key,
@@ -25,6 +26,8 @@ class LocalRecordScreen extends StatefulWidget {
     required this.questionnaires,
     required this.survey,
     required this.screen,
+    required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -66,18 +69,20 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
         if (snapshot.hasData) {
           return Scaffold(
             appBar: _buildAppBar(context),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildPlayer(),
-                  const SizedBox(height: 16),
-                  _buildStart(),
-                  const SizedBox(height: 20),
-                  _buildPlay(),
-                  const SizedBox(height: 20),
-                  snapshot.data,
-                ],
+            body: SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildPlayer(),
+                    const SizedBox(height: 16),
+                    _buildStart(),
+                    const SizedBox(height: 20),
+                    _buildPlay(),
+                    const SizedBox(height: 20),
+                    snapshot.data,
+                  ],
+                ),
               ),
             ),
           );
@@ -100,6 +105,8 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
       backgroundColor: backgroundC,
       icon: icon,
       onClicked: () async {
+        if (recorder.isRecording) return;
+
         await player.togglePlaying(whenFinished: () => setState(() {}));
         setState(() {});
       },
@@ -148,15 +155,25 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
         child: CircleAvatar(
           radius: 92,
           backgroundColor: AppColor.primary,
-          child: player.isPlaying ?
-            const Icon(Icons.audiotrack_outlined, size: 120) :
-            Column(
+          child: player.isPlaying
+            ? Icon(
+              Icons.audiotrack_outlined,
+              size: 120,
+              color: AppColor.subPrimary
+            ) : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.mic, size: 32),
+                Icon(
+                  Icons.mic,
+                  size: 32,
+                  color: AppColor.subPrimary,
+                ),
                 TimerWidget(controller: timerController),
                 const SizedBox(height: 8),
-                Text(text),
+                Text(
+                  text,
+                  style: TextStyle(color: AppColor.subPrimary),
+                ),
               ],
             ),
         ),
@@ -166,6 +183,7 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: const Text('Record Answer'),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -185,10 +203,12 @@ class _LocalRecordScreenState extends State<LocalRecordScreen> {
                 LocalQuestionnaireScreen(
                   survey: widget.survey,
                   questionnaires: widget.questionnaires,
-                ) :
-                LocalReviewScreen(
+                  addresses: widget.addresses,
+                  index: widget.index,
+                ) : LocalReviewScreen(
                   survey: widget.survey,
                   questionnaires: widget.questionnaires,
+                  addresses: widget.addresses,
                 ),
             ),
           );

@@ -1,6 +1,5 @@
 part of 'local_questionnaire_bloc.dart';
 
-/// CHECKED
 @immutable
 abstract class LocalQuestionnaireState extends Equatable {
   const LocalQuestionnaireState();

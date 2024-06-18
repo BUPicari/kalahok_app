@@ -9,7 +9,6 @@ import 'package:kalahok_app/widgets/offline/types/openended/local_open_ended_typ
 import 'package:kalahok_app/widgets/offline/types/rating/local_rating_type_widget.dart';
 import 'package:kalahok_app/widgets/unkown_question_type_widget.dart';
 
-/// CHECKED
 class LocalQuestionnaireWidget extends StatelessWidget {
   final List<Questionnaire> questionnaires;
   final PageController pageController;
@@ -17,6 +16,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
   final ValueChanged<Response> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalQuestionnaireWidget({
     Key? key,
@@ -26,6 +26,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -58,6 +59,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "openEnded":
         return LocalOpenEndedTypeWidget(
@@ -67,6 +69,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "trueOrFalse":
         return LocalChoiceTypeWidget(
@@ -77,6 +80,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "rating":
         return LocalRatingTypeWidget(
@@ -86,6 +90,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "datepicker":
         return LocalDatePickerTypeWidget(
@@ -95,6 +100,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       case "dropdown":
         return LocalDropdownTypeWidget(
@@ -104,6 +110,7 @@ class LocalQuestionnaireWidget extends StatelessWidget {
           onSetResponse: onSetResponse,
           onPressedPrev: onPressedPrev,
           onPressedNext: onPressedNext,
+          addresses: addresses,
         );
       default:
         return const UnknownQuestionTypeWidget();

@@ -8,15 +8,18 @@ import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/error_screen.dart';
+import 'package:kalahok_app/screens/offline/local_category_screen.dart';
 import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
+import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class LocalWaiverScreen extends StatefulWidget {
   final SurveyDetail surveyDetail;
+  final List<String> addresses;
 
   const LocalWaiverScreen({
     Key? key,
     required this.surveyDetail,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -35,25 +38,26 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
         detailsId: widget.surveyDetail.id,
       )),
       child: Scaffold(
-        body: BlocBuilder<LocalQuestionnaireBloc, LocalQuestionnaireState>(
-          builder: (context, state) {
-            if (state is LocalQuestionnaireByDetailLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is LocalQuestionnaireByDetailLoadedState) {
-              return _buildContent(
-                context: context,
-                questionnaires: state.questionnaires,
-              );
-            }
-            if (state is LocalQuestionnaireErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+        body: SafeArea(
+          child: BlocBuilder<LocalQuestionnaireBloc, LocalQuestionnaireState>(
+            builder: (context, state) {
+              if (state is LocalQuestionnaireByDetailLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is LocalQuestionnaireByDetailLoadedState) {
+                return _buildContent(
+                  context: context,
+                  questionnaires: state.questionnaires,
+                );
+              }
+              if (state is LocalQuestionnaireErrorState) {
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
@@ -115,9 +119,8 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
+            Row(children: [
+              Expanded(
                 child: SizedBox(
                   height: 50,
                   child: ElevatedButton(
@@ -125,9 +128,9 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LocalQuestionnaireScreen(
-                            survey: widget.surveyDetail.survey,
-                            questionnaires: questionnaires,
+                          builder: (context) => LoadingOverlayWidget(
+                            progressText: AppConfig.onlineModeText,
+                            child: LocalCategoryScreen(addresses: widget.addresses),
                           ),
                         ),
                       );
@@ -142,10 +145,10 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'PROCEED',
+                          'Back',
                           style: TextStyle(
                             color: AppColor.subSecondary,
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -154,7 +157,46 @@ class _LocalWaiverScreenState extends State<LocalWaiverScreen> {
                   ),
                 ),
               ),
-            ),
+              const SizedBox(width: 25),
+              Expanded(
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LocalQuestionnaireScreen(
+                            survey: widget.surveyDetail.survey,
+                            questionnaires: questionnaires,
+                            addresses: widget.addresses,
+                          ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.subPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(33),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Proceed',
+                          style: TextStyle(
+                            color: AppColor.subSecondary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ]),
           ],
         ),
       ),

@@ -4,17 +4,17 @@ import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/online/question_screen.dart';
 import 'package:kalahok_app/screens/online/record_screen.dart';
 import 'package:kalahok_app/widgets/online/review_button_widget.dart';
 
-/// CHECKED
 class ReviewScreen extends StatelessWidget {
   final Surveys survey;
+  final List<String> addresses;
 
   const ReviewScreen({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -24,58 +24,54 @@ class ReviewScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                Text(
-                  '* Red boxes are required and has no answers',
-                  style: TextStyle(
-                    color: AppColor.darkError,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Red boxes are required and has no answers',
+                    style: TextStyle(
+                      color: AppColor.darkError,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '* Gray boxes are not required and has no answers',
-                  style: TextStyle(
-                    color: AppColor.secondary,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Gray boxes are not required and has no answers',
+                    style: TextStyle(
+                      color: AppColor.secondary,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '* Green boxes have answers',
-                  style: TextStyle(
-                    color: AppColor.darkSuccess,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Green boxes have answers',
+                    style: TextStyle(
+                      color: AppColor.darkSuccess,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            Expanded(
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                children: Functions.heightBetween(
-                  _buildListViewChildren(context),
-                  height: 8,
+                ],
+              ),
+              const SizedBox(height: 15),
+              Expanded(
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  children: Functions.heightBetween(
+                    _buildListViewChildren(context),
+                    height: 8,
+                  ),
                 ),
               ),
-            ),
-            ReviewButtonWidget(survey: survey),
-          ],
+              ReviewButtonWidget(survey: survey, addresses: addresses),
+            ],
+          ),
         ),
       ),
     );
@@ -91,7 +87,6 @@ class ReviewScreen extends StatelessWidget {
               question.question,
               style: TextStyle(
                 color: AppColor.subSecondary,
-                fontStyle: FontStyle.italic,
                 fontSize: 16,
               ),
             ),
@@ -111,6 +106,7 @@ class ReviewScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: const Text('Recorded Response'),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -126,9 +122,10 @@ class ReviewScreen extends StatelessWidget {
           Icons.arrow_back,
           color: AppColor.subPrimary,
         ),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => QuestionScreen(survey: survey),
-        )),
+        onTap: () {
+          // Navigate back to the previous screen by popping the current route
+          Navigator.of(context).pop();
+        },
       ),
     );
   }
@@ -192,7 +189,7 @@ class ReviewScreen extends StatelessWidget {
         );
       }).toList();
 
-      Widget addOthersWidget = Column();
+      Widget addOthersWidget = const Column();
       String othersOrSpecifyText = question.type == 'trueOrFalse'
         ? 'Specify:'
         : 'Others:';
@@ -235,7 +232,10 @@ class ReviewScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(33),
                 ),
               ),
-              icon: const Icon(Icons.play_arrow),
+              icon: Icon(
+                color: AppColor.subPrimary,
+                Icons.play_arrow,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -244,6 +244,7 @@ class ReviewScreen extends StatelessWidget {
                       question: question,
                       survey: survey,
                       screen: "Review",
+                      addresses: addresses,
                     ),
                   ),
                 );

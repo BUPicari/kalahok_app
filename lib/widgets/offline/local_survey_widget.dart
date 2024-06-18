@@ -5,14 +5,16 @@ import 'package:kalahok_app/data/models/offline/survey_detail.dart';
 import 'package:kalahok_app/data/resources/offline/local_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/offline/local_language_widget.dart';
+import 'package:kalahok_app/widgets/offline/local_passcode_widget.dart';
 
-/// CHECKED
 class LocalSurveyWidget extends StatelessWidget {
   final Survey survey;
+  final List<String> addresses;
 
   const LocalSurveyWidget({
     Key? key,
     required this.survey,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -23,8 +25,12 @@ class LocalSurveyWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => LocalLanguageWidget(
-                surveyDetails: value,
+              builder: (context) => LocalPasscodeWidget(
+                progressText: "Enter the passcode:",
+                child: LocalLanguageWidget(
+                  surveyDetails: value,
+                  addresses: addresses,
+                ),
               ),
             ),
           );
@@ -52,22 +58,26 @@ class LocalSurveyWidget extends StatelessWidget {
                 fontSize: 12,
               ),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
             ),
-            const SizedBox(height: 25),
-            Text(
-              "Available Languages:",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: AppColor.neutral,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Center(
-              child: FutureBuilder(
-                future: _getAvailableLanguages(),
-                builder: (context, snapshot) {
-                  return snapshot.connectionState == ConnectionState.done ?
+            const SizedBox(height: 10),
+            Wrap(
+              runSpacing: 5,
+              spacing: 5,
+              children: [
+                Text(
+                  "Languages:",
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.neutral,
+                  ),
+                ),
+                FutureBuilder(
+                  future: _getAvailableLanguages(),
+                  builder: (context, snapshot) {
+                    return snapshot.connectionState == ConnectionState.done ?
                     Text(
                       snapshot.data.toString(),
                       style: TextStyle(
@@ -78,8 +88,9 @@ class LocalSurveyWidget extends StatelessWidget {
                       ),
                     ) :
                     const SizedBox();
-                },
-              ),
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -90,12 +101,10 @@ class LocalSurveyWidget extends StatelessWidget {
   Future<String> _getAvailableLanguages() async {
     List<String> languages = [];
     List<SurveyDetail> details = await _getDetailsBySurvey();
-
     for (var detail in details) {
       languages.add(detail.language.name);
     }
-
-    return languages.join(" | ");
+    return languages.join(", ");
   }
 
   Future<List<SurveyDetail>> _getDetailsBySurvey() async {

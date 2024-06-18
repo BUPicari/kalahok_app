@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:kalahok_app/helpers/functions.dart';
 
-/// CHECKED
 class ErrorScreen extends StatelessWidget {
   final String error;
 
@@ -13,7 +12,6 @@ class ErrorScreen extends StatelessWidget {
     /// Local to API not yet sent items submission
     Functions.localToApi();
 
-    /// todo: fix this ui later
     return Center(child: Text(error));
   }
 }

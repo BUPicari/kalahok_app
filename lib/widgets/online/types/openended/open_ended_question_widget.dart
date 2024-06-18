@@ -9,7 +9,6 @@ import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/online/record_answer_widget.dart';
 
-/// CHECKED
 class OpenEndedQuestionWidget extends StatefulWidget {
   final int index;
   final Surveys survey;
@@ -17,6 +16,7 @@ class OpenEndedQuestionWidget extends StatefulWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const OpenEndedQuestionWidget({
     Key? key,
@@ -26,6 +26,7 @@ class OpenEndedQuestionWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -70,6 +71,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             survey: widget.survey,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),
@@ -88,12 +90,14 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
           RecordAnswerWidget(
             question: widget.question,
             survey: widget.survey,
+            addresses: widget.addresses,
+            index: widget.index,
           ),
         ],
       );
     }
 
-    return Column();
+    return const Column();
   }
 
   Widget _buildTextFieldForms() {
@@ -130,18 +134,21 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
             keyboardType: TextInputType.multiline,
             style: const TextStyle(height: 2.0),
             onChanged: (value) {
+              int index = widget.question.labels.indexOf(label);
               setState(() {
-                int index = widget.question.labels.indexOf(label);
-
                 responses.isNotEmpty
                   ? responses[index] = value
                   : responses = List.generate(widget.question.labels.length, (i) =>
                     i == index ? value : '');
 
                 if (fieldControllers.isNotEmpty) {
+                  var cursorPos = fieldControllers[index].selection;
                   fieldControllers[index].text = value;
-                  fieldControllers[index].selection =
-                    TextSelection.fromPosition(TextPosition(offset: fieldControllers[index].text.length));
+                  if (cursorPos.start > value.length) {
+                    cursorPos = TextSelection.fromPosition(
+                      TextPosition(offset: value.length));
+                  }
+                  fieldControllers[index].selection = cursorPos;
                 } else {
                   fieldControllers = List.generate(widget.question.labels.length, (j) => j == index
                     ? TextEditingController(text: value)

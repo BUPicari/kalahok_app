@@ -6,7 +6,6 @@ import 'package:kalahok_app/widgets/offline/local_goto_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/offline/types/rating/local_rate_widget.dart';
 
-/// CHECKED
 class LocalRatingTypeWidget extends StatelessWidget {
   final int index;
   final List<Questionnaire> questionnaires;
@@ -14,6 +13,7 @@ class LocalRatingTypeWidget extends StatelessWidget {
   final ValueChanged<Response> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const LocalRatingTypeWidget({
     Key? key,
@@ -23,6 +23,7 @@ class LocalRatingTypeWidget extends StatelessWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -50,6 +51,7 @@ class LocalRatingTypeWidget extends StatelessWidget {
             questionnaire: questionnaire,
             onPressedPrev: onPressedPrev,
             onPressedNext: onPressedNext,
+            addresses: addresses,
           ),
         ],
       ),

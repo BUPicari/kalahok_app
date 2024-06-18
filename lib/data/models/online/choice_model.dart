@@ -1,4 +1,3 @@
-/// CHECKED
 class Choice {
   String name;
 

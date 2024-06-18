@@ -1,4 +1,3 @@
-/// CHECKED
 class Language {
   int id;
   String name;

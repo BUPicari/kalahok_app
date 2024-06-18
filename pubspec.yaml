@@ -1,5 +1,5 @@
 name: kalahok_app
-description: Kalahok (E-Participation v2.0) Mobile App
+description: BosesKo Mobile App
 publish_to: 'none'
 version: 1.0.0+1
 environment:
@@ -22,15 +22,15 @@ dependencies:
   sqflite: ^2.2.5
   path: ^1.8.2
   internet_connection_checker: ^1.0.0+1
-  intl: ^0.18.0
-  workmanager: ^0.5.1
+  intl: ^0.19.0
   video_player: ^2.7.2
   chewie: ^1.7.1
-  awesome_notifications: ^0.7.6
+  awesome_notifications: ^0.8.3
   flutter_inappwebview: ^5.7.2+3
   flutter_map_location_marker: ^6.0.0
   url_launcher: ^6.1.11
   flutter_tts: ^3.8.3
+  scrollview_observer: ^1.20.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

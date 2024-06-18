@@ -5,16 +5,18 @@ import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/online/category_survey_screen.dart';
 import 'package:kalahok_app/screens/online/waiver_screen.dart';
+import 'package:kalahok_app/widgets/online/passcode_widget.dart';
 
-/// CHECKED
 class CategorySurveyLanguageWidget extends StatelessWidget {
   final Category category;
   final List<Surveys> surveys;
+  final List<String> addresses;
 
   const CategorySurveyLanguageWidget({
     Key? key,
     required this.category,
     required this.surveys,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -27,9 +29,13 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
             color: AppColor.subPrimary,
           ),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CategorySurveyScreen(category: category),
+            builder: (context) => CategorySurveyScreen(
+              category: category,
+              addresses: addresses,
+            ),
           )),
         ),
+        foregroundColor: AppColor.subPrimary,
         title: Text(surveys[0].title),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
@@ -49,12 +55,14 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildSurveyWithLanguageGridView(context),
-        ],
+      body: SafeArea(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(10),
+          children: [
+            _buildSurveyWithLanguageGridView(context),
+          ],
+        ),
       ),
     );
   }
@@ -64,7 +72,7 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Active Survey',
+          'Choose your preferred',
           style: TextStyle(fontSize: 16, color: AppColor.subPrimary),
         ),
         Text(
@@ -81,14 +89,14 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
 
   Widget _buildSurveyWithLanguageGridView(context) {
     return SizedBox(
-      height: 600,
+      height: 570,
       child: GridView(
         primary: false,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
           childAspectRatio: 4 / 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         children: surveys
           .map((survey) => _buildSurveyWithLanguageGridViewWidget(context: context, survey: survey))
@@ -103,7 +111,7 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
   }) {
     return GestureDetector(
       child: Container(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: AppColor.bgNeutral,
           border: Border(
@@ -117,27 +125,37 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "${survey.title} - ${survey.languageName}",
+              "( ${survey.languageName} )",
+              style: TextStyle(
+                color: AppColor.primary,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                fontSize: 10,
+              ),
+            ),
+            Text(
+              survey.title,
               style: TextStyle(
                 color: AppColor.warning,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Text(
               survey.description.replaceAll("\n", ""),
               style: TextStyle(
                 fontSize: 12,
-                fontStyle: FontStyle.italic,
                 color: AppColor.subSecondary,
               ),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 4,
+              maxLines: 3,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text(
               "Available from:",
               style: TextStyle(
@@ -146,11 +164,10 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
                 color: AppColor.neutral,
               ),
             ),
-            const SizedBox(height: 5),
             Text(
               "${survey.startDate} to ${survey.endDate}",
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
                 color: AppColor.secondary,
@@ -159,15 +176,25 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               height: 25,
-              width: 100,
+              width: 130,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WaiverScreen(survey: survey),
-                    ),
-                  );
+                  if (survey.passcode != "" && survey.passcode != null) {
+                    PasscodeWidget.of(context).show(
+                      survey: survey,
+                      addresses: addresses,
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WaiverScreen(
+                          survey: survey,
+                          addresses: addresses,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.primary,

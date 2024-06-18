@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// CHECKED
 class AppColor {
   static MaterialColor primary = Colors.indigo;
   static MaterialColor secondary = Colors.blueGrey;
@@ -18,19 +17,26 @@ class AppColor {
 }
 
 class ApiConfig {
+  /// UPDATER URL
+  static String updaterUrl = "";
+  /// UPDATER API KEY
+  static String updaterApiKey = "";
   /// SERVER URL
   static String baseUrl = "https://chedlakas.mab.com.ph:8001";
+  /// SERVER API KEY
+  static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
   /// VISUALIZATION URL
   static String visualizationUrl = "https://chedlakas.mab.com.ph:8004/admin";
   /// LOCAL URL
-  // static String baseUrl = "http://10.10.14.80:3001";
-  /// API KEY
-  static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
+  // static String baseUrl = "http://10.10.16.117:3001";
+  /// LOCAL API KEY
+  // static String apiKey = "BIBgAolNJodHxR95ghUnR2soX4JvzSSbIKWMo9IKg60";
 }
 
 class AppConfig {
   static String name = "BosesKo";
   static String logo = "assets/images/bosesko-logo.png";
-  static String logoPreview = "assets/images/bosesko-removebg-preview.png";
-  static String demoVideo = "assets/videos/demo.mp4";
+  static String demoVideo = "assets/videos/howto.mp4";
+  static String offlineModeText = "Switching to offline mode. Please wait while the data is being downloaded ...";
+  static String onlineModeText = "Switching to online mode ...";
 }

@@ -2,10 +2,10 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kalahok_app/app.dart';
-import 'package:kalahok_app/screens/online/category_screen.dart';
+import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/screens/initial_screen.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class NotificationService {
   static Future<void> initializeNotification() async {
     await AwesomeNotifications().initialize(
@@ -73,9 +73,9 @@ class NotificationService {
     if (payload["navigate"] == "true") {
       MyApp.navigatorKey.currentState?.push(
         MaterialPageRoute(
-          builder: (_) => LoadingOverlay(
-            progressText: "OFFLINE MODE",
-            child: const CategoryScreen(),
+          builder: (_) => LoadingOverlayWidget(
+            progressText: AppConfig.offlineModeText,
+            child: const InitialScreen(),
           ),
         ),
       );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// CHECKED
+import 'package:kalahok_app/helpers/variables.dart';
+
 class AudioButtonWidget extends StatelessWidget {
   final String text;
   final Color color;
@@ -31,7 +32,10 @@ class AudioButtonWidget extends StatelessWidget {
           vertical: 16,
         ),
       ),
-      icon: Icon(icon),
+      icon: Icon(
+        color: AppColor.subPrimary,
+        icon,
+      ),
       onPressed: onClicked,
       label: Text(
         text,

@@ -10,7 +10,6 @@ import 'package:kalahok_app/helpers/functions.dart';
 part 'survey_event.dart';
 part 'survey_state.dart';
 
-/// CHECKED
 class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   final SurveyRepository _surveyRepository = SurveyRepository();
 
@@ -38,17 +37,16 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
 
         for (var question in questionnaires) {
           if (question.config.isRequired) {
-            var answer = question.answer;
-            if ((answer != null && answer.answers.isNotEmpty) ||
-              (answer != null && answer.otherAnswer.isNotEmpty) ||
-              (answer != null && answer.file != null)) {
+            String otherAnswer = question.answer?.otherAnswer ?? '';
+            List<String> answer = question.answer?.answers ?? [];
+            String file = question.answer?.file ?? '';
+
+            if ((answer.isNotEmpty && Functions.arrDoesNotOnlyContainsEmptyString(strArr: answer)) ||
+              (otherAnswer.isNotEmpty) || (file.isNotEmpty)) {
               numOfRequiredResponses += 1;
             }
           }
         }
-
-        print('numOfRequired: ${event.survey.numOfRequired}');
-        print('numOfRequiredResponses: $numOfRequiredResponses');
 
         if (event.survey.numOfRequired != numOfRequiredResponses) {
           emit(SurveyForReviewState());

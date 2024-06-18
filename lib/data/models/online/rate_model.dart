@@ -1,4 +1,3 @@
-/// CHECKED
 class Rate {
   String min;
   String max;

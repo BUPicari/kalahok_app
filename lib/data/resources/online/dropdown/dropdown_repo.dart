@@ -1,7 +1,6 @@
 import 'package:kalahok_app/data/models/online/dropdown_model.dart';
 import 'package:kalahok_app/data/resources/online/dropdown/dropdown_provider.dart';
 
-/// CHECKED
 class DropdownRepository {
   final _provider = DropdownProvider();
 

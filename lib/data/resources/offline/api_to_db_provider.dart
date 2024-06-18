@@ -8,7 +8,6 @@ import 'package:kalahok_app/data/models/offline/category.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/database_service.dart';
 
-/// CHECKED
 class ApiToDbProvider {
   final _dbService = DatabaseService.dbService;
 
@@ -18,7 +17,7 @@ class ApiToDbProvider {
 
   Future<void> _insertCategories() async {
     final db = await _dbService.database;
-    var path = '/survey/categories/all/with-active-survey-only';
+    var path = '/domains/all/with-active-survey-only';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(
@@ -31,16 +30,12 @@ class ApiToDbProvider {
       Category.fromJson(e)).toList();
 
     for (var category in categories) {
-      print("Start inserting a category - API to Local DB");
-
       /// Add the category
       await db.insert(
         'category',
         category.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-
-      print("Done inserting a category - API to Local DB");
 
       /// Call the next API
       await _insertSurveys(categoryId: category.id);
@@ -49,7 +44,7 @@ class ApiToDbProvider {
 
   Future<void> _insertSurveys({ required int categoryId }) async {
     final db = await _dbService.database;
-    var path = '/survey/categories/$categoryId/surveys';
+    var path = '/domains/$categoryId/surveys';
     var url = Uri.parse(ApiConfig.baseUrl + path);
 
     http.Response response = await http.get(
@@ -62,8 +57,6 @@ class ApiToDbProvider {
       CategoryWithSurveysAndDetails.fromJson(jsonDecode(responseBody));
 
     for (var survey in category.surveys) {
-      print("Start inserting a survey - API to Local DB");
-
       /// Add the survey
       var json = {
         "id": survey.id,
@@ -93,8 +86,6 @@ class ApiToDbProvider {
           detailsId: detail.id,
         );
       }
-
-      print("Done inserting a survey - API to Local DB");
     }
   }
 
@@ -103,16 +94,12 @@ class ApiToDbProvider {
   }) async {
     final db = await _dbService.database;
 
-    print("Start inserting a language - API to Local DB");
-
     /// Add the language
     await db.insert(
       'language',
       language.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
-    print("Done inserting a language - API to Local DB");
   }
 
   Future<void> _insertSurveyDetail({
@@ -120,8 +107,6 @@ class ApiToDbProvider {
     required SurveysInCategoryWithSurveysAndDetails survey,
   }) async {
     final db = await _dbService.database;
-
-    print("Start inserting a survey detail - API to Local DB");
 
     /// Add the survey detail
     var surveyDetail = {
@@ -135,16 +120,12 @@ class ApiToDbProvider {
       surveyDetail,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
-    print("Done inserting a survey detail - API to Local DB");
   }
 
   Future<void> _updateSurvey({
     required SurveyWithQuestionnaires survey,
   }) async {
     final db = await _dbService.database;
-
-    print("Start updating a survey - API to Local DB");
 
     /// Update the survey
     var json = {
@@ -158,8 +139,6 @@ class ApiToDbProvider {
       whereArgs: [survey.id],
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
-    print("Done updating a survey - API to Local DB");
   }
 
   Future<void> _insertQuestionnaires({
@@ -183,8 +162,6 @@ class ApiToDbProvider {
     await _updateSurvey(survey: survey);
 
     for (var questionnaire in survey.questionnaires) {
-      print("Start inserting a questionnaire - API to Local DB");
-
       /// Add the questionnaire
       var tempQuestionnaire = {
         "id": questionnaire.id,
@@ -202,8 +179,6 @@ class ApiToDbProvider {
         tempQuestionnaire,
         conflictAlgorithm: ConflictAlgorithm.replace
       );
-
-      print("Done inserting a questionnaire - API to Local DB");
     }
   }
 
@@ -227,8 +202,6 @@ class ApiToDbProvider {
       DropdownInSurveyWithQuestionnaires.fromJson(jsonDecode(provinceResponseBody));
 
     for (var pRes in provinceResult.result) {
-      print("Start province ${pRes.label} dropdown - API to Local DB");
-
       /// Add the province dropdown
       var provinceDropdown = {
         "id": pResIndex,
@@ -240,8 +213,6 @@ class ApiToDbProvider {
         provinceDropdown,
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-
-      print("Done province ${pRes.label} dropdown - API to Local DB");
 
       /// City Dropdown
       var cityPath = '/address/paginate/city?filter=${pRes.value}';
@@ -256,8 +227,6 @@ class ApiToDbProvider {
         DropdownInSurveyWithQuestionnaires.fromJson(jsonDecode(cityResponseBody));
 
       for (var cRes in cityResult.result) {
-        print("Start city ${cRes.label} dropdown - API to Local DB");
-
         /// Add the city dropdown
         var cityDropdown = {
           "id": cResIndex,
@@ -270,8 +239,6 @@ class ApiToDbProvider {
           cityDropdown,
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
-
-        print("Done city ${cRes.label} dropdown - API to Local DB");
 
         /// Barangay Dropdown
         var barangayPath = '/address/barangay?filter=${cRes.value}';
@@ -286,8 +253,6 @@ class ApiToDbProvider {
           DropdownInSurveyWithQuestionnaires.fromJson(jsonDecode(barangayResponseBody));
 
         for (var bRes in barangayResult.result) {
-          print("Start barangay ${bRes.label} dropdown - API to Local DB");
-
           /// Add the barangay dropdown
           var barangayDropdown = {
             "id": bResIndex,
@@ -300,8 +265,6 @@ class ApiToDbProvider {
             barangayDropdown,
             conflictAlgorithm: ConflictAlgorithm.replace,
           );
-
-          print("Done barangay ${bRes.label} dropdown - API to Local DB");
 
           bResIndex++;
         }
@@ -329,8 +292,6 @@ class ApiToDbProvider {
       DropdownInSurveyWithQuestionnaires.fromJson(jsonDecode(courseResponseBody));
 
     for (var crRes in courseResult.result) {
-      print("Start course ${crRes.label} dropdown - API to Local DB");
-
       /// Add the course dropdown
       var courseDropdown = {
         "id": crResIndex,
@@ -364,8 +325,6 @@ class ApiToDbProvider {
       DropdownInSurveyWithQuestionnaires.fromJson(jsonDecode(schoolResponseBody));
 
     for (var scRes in schoolResult.result) {
-      print("Start school ${scRes.label} dropdown - API to Local DB");
-
       /// Add the school dropdown
       var schoolDropdown = {
         "id": scResIndex,

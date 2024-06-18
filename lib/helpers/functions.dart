@@ -13,7 +13,6 @@ import 'package:kalahok_app/data/models/offline/survey_response.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/services/database_service.dart';
 
-/// CHECKED
 class Functions {
   /// Check if the array does not only contains empty string
   static bool arrDoesNotOnlyContainsEmptyString({
@@ -106,23 +105,23 @@ class Functions {
       surveyId: surveyId,
     );
 
-    String filename = temp != '' ? "recorded.aac" : '';
+    String filename = temp != '' ? "recorded" : '';
 
     if (filename != '') {
       return ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(100, 40),
         ),
-        icon: const Icon(Icons.music_note_rounded),
+        icon: const Icon(Icons.music_note_rounded, size: 20),
         label: Text(
           filename,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
         ),
         onPressed: null,
       );
     }
 
-    return Column();
+    return const Column();
   }
 
   /// Checking internet connection availability
@@ -130,10 +129,6 @@ class Functions {
     return await InternetConnectionChecker().hasConnection;
   }
 
-  /// PENDING - kakarecord plng and di pa na balik sa waiver
-  /// DENY - lahat ng record na PENDING before tas di na submit
-  /// SUBMITTED - lahat ng record na PENDING before ang na save sa sqlite or na submit
-  /// DONE - lahat ng record na from SUBMITTED to post requested to api
   static void audioRename({ required String from, required String to }) async {
     String appDirFolderPath = await getRecordingPath();
     final recordDir = Directory(appDirFolderPath);
@@ -160,8 +155,6 @@ class Functions {
   static void localToApi() async {
     final dbService = DatabaseService.dbService;
     final db = await dbService.database;
-
-    print("Check if there are items that are not yet sent from Local to API");
 
     /// Query db survey responses where is_sent = false
     List<Map<String, dynamic>> dbSurveyResponse = await db.query(
@@ -204,8 +197,6 @@ class Functions {
 
           /// Send is_sent = false questionnaire responses to api post request
           try {
-            print("Start Local to API submission for a not yet sent items");
-
             var request = http.MultipartRequest('POST', url);
             request.headers['X-Requested-With'] = "XMLHttpRequest";
             request.headers['x-api-key'] = ApiConfig.apiKey;
@@ -225,11 +216,8 @@ class Functions {
               }
             });
 
-            var result = await request.send();
-            audioRename(from: 'SUBMITTED', to: 'DONE');
-
-            print("Done Local to API submission for a not yet sent items");
-            print("Start updating survey response to is_sent = true");
+            await request.send();
+            audioRename(from: 'LOCAL', to: 'DONE');
 
             /// Update the survey response to is_sent = true
             await db.update(
@@ -240,9 +228,6 @@ class Functions {
               conflictAlgorithm: ConflictAlgorithm.replace,
             );
 
-            print("Done updating survey response to is_sent = true");
-            print("Notify now the user that the local responses has already been submitted");
-
             /// Call the notification
             await NotificationService.showNotification(
               title: "Local to API responses submitted!",
@@ -250,10 +235,8 @@ class Functions {
               summary: "BosesKo Notification",
               notificationLayout: NotificationLayout.Inbox,
             );
-
-            print("Notified the user that the local responses has already been submitted");
           } catch (error) {
-            print(error);
+            print("Error: $error");
           }
         }
       }

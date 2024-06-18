@@ -12,17 +12,20 @@ import 'package:kalahok_app/services/online/sound_recorder_service.dart';
 import 'package:kalahok_app/widgets/audio_button_widget.dart';
 import 'package:kalahok_app/widgets/timer_widget.dart';
 
-/// CHECKED
 class RecordScreen extends StatefulWidget {
   final Questions question;
   final Surveys survey;
   final String screen;
+  final List<String> addresses;
+  final int? index;
 
   const RecordScreen({
     Key? key,
     required this.question,
     required this.survey,
     required this.screen,
+    required this.addresses,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -64,18 +67,20 @@ class _RecordScreenState extends State<RecordScreen> {
         if (snapshot.hasData) {
           return Scaffold(
             appBar: _buildAppBar(context),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildPlayer(),
-                  const SizedBox(height: 16),
-                  _buildStart(),
-                  const SizedBox(height: 20),
-                  _buildPlay(),
-                  const SizedBox(height: 20),
-                  snapshot.data
-                ],
+            body: SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildPlayer(),
+                    const SizedBox(height: 16),
+                    _buildStart(),
+                    const SizedBox(height: 20),
+                    _buildPlay(),
+                    const SizedBox(height: 20),
+                    snapshot.data
+                  ],
+                ),
               ),
             ),
           );
@@ -98,6 +103,8 @@ class _RecordScreenState extends State<RecordScreen> {
       backgroundColor: backgroundC,
       icon: icon,
       onClicked: () async {
+        if (recorder.isRecording) return;
+
         await player.togglePlaying(whenFinished: () => setState(() {}));
         setState(() {});
       },
@@ -147,14 +154,24 @@ class _RecordScreenState extends State<RecordScreen> {
           radius: 92,
           backgroundColor: AppColor.primary,
           child: player.isPlaying
-            ? const Icon(Icons.audiotrack_outlined, size: 120)
-            : Column(
+            ? Icon(
+              Icons.audiotrack_outlined,
+              size: 120,
+              color: AppColor.subPrimary,
+            ) : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.mic, size: 32),
+                Icon(
+                  Icons.mic,
+                  size: 32,
+                  color: AppColor.subPrimary,
+                ),
                 TimerWidget(controller: timerController),
                 const SizedBox(height: 8),
-                Text(text),
+                Text(
+                  text,
+                  style: TextStyle(color: AppColor.subPrimary),
+                ),
               ],
             ),
         ),
@@ -164,6 +181,7 @@ class _RecordScreenState extends State<RecordScreen> {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: const Text('Record Answer'),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -180,8 +198,14 @@ class _RecordScreenState extends State<RecordScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => widget.screen == "Question" ?
-                QuestionScreen(survey: widget.survey) :
-                ReviewScreen(survey: widget.survey),
+                QuestionScreen(
+                  survey: widget.survey,
+                  addresses: widget.addresses,
+                  index: widget.index,
+                ) : ReviewScreen(
+                  survey: widget.survey,
+                  addresses: widget.addresses,
+                ),
             ),
           );
         },

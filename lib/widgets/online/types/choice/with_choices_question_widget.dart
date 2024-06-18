@@ -8,7 +8,6 @@ import 'package:kalahok_app/widgets/online/types/choice/choice_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/question_subtext_widget.dart';
 
-/// CHECKED
 class WithChoicesQuestionWidget extends StatelessWidget {
   final int index;
   final Surveys survey;
@@ -17,6 +16,7 @@ class WithChoicesQuestionWidget extends StatelessWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const WithChoicesQuestionWidget({
     Key? key,
@@ -27,6 +27,7 @@ class WithChoicesQuestionWidget extends StatelessWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -55,6 +56,7 @@ class WithChoicesQuestionWidget extends StatelessWidget {
             survey: survey,
             onPressedPrev: onPressedPrev,
             onPressedNext: onPressedNext,
+            addresses: addresses,
           ),
         ],
       ),

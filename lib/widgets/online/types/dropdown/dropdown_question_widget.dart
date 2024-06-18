@@ -10,7 +10,6 @@ import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 
-/// NOT CHECK
 class DropdownQuestionWidget extends StatefulWidget {
   final int index;
   final Surveys survey;
@@ -18,6 +17,7 @@ class DropdownQuestionWidget extends StatefulWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const DropdownQuestionWidget({
     Key? key,
@@ -27,6 +27,7 @@ class DropdownQuestionWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -34,10 +35,11 @@ class DropdownQuestionWidget extends StatefulWidget {
 }
 
 class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
-  late int _tempId;
   late DropdownRepository _dropdownRepository;
   List<String> responses = [];
   List<String> fieldTexts = [];
+  List<int> filters = [];
+  bool isReset = false;
 
   Future<List<Result>> _getData({
     required path,
@@ -59,7 +61,6 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
   void initState() {
     super.initState();
 
-    _tempId = 0;
     _dropdownRepository = DropdownRepository();
     responses = widget.question.answer?.answers ?? [];
     fieldTexts = widget.question.labels.map((label) => label.name).toList();
@@ -78,6 +79,7 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
             question: widget.question.question,
           ),
           const SizedBox(height: 32),
+          isReset ? _errorMessage() : Container(),
           Expanded(
             child: _buildDropdownForms(),
           ),
@@ -87,15 +89,36 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
             survey: widget.survey,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),
     );
   }
 
+  Widget _errorMessage() {
+    return Column(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Responses has been reset, please select new ${widget.question.labels.last.name}.",
+              style: TextStyle(
+                color: AppColor.darkError,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+      ],
+    );
+  }
+
   Widget _buildDropdownForms() {
     bool useStaticDropdown = widget.question.config.useStaticDropdown ?? false;
-    /// todo: refactor this code, masyado ulit ulit and make sure na ok offline
 
     if (useStaticDropdown) {
       return _buildStaticForm();
@@ -105,135 +128,132 @@ class _DropdownQuestionWidgetState extends State<DropdownQuestionWidget> {
   }
 
   Widget _buildStaticForm() {
-    return ListView(
-      children: widget.question.labels
-          .map(
-            (label) => Column(
-          children: [
-            SearchableDropdown<Result>.paginated(
-              backgroundDecoration: (child) => Card(
-                margin: EdgeInsets.zero,
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(
-                      color: AppColor.neutral,
-                      width: 2.0
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: child,
-                ),
+    return ListView(children: widget.question.labels.asMap().map((index, label)
+      => MapEntry(index, Column(children: [
+        SearchableDropdown<Result>.paginated(
+          backgroundDecoration: (child) => Card(
+            margin: EdgeInsets.zero,
+            shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: AppColor.neutral,
+                width: 2.0,
               ),
-              hintText: Text('Select a ${label.name}'),
-              margin: const EdgeInsets.all(15),
-              paginatedRequest: (int page, String? searchKey) async {
-                final options = label.endpoint.split(',');
-
-                return options.asMap().entries.map((e) => SearchableDropdownMenuItem(
-                  value: Result(value: e.key, label: e.value.trim()),
-                  label: e.value.trim() ?? '',
-                  child: Text(e.value.trim() ?? ''),
-                ))
-                    .toList();
-              },
-              requestItemCount: 10,
-              onChanged: (Result? val) {
-                setState(() {
-                  /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
-                  /// todo: if getting from local db ~ try getting from json data\
-                  int index = widget.question.labels.indexOf(label);
-
-                  responses.isNotEmpty
-                      ? responses[index] = (val?.label).toString()
-                      : responses = List.generate(widget.question.labels.length, (i) =>
-                  i == index ? (val?.label).toString() : '');
-                });
-
-                if (widget.question.answer == null) {
-                  _setResponse();
-                } else {
-                  widget.question.answer?.answers = responses;
-                }
-              },
             ),
-            const SizedBox(height: 10),
-          ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: child,
+            ),
+          ),
+          hintText: responses.isNotEmpty && responses[index] != '' ?
+            Text(responses[index]) :
+            Text('Select a ${label.name}'),
+          margin: const EdgeInsets.all(15),
+          paginatedRequest: (int page, String? searchKey) async {
+            final options = label.endpoint.split(',');
+
+            return options.asMap().entries.map((e) => SearchableDropdownMenuItem(
+              value: Result(value: e.key, label: e.value.trim()),
+              label: e.value.trim(),
+              child: Text(e.value.trim()),
+            )).toList();
+          },
+          requestItemCount: 10,
+          onChanged: (Result? val) {
+            setState(() {
+              responses.isNotEmpty
+                ? responses[index] = (val?.label).toString()
+                : responses = List.generate(widget.question.labels.length, (i) =>
+                  i == index ? (val?.label).toString() : '');
+            });
+
+            if (widget.question.answer == null) {
+              _setResponse();
+            } else {
+              widget.question.answer?.answers = responses;
+            }
+          },
         ),
-      )
-          .toList(),
-    );
+        const SizedBox(height: 10),
+      ]))).values.toList());
   }
 
   Widget _buildNonStaticForm() {
-    return ListView(
-      children: widget.question.labels
-          .map(
-            (label) => Column(
-          children: [
-            SearchableDropdown<Result>.paginated(
-              backgroundDecoration: (child) => Card(
-                margin: EdgeInsets.zero,
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(
-                      color: AppColor.neutral,
-                      width: 2.0
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: child,
-                ),
+    return ListView(children: widget.question.labels.asMap().map((index, label)
+      => MapEntry(index, Column(children: [
+        SearchableDropdown<Result>.paginated(
+          backgroundDecoration: (child) => Card(
+            margin: EdgeInsets.zero,
+            shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: AppColor.neutral,
+                width: 2.0,
               ),
-              hintText: Text('Select a ${label.name}'),
-              margin: const EdgeInsets.all(15),
-              paginatedRequest: (int page, String? searchKey) async {
-                final paginatedList = await _getData(
-                  path: '/${label.endpoint}',
-                  page: page,
-                  filter: _tempId != 0 ? _tempId.toString() : '',
-                  q: searchKey != null ? searchKey.toString() : '',
-                );
-
-                /// todo: fix this, nag tutuloy and data kahit nasa pinaka dulo na data na siya
-
-                return paginatedList
-                    .map((e) => SearchableDropdownMenuItem(
-                  value: Result(value: e.value, label: e.label),
-                  label: e.label ?? '',
-                  child: Text(e.label ?? ''),
-                ))
-                    .toList();
-              },
-              requestItemCount: 10,
-              onChanged: (Result? val) {
-                setState(() {
-                  _tempId = (val?.value)?.toInt() ?? 0;
-
-                  /// todo: upon getting all the survey from api, get all the data via api from question type dropdown
-                  /// todo: if getting from local db ~ try getting from json data\
-                  int index = widget.question.labels.indexOf(label);
-
-                  responses.isNotEmpty
-                      ? responses[index] = (val?.label).toString()
-                      : responses = List.generate(widget.question.labels.length, (i) =>
-                  i == index ? (val?.label).toString() : '');
-                });
-
-                if (widget.question.answer == null) {
-                  _setResponse();
-                } else {
-                  widget.question.answer?.answers = responses;
-                }
-              },
             ),
-            const SizedBox(height: 10),
-          ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: child,
+            ),
+          ),
+          hintText: responses.isNotEmpty && responses[index] != '' ?
+            Text(responses[index]) :
+            Text('Select a ${label.name}'),
+          margin: const EdgeInsets.all(15),
+          paginatedRequest: (int page, String? searchKey) async {
+            String f = (index == 0) ? "0" :
+              (index > 0 && filters.isNotEmpty && filters[index-1] != 0) ?
+                filters[index-1].toString() : '';
+
+            final paginatedList = await _getData(
+              path: '/${label.endpoint}',
+              page: page,
+              filter: f,
+              q: searchKey != null ? searchKey.toString() : '',
+            );
+
+            return paginatedList.map((e) => SearchableDropdownMenuItem(
+              value: Result(value: e.value, label: e.label),
+              label: e.label,
+              child: Text(e.label),
+            )).toList();
+          },
+          requestItemCount: 10,
+          onChanged: (Result? val) {
+            setState(() {
+              if (index == 0 &&
+                responses.isNotEmpty &&
+                responses[index+1] != '') {
+                isReset = true;
+              } else {
+                isReset = false;
+              }
+
+              if (index == 0) {
+                filters = [];
+                responses = [];
+              }
+
+              filters.isNotEmpty ?
+                filters[index] = (val?.value) ?? 0 :
+                filters = List.generate(widget.question.labels.length, (i) =>
+                  i == index ? (val?.value) ?? 0 : 0);
+
+              responses.isNotEmpty ?
+                responses[index] = (val?.label).toString() :
+                responses = List.generate(widget.question.labels.length, (i) =>
+                  i == index ? (val?.label).toString() : '');
+            });
+
+            if (widget.question.answer == null) {
+              _setResponse();
+            } else {
+              widget.question.answer?.answers = responses;
+            }
+          },
         ),
-      )
-          .toList(),
-    );
+        const SizedBox(height: 10),
+      ]))).values.toList());
   }
 
   void _setResponse() {

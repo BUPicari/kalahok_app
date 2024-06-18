@@ -6,20 +6,24 @@ import 'package:kalahok_app/data/models/offline/category.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_survey_screen.dart';
 
-/// CHECKED
 class LocalCategoryWidget extends StatelessWidget {
   final Category category;
+  final List<String> addresses;
 
   const LocalCategoryWidget({
     Key? key,
     required this.category,
+    required this.addresses,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => LocalSurveyScreen(category: category),
+        builder: (context) => LocalSurveyScreen(
+          category: category,
+          addresses: addresses,
+        ),
       )),
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -35,19 +39,29 @@ class LocalCategoryWidget extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
-                    return Column();
+                    return const Column();
                   } else {
                     if (snapshot.data == true) {
-                      return Image.network(
-                        ApiConfig.baseUrl + category.image,
-                        width: 70,
-                      );
+                      if (category.image != "undefined" && category.image != "NULL") {
+                        return Image.network(
+                          ApiConfig.baseUrl + category.image,
+                          width: 70,
+                          errorBuilder: (
+                            BuildContext context,
+                            Object exception,
+                            StackTrace? stackTrace) {
+                            return const Column();
+                          },
+                        );
+                      } else {
+                        return const Column();
+                      }
                     } else {
-                      return Column();
+                      return const Column();
                     }
                   }
                 } else {
-                  return Column();
+                  return const Column();
                 }
               },
             ),

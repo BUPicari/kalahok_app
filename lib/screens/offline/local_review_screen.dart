@@ -4,19 +4,19 @@ import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/survey.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/offline/local_questionnaire_screen.dart';
 import 'package:kalahok_app/screens/offline/local_record_screen.dart';
 import 'package:kalahok_app/widgets/offline/local_review_button_widget.dart';
 
-/// CHECKED
 class LocalReviewScreen extends StatefulWidget {
   final Survey survey;
   final List<Questionnaire> questionnaires;
+  final List<String> addresses;
 
   const LocalReviewScreen({
     Key? key,
     required this.survey,
     required this.questionnaires,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -31,61 +31,58 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
 
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                Text(
-                  '* Red boxes are required and has no answers',
-                  style: TextStyle(
-                    color: AppColor.darkError,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Red boxes are required and has no answers',
+                    style: TextStyle(
+                      color: AppColor.darkError,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '* Gray boxes are not required and has no answers',
-                  style: TextStyle(
-                    color: AppColor.secondary,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Gray boxes are not required and has no answers',
+                    style: TextStyle(
+                      color: AppColor.secondary,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '* Green boxes have answers',
-                  style: TextStyle(
-                    color: AppColor.darkSuccess,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+                  const SizedBox(height: 5),
+                  Text(
+                    '* Green boxes have answers',
+                    style: TextStyle(
+                      color: AppColor.darkSuccess,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            Expanded(
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                children: Functions.heightBetween(
-                  _buildListViewChildren(context),
-                  height: 8,
+                ],
+              ),
+              const SizedBox(height: 15),
+              Expanded(
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  children: Functions.heightBetween(
+                    _buildListViewChildren(context),
+                    height: 8,
+                  ),
                 ),
               ),
-            ),
-            LocalReviewButtonWidget(
-              survey: widget.survey,
-              questionnaires: widget.questionnaires,
-            ),
-          ],
+              LocalReviewButtonWidget(
+                survey: widget.survey,
+                questionnaires: widget.questionnaires,
+                addresses: widget.addresses,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -101,7 +98,6 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
               questionnaire.question,
               style: TextStyle(
                 color: AppColor.subSecondary,
-                fontStyle: FontStyle.italic,
                 fontSize: 16,
               ),
             ),
@@ -124,6 +120,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
+      foregroundColor: AppColor.subPrimary,
       title: const Text('Recorded Response'),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -139,12 +136,10 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
           Icons.arrow_back,
           color: AppColor.subPrimary,
         ),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LocalQuestionnaireScreen(
-            survey: widget.survey,
-            questionnaires: widget.questionnaires,
-          ),
-        )),
+        onTap: () {
+          // Navigate back to the previous screen by popping the current route
+          Navigator.of(context).pop();
+        },
       ),
     );
   }
@@ -212,7 +207,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
           ]);
       }).toList();
 
-      Widget addOthersWidget = Column();
+      Widget addOthersWidget = const Column();
       String othersOrSpecifyText = questionnaire.type == 'trueOrFalse' ?
         'Specify:' :
         'Others:';
@@ -255,7 +250,10 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
                   borderRadius: BorderRadius.circular(33),
                 ),
               ),
-              icon: const Icon(Icons.play_arrow),
+              icon: Icon(
+                color: AppColor.subPrimary,
+                Icons.play_arrow,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -265,6 +263,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
                       questionnaires: widget.questionnaires,
                       survey: widget.survey,
                       screen: "Review",
+                      addresses: widget.addresses,
                     ),
                   ),
                 );

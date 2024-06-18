@@ -6,17 +6,20 @@ import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/screens/offline/local_record_screen.dart';
 
-/// CHECKED
 class LocalRecordResponseWidget extends StatefulWidget {
   final Questionnaire questionnaire;
   final List<Questionnaire> questionnaires;
   final Survey survey;
+  final List<String> addresses;
+  final int index;
 
   const LocalRecordResponseWidget({
     Key? key,
     required this.questionnaire,
     required this.questionnaires,
     required this.survey,
+    required this.addresses,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -76,6 +79,8 @@ class _LocalRecordResponseWidgetState extends State<LocalRecordResponseWidget> {
               questionnaires: widget.questionnaires,
               survey: widget.survey,
               screen: "Question",
+              addresses: widget.addresses,
+              index: widget.index,
             ),
           ),
         );

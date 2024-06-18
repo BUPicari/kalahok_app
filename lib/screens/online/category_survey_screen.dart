@@ -10,13 +10,14 @@ import 'package:kalahok_app/screens/online/category_screen.dart';
 import 'package:kalahok_app/widgets/online/category_survey_widget.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
-/// CHECKED
 class CategorySurveyScreen extends StatelessWidget {
   final Category category;
+  final List<String> addresses;
 
   const CategorySurveyScreen({
     Key? key,
     required this.category,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -35,12 +36,13 @@ class CategorySurveyScreen extends StatelessWidget {
               color: AppColor.subPrimary,
             ),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => LoadingOverlay(
-                progressText: "OFFLINE MODE",
-                child: const CategoryScreen(),
+              builder: (context) => LoadingOverlayWidget(
+                progressText: AppConfig.offlineModeText,
+                child: CategoryScreen(addresses: addresses),
               ),
             )),
           ),
+          foregroundColor: AppColor.subPrimary,
           title: Text(category.name),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(80),
@@ -60,34 +62,35 @@ class CategorySurveyScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: BlocBuilder<CategoryBloc, CategoryState>(
-          builder: (context, state) {
-            if (state is CategoryWithSurveyLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is CategoryWithSurveyLoadedState) {
-              if (state.categoryWithSurvey?.name == "none") {
-                return const ErrorScreen(
-                  error: "No Active Survey as of the moment!",
+        body: SafeArea(
+          child: BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryWithSurveyLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
+              if (state is CategoryWithSurveyLoadedState) {
+                if (state.categoryWithSurvey?.name == "none") {
+                  return const ErrorScreen(
+                    error: "No Active Survey as of the moment!",
+                  );
+                }
 
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                children: [
-                  _buildCategorySurveys(categoryWithSurvey: state.categoryWithSurvey),
-                ],
-              );
-            }
-            if (state is CategoryErrorState) {
-              /// todo: fix this ui later
-              return ErrorScreen(error: state.error);
-            }
-            return Container();
-          },
+                return ListView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    _buildCategorySurveys(categoryWithSurvey: state.categoryWithSurvey),
+                  ],
+                );
+              }
+              if (state is CategoryErrorState) {
+                return ErrorScreen(error: state.error);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
@@ -121,12 +124,15 @@ class CategorySurveyScreen extends StatelessWidget {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3 / 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         children: categoryWithSurvey!.surveys!
-          .map((survey) => CategorySurveyWidget(category: category, survey: survey))
-          .toList(),
+          .map((survey) => CategorySurveyWidget(
+            category: category,
+            survey: survey,
+            addresses: addresses,
+          )).toList(),
       ),
     );
   }

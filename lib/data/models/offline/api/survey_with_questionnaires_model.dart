@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-/// CHECKED
 class SurveyWithQuestionnaires {
   int id;
   int detailsId;

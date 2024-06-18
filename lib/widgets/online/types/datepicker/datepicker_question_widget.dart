@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import 'package:kalahok_app/helpers/variables.dart';
 import 'package:kalahok_app/data/models/online/answer_model.dart';
 import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 
-/// CHECKED
 class DatePickerQuestionWidget extends StatefulWidget {
   final int index;
   final Surveys survey;
@@ -16,6 +16,7 @@ class DatePickerQuestionWidget extends StatefulWidget {
   final ValueChanged<Answer> onSetResponse;
   final ValueChanged<int> onPressedPrev;
   final ValueChanged<int> onPressedNext;
+  final List<String> addresses;
 
   const DatePickerQuestionWidget({
     Key? key,
@@ -25,6 +26,7 @@ class DatePickerQuestionWidget extends StatefulWidget {
     required this.onSetResponse,
     required this.onPressedPrev,
     required this.onPressedNext,
+    required this.addresses,
   }) : super(key: key);
 
   @override
@@ -35,6 +37,7 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
   late DateTime initialDate;
   List<String> selected = [];
   List<String> fieldTexts = [];
+  late DateRangePickerController _controller;
 
   @override
   void initState() {
@@ -43,6 +46,7 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
     initialDate = DateTime(1998, 01);
     selected = widget.question.answer?.answers ?? [];
     fieldTexts = List.generate(1, (i) => widget.question.question);
+    _controller = DateRangePickerController();
   }
 
   @override
@@ -60,8 +64,10 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
           const SizedBox(height: 32),
           Expanded(
             child: SfDateRangePicker(
-              onSelectionChanged: _setDateSelected,
               view: DateRangePickerView.month,
+              controller: _controller,
+              cellBuilder: _cellBuilder,
+              onSelectionChanged: _setDateSelected,
               initialDisplayDate: _getDate(display: true),
               initialSelectedDate: _getDate(),
             ),
@@ -72,10 +78,75 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
             survey: widget.survey,
             onPressedPrev: widget.onPressedPrev,
             onPressedNext: widget.onPressedNext,
+            addresses: widget.addresses,
           ),
         ],
       ),
     );
+  }
+
+  Widget _cellBuilder(
+    BuildContext context,
+    DateRangePickerCellDetails cellDetails,
+  ) {
+    var boxDecoration = BoxDecoration(
+      color: AppColor.bgNeutral,
+      shape: BoxShape.circle,
+    );
+    var margin = const EdgeInsets.all(2);
+    var mainAxisSize = MainAxisSize.max;
+    var mainAxisAlignment = MainAxisAlignment.spaceAround;
+
+    if (_controller.view == DateRangePickerView.month) {
+      return Container(
+        margin: margin,
+        decoration: boxDecoration,
+        child: Column(
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: mainAxisAlignment,
+          children: [
+            Text(DateFormat('dd').format(cellDetails.date)),
+          ],
+        ),
+      );
+    } else if (_controller.view == DateRangePickerView.year) {
+      return Container(
+        margin: margin,
+        decoration: boxDecoration,
+        child: Column(
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: mainAxisAlignment,
+          children: [
+            Text(DateFormat('MMM').format(cellDetails.date)),
+          ],
+        ),
+      );
+    } else if (_controller.view == DateRangePickerView.decade) {
+      return Container(
+        margin: margin,
+        decoration: boxDecoration,
+        child: Column(
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: mainAxisAlignment,
+          children: [
+            Text(DateFormat('yyy').format(cellDetails.date)),
+          ],
+        ),
+      );
+    } else {
+      final int yearValue = cellDetails.date.year;
+      return Container(
+        margin: margin,
+        decoration: boxDecoration,
+        child: Column(
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: mainAxisAlignment,
+          children: [
+            Text('$yearValue - ${yearValue + 9}'),
+          ],
+        ),
+      );
+    }
   }
 
   DateTime? _getDate({ bool display = false }) {

@@ -1,7 +1,6 @@
 import 'survey.dart';
 import 'language.dart';
 
-/// CHECKED
 class SurveyDetail {
   int id;
   Survey survey;
