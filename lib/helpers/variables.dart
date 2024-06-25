@@ -18,7 +18,7 @@ class AppColor {
 
 class ApiConfig {
   /// UPDATER URL
-  static String updaterUrl = "";
+  static String updaterUrl = "https://app-config-manager.vercel.app/api/mobile";
   /// UPDATER API KEY
   static String updaterApiKey = "";
   /// SERVER URL
