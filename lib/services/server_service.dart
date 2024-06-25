@@ -14,15 +14,21 @@ class ServerService {
       var url = Uri.parse(updaterUrl);
       http.Response response = await http.get(
         url,
-        headers: {'x-api-key': ApiConfig.updaterApiKey},
       );
 
       if (response.statusCode == 200) {
         var responseBody = response.body;
         ServerUrl result = ServerUrl.fromJson(jsonDecode(responseBody));
 
-        ApiConfig.baseUrl = result.url;
-        ApiConfig.apiKey = result.apiKey;
+        for (var payload in result.payloads) {
+          if (payload.name == "url") {
+            ApiConfig.baseUrl = payload.value;
+          }
+
+          if (payload.name == "api_key") {
+            ApiConfig.apiKey = payload.value;
+          }
+        }
       } else {
         ApiConfig.baseUrl = defaultBaseUrl;
         ApiConfig.apiKey = defaultApiKey;
