@@ -78,6 +78,7 @@ class _LocalSurveyScreenState extends State<LocalSurveyScreen> {
               }
               if (state is LocalSurveyByCategoryLoadedState) {
                 return ListView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(10),
                   children: [

@@ -5,15 +5,19 @@ import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/data/models/online/choice_model.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/widgets/question_subtext_widget.dart';
+import 'package:kalahok_app/widgets/question_text_widget.dart';
 
 class ChoiceWidget extends StatefulWidget {
   final Questions question;
   final ValueChanged<Answer> onSetResponse;
+  final String subText;
 
   const ChoiceWidget({
     Key? key,
     required this.question,
     required this.onSetResponse,
+    required this.subText,
   }) : super(key: key);
 
   @override
@@ -45,6 +49,7 @@ class _ChoiceWidgetState extends State<ChoiceWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       physics: const BouncingScrollPhysics(),
       children: Functions.heightBetween(
         _buildListViewChildren(),
@@ -56,8 +61,21 @@ class _ChoiceWidgetState extends State<ChoiceWidget> {
   List<Widget> _buildListViewChildren() {
     var children = <Widget>[];
 
-    children = widget.question.choices
-      .map((choice) => _buildChoiceContainer(choice: choice))
+    children.add(Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 5),
+        QuestionTextWidget(
+          isRequired: widget.question.config.isRequired,
+          question: widget.question.question,
+        ),
+        QuestionSubtextWidget(subText: widget.subText),
+        const SizedBox(height: 12),
+      ],
+    ));
+
+    widget.question.choices
+      .map((choice) => children.add(_buildChoiceContainer(choice: choice)))
       .toList();
 
     if (widget.question.config.canAddOthers) {
@@ -72,6 +90,7 @@ class _ChoiceWidgetState extends State<ChoiceWidget> {
 
     return GestureDetector(
       onTap: () {
+        FocusScope.of(context).unfocus();
         setState(() {
           selected.contains(choice.name) ?
             selected.remove(choice.name) :

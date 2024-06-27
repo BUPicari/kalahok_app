@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
 import 'package:kalahok_app/widgets/offline/local_goto_widget.dart';
-import 'package:kalahok_app/widgets/question_subtext_widget.dart';
-import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/widgets/offline/types/choice/local_choice_widget.dart';
 
 class LocalChoiceTypeWidget extends StatelessWidget {
@@ -34,19 +32,12 @@ class LocalChoiceTypeWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 5),
-          QuestionTextWidget(
-            isRequired: questionnaire.configs.isRequired,
-            question: questionnaire.question,
-          ),
-          QuestionSubtextWidget(subText: subText),
-          const SizedBox(height: 30),
           Expanded(
             child: LocalChoiceWidget(
               questionnaire: questionnaire,
               onSetResponse: onSetResponse,
+              subText: subText,
             ),
           ),
           LocalGotoWidget(

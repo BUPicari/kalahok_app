@@ -4,15 +4,19 @@ import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
 import 'package:kalahok_app/helpers/functions.dart';
 import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/widgets/question_subtext_widget.dart';
+import 'package:kalahok_app/widgets/question_text_widget.dart';
 
 class LocalChoiceWidget extends StatefulWidget {
   final Questionnaire questionnaire;
   final ValueChanged<Response> onSetResponse;
+  final String subText;
 
   const LocalChoiceWidget({
     Key? key,
     required this.questionnaire,
     required this.onSetResponse,
+    required this.subText,
   }) : super(key: key);
 
   @override
@@ -44,6 +48,7 @@ class _LocalChoiceWidgetState extends State<LocalChoiceWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       physics: const BouncingScrollPhysics(),
       children: Functions.heightBetween(
         _buildListViewChildren(),
@@ -55,8 +60,22 @@ class _LocalChoiceWidgetState extends State<LocalChoiceWidget> {
   List<Widget> _buildListViewChildren() {
     var children = <Widget>[];
 
-    children = widget.questionnaire.choices
-      .map((choice) => _buildChoiceContainer(choice: choice)).toList();
+    children.add(Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 5),
+        QuestionTextWidget(
+          isRequired: widget.questionnaire.configs.isRequired,
+          question: widget.questionnaire.question,
+        ),
+        QuestionSubtextWidget(subText: widget.subText),
+        const SizedBox(height: 12),
+      ],
+    ));
+
+    widget.questionnaire.choices
+      .map((choice) => children.add(_buildChoiceContainer(choice: choice)))
+      .toList();
 
     if (widget.questionnaire.configs.canAddOthers) {
       children.add(_buildAddOthers());
@@ -70,6 +89,7 @@ class _LocalChoiceWidgetState extends State<LocalChoiceWidget> {
 
     return GestureDetector(
       onTap: () {
+        FocusScope.of(context).unfocus();
         setState(() {
           selected.contains(choice.name) ?
             selected.remove(choice.name) :

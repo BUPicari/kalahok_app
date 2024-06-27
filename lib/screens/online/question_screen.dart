@@ -52,17 +52,20 @@ class _QuestionScreenState extends State<QuestionScreen> {
     /// Local to API not yet sent items submission
     Functions.localToApi();
 
-    return Scaffold(
-      appBar: buildAppBar(context: context),
-      body: SafeArea(
-        child: QuestionsWidget(
-          survey: widget.survey,
-          pageController: pageController,
-          onChangedPage: (index) => goTo(index: index),
-          onSetResponse: (response) => setResponse(response: response),
-          onPressedPrev: (index) => setPrevQuestion(index: index),
-          onPressedNext: (index) => setNextQuestion(index: index),
-          addresses: widget.addresses,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: buildAppBar(context: context),
+        body: SafeArea(
+          child: QuestionsWidget(
+            survey: widget.survey,
+            pageController: pageController,
+            onChangedPage: (index) => goTo(index: index),
+            onSetResponse: (response) => setResponse(response: response),
+            onPressedPrev: (index) => setPrevQuestion(index: index),
+            onPressedNext: (index) => setNextQuestion(index: index),
+            addresses: widget.addresses,
+          ),
         ),
       ),
     );

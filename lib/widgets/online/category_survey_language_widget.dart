@@ -57,6 +57,7 @@ class CategorySurveyLanguageWidget extends StatelessWidget {
       ),
       body: SafeArea(
         child: ListView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(10),
           children: [

@@ -53,15 +53,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 5),
-          QuestionTextWidget(
-            isRequired: widget.question.config.isRequired,
-            question: widget.question.question,
-          ),
-          _recordingButton(),
-          const SizedBox(height: 12),
           Expanded(
             child: _buildTextFieldForms(),
           ),
@@ -102,6 +94,7 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
 
   Widget _buildTextFieldForms() {
     return ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       physics: const BouncingScrollPhysics(),
       children: Functions.heightBetween(
         _buildTextField(),
@@ -111,71 +104,85 @@ class _OpenEndedQuestionWidgetState extends State<OpenEndedQuestionWidget> {
   }
 
   List<Widget> _buildTextField() {
-    List<Widget> textFields = widget.question.labels
-      .map(
-        (label) => Column(children: [
-          TextField(
-            readOnly: widget.question.hasRecording == true,
-            controller: fieldControllers.isNotEmpty
-              ? fieldControllers[widget.question.labels.indexOf(label)]
-              : null,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(
-                  color: AppColor.neutral,
-                  width: 2.0,
-                ),
+    var children = <Widget>[];
+
+    children.add(Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 5),
+        QuestionTextWidget(
+          isRequired: widget.question.config.isRequired,
+          question: widget.question.question,
+        ),
+        _recordingButton(),
+        const SizedBox(height: 12),
+      ],
+    ));
+
+    widget.question.labels.map(
+      (label) => children.add(Column(children: [
+        TextField(
+          readOnly: widget.question.hasRecording == true,
+          controller: fieldControllers.isNotEmpty
+            ? fieldControllers[widget.question.labels.indexOf(label)]
+            : null,
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: AppColor.neutral,
+                width: 2.0,
               ),
-              border: const OutlineInputBorder(),
-              hintText: label.name,
             ),
-            maxLines: null,
-            keyboardType: TextInputType.multiline,
-            style: const TextStyle(height: 2.0),
-            onChanged: (value) {
-              int index = widget.question.labels.indexOf(label);
-              setState(() {
-                responses.isNotEmpty
-                  ? responses[index] = value
-                  : responses = List.generate(widget.question.labels.length, (i) =>
-                    i == index ? value : '');
-
-                if (fieldControllers.isNotEmpty) {
-                  var cursorPos = fieldControllers[index].selection;
-                  fieldControllers[index].text = value;
-                  if (cursorPos.start > value.length) {
-                    cursorPos = TextSelection.fromPosition(
-                      TextPosition(offset: value.length));
-                  }
-                  fieldControllers[index].selection = cursorPos;
-                } else {
-                  fieldControllers = List.generate(widget.question.labels.length, (j) => j == index
-                    ? TextEditingController(text: value)
-                    : TextEditingController(text: ''));
-                }
-              });
-
-              if (widget.question.answer == null) {
-                _setResponse();
-              } else {
-                widget.question.answer?.answers = responses;
-              }
-
-              if (Functions.arrDoesNotOnlyContainsEmptyString(strArr: responses)) {
-                widget.question.hasRecording = false;
-                widget.question.hasInput = true;
-              } else {
-                widget.question.hasRecording = false;
-                widget.question.hasInput = false;
-              }
-            },
+            border: const OutlineInputBorder(),
+            hintText: label.name,
           ),
-          const SizedBox(height: 5),
-        ]),
-      ).toList();
+          maxLines: null,
+          keyboardType: TextInputType.multiline,
+          style: const TextStyle(height: 2.0),
+          onChanged: (value) {
+            int index = widget.question.labels.indexOf(label);
+            setState(() {
+              responses.isNotEmpty
+                ? responses[index] = value
+                : responses = List.generate(widget.question.labels.length, (i) =>
+                  i == index ? value : '');
 
-    return textFields;
+              if (fieldControllers.isNotEmpty) {
+                var cursorPos = fieldControllers[index].selection;
+                fieldControllers[index].text = value;
+                if (cursorPos.start > value.length) {
+                  cursorPos = TextSelection.fromPosition(
+                    TextPosition(offset: value.length));
+                }
+                fieldControllers[index].selection = cursorPos;
+              } else {
+                fieldControllers = List.generate(widget.question.labels.length, (j) => j == index
+                  ? TextEditingController(text: value)
+                  : TextEditingController(text: ''));
+              }
+            });
+
+            if (widget.question.answer == null) {
+              _setResponse();
+            } else {
+              widget.question.answer?.answers = responses;
+            }
+
+            if (Functions.arrDoesNotOnlyContainsEmptyString(strArr: responses)) {
+              widget.question.hasRecording = false;
+              widget.question.hasInput = true;
+            } else {
+              widget.question.hasRecording = false;
+              widget.question.hasInput = false;
+            }
+          },
+        ),
+        const SizedBox(height: 5),
+      ])),
+    ).toList();
+
+    return children;
   }
 
   void _setResponse() {

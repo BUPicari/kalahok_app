@@ -30,6 +30,7 @@ class LocalQuestionnaireOrdersWidget extends StatelessWidget {
       child: ListViewObserver(
         controller: observerController,
         child: ListView.separated(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           controller: scrollController,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: padding),
@@ -38,21 +39,24 @@ class LocalQuestionnaireOrdersWidget extends StatelessWidget {
           itemCount: questionnaires.length,
           itemBuilder: (context, index) {
             final isSelected = questionnaire == questionnaires[index];
-            return _buildNumber(index: index, isSelected: isSelected);
+            return _buildNumber(context, index: index, isSelected: isSelected);
           },
         ),
       ),
     );
   }
 
-  Widget _buildNumber({ required int index, required bool isSelected }) {
+  Widget _buildNumber(context, { required int index, required bool isSelected }) {
     final color = _generateColor(
       questionnaire: questionnaires[index],
       isSelected: isSelected,
     );
 
     return GestureDetector(
-      onTap: () => onClickedNumber(index),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        onClickedNumber(index);
+      },
       child: CircleAvatar(
         backgroundColor: color,
         child: Text(

@@ -62,6 +62,7 @@ class ReviewScreen extends StatelessWidget {
               const SizedBox(height: 15),
               Expanded(
                 child: ListView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: const BouncingScrollPhysics(),
                   children: Functions.heightBetween(
                     _buildListViewChildren(context),

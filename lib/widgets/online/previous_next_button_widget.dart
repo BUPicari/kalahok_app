@@ -40,7 +40,7 @@ class PreviousNextButtonWidget extends StatelessWidget {
   Widget _actions(context) {
     if (survey.questionnaires?.last == question) {
       return Row(children: [
-        _buildPrevBtn(),
+        _buildPrevBtn(context),
         const SizedBox(width: 10),
         _buildReviewBtn(context),
         const SizedBox(width: 10),
@@ -49,19 +49,22 @@ class PreviousNextButtonWidget extends StatelessWidget {
     }
 
     return Row(children: [
-      _buildPrevBtn(),
+      _buildPrevBtn(context),
       const Spacer(),
-      _buildNextBtn(),
+      _buildNextBtn(context),
     ]);
   }
 
-  Widget _buildPrevBtn() {
+  Widget _buildPrevBtn(context) {
     bool condition = question == survey.questionnaires?.first;
     var color = condition ? AppColor.secondary : AppColor.primary;
 
     return Expanded(
       child: ElevatedButton(
-        onPressed: condition ? null : () => onPressedPrev(index),
+        onPressed: () {
+          FocusScope.of(context).unfocus();
+          condition ? null : onPressedPrev(index);
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(
@@ -144,13 +147,16 @@ class PreviousNextButtonWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildNextBtn() {
+  Widget _buildNextBtn(context) {
     bool condition = question == survey.questionnaires?.last;
     var color = condition ? AppColor.secondary : AppColor.primary;
 
     return Expanded(
       child: ElevatedButton(
-        onPressed: condition ? null : () => onPressedNext(index),
+        onPressed: () {
+          FocusScope.of(context).unfocus();
+          condition ? null : onPressedNext(index);
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(

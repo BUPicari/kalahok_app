@@ -61,30 +61,33 @@ class _LocalPasscodeWidgetState extends State<LocalPasscodeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: ValueListenableBuilder<bool>(
-          valueListenable: widget._isLoadingNotifier,
-          child: widget.child,
-          builder: (context, value, child) {
-            return Stack(
-              children: [
-                child!,
-                if (value)
-                  BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-                    child: Opacity(
-                      opacity: 0.8,
-                      child: ModalBarrier(dismissible: false, color: AppColor.subSecondary),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: SafeArea(
+          child: ValueListenableBuilder<bool>(
+            valueListenable: widget._isLoadingNotifier,
+            child: widget.child,
+            builder: (context, value, child) {
+              return Stack(
+                children: [
+                  child!,
+                  if (value)
+                    BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                      child: Opacity(
+                        opacity: 0.8,
+                        child: ModalBarrier(dismissible: false, color: AppColor.subSecondary),
+                      ),
                     ),
-                  ),
-                if (value)
-                  Center(
-                    child: _passcodeTextField(context),
-                  ),
-              ],
-            );
-          },
+                  if (value)
+                    Center(
+                      child: _passcodeTextField(context),
+                    ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

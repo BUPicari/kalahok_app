@@ -5,8 +5,6 @@ import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/online/types/choice/choice_widget.dart';
-import 'package:kalahok_app/widgets/question_text_widget.dart';
-import 'package:kalahok_app/widgets/question_subtext_widget.dart';
 
 class WithChoicesQuestionWidget extends StatelessWidget {
   final int index;
@@ -35,19 +33,12 @@ class WithChoicesQuestionWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 5),
-          QuestionTextWidget(
-            isRequired: question.config.isRequired,
-            question: question.question,
-          ),
-          QuestionSubtextWidget(subText: subText),
-          const SizedBox(height: 30),
           Expanded(
             child: ChoiceWidget(
               question: question,
               onSetResponse: onSetResponse,
+              subText: subText,
             ),
           ),
           PreviousNextButtonWidget(
