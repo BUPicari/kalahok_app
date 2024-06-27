@@ -69,6 +69,7 @@ class _LocalReviewScreenState extends State<LocalReviewScreen> {
               const SizedBox(height: 15),
               Expanded(
                 child: ListView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: const BouncingScrollPhysics(),
                   children: Functions.heightBetween(
                     _buildListViewChildren(context),

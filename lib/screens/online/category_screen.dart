@@ -123,6 +123,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               }
               if (state is CategoryLoadedState) {
                 return ListView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(16),
                   children: [

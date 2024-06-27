@@ -113,6 +113,7 @@ class _LocalDropdownTypeWidgetState extends State<LocalDropdownTypeWidget> {
     }
 
     return ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: widget.questionnaire.labels.asMap().map((i, label) => MapEntry(i,
         Column(children: [
           SearchableDropdown<Dropdown>.paginated(
@@ -220,6 +221,7 @@ class _LocalDropdownTypeWidgetState extends State<LocalDropdownTypeWidget> {
       key: _gestureDetectorKey,
       onTap: () => _setResponse(),
       child: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         physics: const BouncingScrollPhysics(),
         children: Functions.heightBetween(
           _buildChoiceContainer(choices: addressChoices),

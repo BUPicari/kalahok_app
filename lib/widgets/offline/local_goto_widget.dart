@@ -39,7 +39,7 @@ class LocalGotoWidget extends StatelessWidget {
   Widget _actions(context) {
     if (questionnaires.last == questionnaire) {
       return Row(children: [
-        _buildPrevBtn(),
+        _buildPrevBtn(context),
         const SizedBox(width: 10),
         _buildReviewBtn(context),
         const SizedBox(width: 10),
@@ -48,19 +48,22 @@ class LocalGotoWidget extends StatelessWidget {
     }
 
     return Row(children: [
-      _buildPrevBtn(),
+      _buildPrevBtn(context),
       const Spacer(),
-      _buildNextBtn(),
+      _buildNextBtn(context),
     ]);
   }
 
-  Widget _buildPrevBtn() {
+  Widget _buildPrevBtn(context) {
     bool condition = questionnaire == questionnaires.first;
     var color = condition ? AppColor.secondary : AppColor.primary;
 
     return Expanded(
       child: ElevatedButton(
-        onPressed: condition ? null : () => onPressedPrev(index),
+        onPressed: () {
+          FocusScope.of(context).unfocus();
+          condition ? null : onPressedPrev(index);
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(
@@ -145,13 +148,16 @@ class LocalGotoWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildNextBtn() {
+  Widget _buildNextBtn(context) {
     bool condition = questionnaire == questionnaires.last;
     var color = condition ? AppColor.secondary : AppColor.primary;
 
     return Expanded(
       child: ElevatedButton(
-        onPressed: condition ? null : () => onPressedNext(index),
+        onPressed: () {
+          FocusScope.of(context).unfocus();
+          condition ? null : onPressedNext(index);
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(
