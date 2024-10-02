@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:kalahok_app/app.dart';
 import 'package:kalahok_app/helpers/variables.dart';
-import 'package:kalahok_app/screens/initial_screen.dart';
+import 'package:kalahok_app/screens/server_screen.dart';
 import 'package:kalahok_app/widgets/loading_overlay_widget.dart';
 
 class NotificationService {
@@ -75,7 +75,7 @@ class NotificationService {
         MaterialPageRoute(
           builder: (_) => LoadingOverlayWidget(
             progressText: AppConfig.offlineModeText,
-            child: const InitialScreen(),
+            child: const ServerScreen(),
           ),
         ),
       );

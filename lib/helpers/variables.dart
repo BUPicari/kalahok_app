@@ -18,15 +18,18 @@ class AppColor {
 
 class ApiConfig {
   /// UPDATER URL
-  static String updaterUrl = "https://app-config-manager.vercel.app/api/mobile";
+  // static String updaterUrl = "https://app-config-manager.vercel.app/api/mobile";
+  static String updaterUrl = "";
   /// UPDATER API KEY
   static String updaterApiKey = "";
   /// SERVER URL
-  static String baseUrl = "https://chedlakas.mab.com.ph:8001";
+  // static String baseUrl = "https://chedlakas.mab.com.ph:8001";
+  static String baseUrl = "https://www.bu-research.online/bosesko-api";
   /// SERVER API KEY
-  static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
+  // static String apiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
+  static String apiKey = "BIBgAolNJodHxR95ghUnR2soX4JvzSSbIKWMo9IKg60";
   /// VISUALIZATION URL
-  static String visualizationUrl = "https://chedlakas.mab.com.ph:8004/admin";
+  // static String visualizationUrl = "https://chedlakas.mab.com.ph:8004/admin";
   /// LOCAL URL
   // static String baseUrl = "http://10.10.16.117:3001";
   /// LOCAL API KEY

@@ -7,6 +7,7 @@ import 'package:kalahok_app/data/models/online/label_model.dart';
 import 'package:kalahok_app/data/models/online/dropdown_model.dart';
 import 'package:kalahok_app/data/resources/online/dropdown/dropdown_repo.dart';
 import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/services/server_service.dart';
 
 class InitialScreen extends StatefulWidget {
   const InitialScreen({ Key? key }) : super(key: key);
@@ -28,6 +29,7 @@ class _InitialScreenState extends State<InitialScreen> {
     required filter,
     required q,
   }) async {
+    await ServerService.initializeServer();
     final list = await _dropdownRepository.getDropdownList(
       path: path,
       page: page,

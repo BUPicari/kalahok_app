@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:kalahok_app/data/models/server_url.dart';
 import 'package:kalahok_app/helpers/variables.dart';
+import 'package:kalahok_app/data/models/server_url.dart';
 
 class ServerService {
   static Future<void> initializeServer() async {
-    String defaultBaseUrl = "https://chedlakas.mab.com.ph:8001";
-    String defaultApiKey = "vTZiBkM3GZniy45jf14V_Mpdvm43enyIzW61NAuzZTc";
+    String defaultBaseUrl = "https://www.bu-research.online/bosesko-api";
+    String defaultApiKey = "BIBgAolNJodHxR95ghUnR2soX4JvzSSbIKWMo9IKg60";
     String updaterUrl = ApiConfig.updaterUrl;
 
-    if (updaterUrl != "") {
+    try {
       var url = Uri.parse(updaterUrl);
       http.Response response = await http.get(
         url,
@@ -33,7 +33,8 @@ class ServerService {
         ApiConfig.baseUrl = defaultBaseUrl;
         ApiConfig.apiKey = defaultApiKey;
       }
-    } else {
+    } catch (error) {
+      print("Error: $error");
       ApiConfig.baseUrl = defaultBaseUrl;
       ApiConfig.apiKey = defaultApiKey;
     }
