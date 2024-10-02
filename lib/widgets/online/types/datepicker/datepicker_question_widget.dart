@@ -8,6 +8,7 @@ import 'package:kalahok_app/data/models/online/questions_model.dart';
 import 'package:kalahok_app/data/models/online/surveys_model.dart';
 import 'package:kalahok_app/widgets/online/previous_next_button_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
+import 'package:kalahok_app/widgets/question_subtext_widget.dart';
 
 class DatePickerQuestionWidget extends StatefulWidget {
   final int index;
@@ -71,6 +72,9 @@ class _DatePickerQuestionWidgetState extends State<DatePickerQuestionWidget> {
               initialDisplayDate: _getDate(display: true),
               initialSelectedDate: _getDate(),
             ),
+          ),
+          const QuestionSubtextWidget(
+            subText: "Click the current date in the upper left to select a month or year.",
           ),
           PreviousNextButtonWidget(
             index: widget.index,

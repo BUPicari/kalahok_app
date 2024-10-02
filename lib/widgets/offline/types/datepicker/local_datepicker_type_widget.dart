@@ -7,6 +7,7 @@ import 'package:kalahok_app/widgets/offline/local_goto_widget.dart';
 import 'package:kalahok_app/widgets/question_text_widget.dart';
 import 'package:kalahok_app/data/models/offline/questionnaire.dart';
 import 'package:kalahok_app/data/models/offline/response.dart';
+import 'package:kalahok_app/widgets/question_subtext_widget.dart';
 
 class LocalDatePickerTypeWidget extends StatefulWidget {
   final int index;
@@ -70,6 +71,9 @@ class _LocalDatePickerTypeWidgetState extends State<LocalDatePickerTypeWidget> {
               initialDisplayDate: _getDate(display: true),
               initialSelectedDate: _getDate(),
             ),
+          ),
+          const QuestionSubtextWidget(
+            subText: "Click the current date in the upper left to select a month or year.",
           ),
           LocalGotoWidget(
             index: widget.index,
